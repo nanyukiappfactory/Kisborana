@@ -52,7 +52,7 @@ class Migration_Create_member extends CI_Migration {
                             'type' => 'VARCHAR',
                             'constraint' => '100',
                         ),
-                        'member_bank_account_number' => array(
+                        'member_account_number' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '100',
                         ),
