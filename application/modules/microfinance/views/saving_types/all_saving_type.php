@@ -58,9 +58,9 @@
 
             
             <div>   
-            <?php echo anchor("saving_types/new_saving_type", "Add Saving Type", array("class"=>"btn btn-primary btn-sm")); ?>
+            <?php echo anchor("microfinance/saving_types/new_saving_type", "Add Saving Type", array("class"=>"btn btn-primary btn-sm")); ?>
             
-            <?php echo anchor("saving_types/import", "Import Saving Types", array("class"=>"btn btn-success btn-sm")); ?>  
+            <?php echo anchor("microfinance/imports", "Import Saving Types", array("class"=>"btn btn-success btn-sm")); ?>  
             </div>
 
             

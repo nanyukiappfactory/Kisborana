@@ -6,7 +6,7 @@ class Saving_types extends MX_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("saving_types_model");        
+        $this->load->model("microfinance/saving_types_model");        
        $this->load->model("site/site_model"); 
 
        
@@ -22,7 +22,7 @@ class Saving_types extends MX_Controller
             //var_dump($friend_id); die();
            
            $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("saving_types/search_results",$saving_type_id, true),
+            "content" => $this->load->view("microfinance/saving_types/search_results",$saving_type_id, true),
 
            );
         $this->load->view("site/layouts/layout", $data);
@@ -34,7 +34,7 @@ class Saving_types extends MX_Controller
         $v_data["all_saving_type"] = $this->saving_types_model->get_saving_type();
 
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("saving_types/all_saving_type", $v_data, true),
+            "content" => $this->load->view("microfinance/saving_types/all_saving_type", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
         }
@@ -54,14 +54,14 @@ class Saving_types extends MX_Controller
                 $this->session->set_flashdata
                     ("error_message", "unable to add saving type");
             }
-            redirect("saving_types");
+            redirect("microfinance/saving_types");
         
 
         $data["form_error"] = validation_errors();
         }
-        $v_data ["add_saving_type"]= "saving_types/saving_type_model";
+        $v_data ["add_saving_type"]= "microfinance/saving_types_model";
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("saving_types/saving_types", $v_data, true),
+            "content" => $this->load->view("microfinance/saving_types/saving_type", $v_data, true),
 
         );
         $this->load->view("site/layouts/layout", $data);
@@ -109,7 +109,7 @@ class Saving_types extends MX_Controller
         //2. load view with the data from step 1
         $data = array(
             "title"=>$this->site_model->display_page_title(),
-            "content"=>$this->load->view("saving_types/edit_saving_type", $v_data, true),
+            "content"=>$this->load->view("microfinance/saving_types/edit_saving_type", $v_data, true),
         );
         
         $this->load->view("site/layouts/layout", $data);
@@ -124,7 +124,7 @@ class Saving_types extends MX_Controller
         $v_data["all_saving_type"] = $undeleted;
         $data = array(
             "title"=>$this->site_model->display_page_title(),
-            "content"=>$this->load->view("saving_types/all_saving_type", $v_data, true),
+            "content"=>$this->load->view("microfinance/saving_types/all_saving_type", $v_data, true),
         );
         
         $this->load->view("site/layouts/layout", $data);
@@ -141,7 +141,7 @@ class Saving_types extends MX_Controller
           //3. load the all friends view with data from step 2
           $data = array(
               "title"=>$this->site_model->display_page_title(),
-              "content"=>$this->load->view("saving_types/all_saving_type", $v_data, true),
+              "content"=>$this->load->view("microfinance/saving_types/all_saving_type", $v_data, true),
           );
           
           $this->load->view("site/layouts/layout", $data);
@@ -158,7 +158,7 @@ class Saving_types extends MX_Controller
           //3. load the all friends view with data from step 2
           $data = array(
               "title"=>$this->site_model->display_page_title(),
-              "content"=>$this->load->view("saving_types/all_saving_type", $v_data, true),
+              "content"=>$this->load->view("microfinance/saving_types/all_saving_type", $v_data, true),
           );
           
           $this->load->view("site/layouts/layout", $data);
