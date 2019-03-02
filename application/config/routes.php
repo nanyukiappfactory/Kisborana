@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'saving_types/saving_types';
+$route['default_controller'] = 'admin/admin/login_admin';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -58,4 +58,22 @@ $route['translate_uri_dashes'] = FALSE;
  * Auth Routes
 ****/
 
-$route['admin/login'] = 'auth/auth/login_admin';
+$route['admin/login'] = 'auth/admin/login_admin';
+
+
+/****
+ * Loan Routes
+****/
+
+$route['loans'] = 'microfinance/loans/index';
+
+
+/****
+ * Loan Types Routes
+****/
+
+
+$route['loan_types'] = 'microfinance/loan_types/index';
+$route['loan_types/new_loan_type'] = 'microfinance/loan_types/new_loan_type';
+$route['loan_types/bulk_registration'] = 'microfinance/loan_types/bulk_registration';
+$route['loan_types/edit'] = 'microfinance/loan_types/edit';

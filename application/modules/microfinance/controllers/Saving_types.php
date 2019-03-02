@@ -1,5 +1,7 @@
 <?php
-class Saving_types extends MX_Controller
+require_once "./application/modules/admin/controllers/Admin.php";
+
+class Saving_types extends Admin
 { 
     
 
@@ -14,7 +16,10 @@ class Saving_types extends MX_Controller
 
    //all saving types
     public function index()
-    {
+    { 
+        $var = $this->session->userdata('logged_in_user');
+        $login_status = $var['login_status'];
+        if ($login_status == 'TRUE'){
         //search
         $this->form_validation->set_rules("search", "Search", "required");
         if ($this->form_validation->run()) {
@@ -38,6 +43,9 @@ class Saving_types extends MX_Controller
         );
         $this->load->view("site/layouts/layout", $data);
         }
+    }else{
+        redirect("admin/login_admin");
+    }
     }
 
     //ading new saving type    

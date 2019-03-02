@@ -1,5 +1,7 @@
 <?php
-class Loan_Types extends MX_Controller
+require_once "./application/modules/admin/controllers/Admin.php";
+
+class Loan_Types extends Admin
 {
     public function __construct()
     {
@@ -18,6 +20,9 @@ class Loan_Types extends MX_Controller
     }
     public function index()
     {
+        $var = $this->session->userdata('logged_in_user');
+        $login_status = $var['login_status'];
+        if ($login_status == 'TRUE'){
         // Pagination
 
         $start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -27,7 +32,7 @@ class Loan_Types extends MX_Controller
 
         // get current page records
        
-        $config['base_url'] = base_url() . 'loan_types/index';
+        $config['base_url'] = base_url() . 'microfinance/loan_types/index';
         $config['total_rows'] = $total_records;
         $config['per_page'] = 2;
         $config["uri_segment"] = 3;
@@ -44,8 +49,11 @@ class Loan_Types extends MX_Controller
         $var2 = $this->loan_types_model->get_loan_type($limit_per_page, $start_index);
 
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("loan_types/all_loan_types", $params, true));
+            "content" => $this->load->view("microfinance/loan_types/all_loan_types", $params, true));
         $this->load->view("site/layouts/layout", $data);
+    }else{
+        redirect("admin/login_admin");
+    }
     }
 
     public function execute_search()
@@ -59,40 +67,11 @@ class Loan_Types extends MX_Controller
         // Pass the results to the view.
 
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("loan_types/search_results", $data, true));
+            "content" => $this->load->view("microfinance/loan_types/search_results", $data, true));
         $this->load->view("site/layouts/layout", $data);
 
     }
 
-    public function welcome($loan_type_id)
-    {
-
-        $my_loan_type = $this->loan_types_model->get_single_loan_type($loan_type_id);
-
-        if ($my_loan_type->num_rows() > 0) {
-            $row = $my_loan_type->row();
-            $loan_type = $row->loan_type_name;
-            $age = $row->loan_type_age;
-            $gender = $row->loan_type_gender;
-            $hobby = $row->loan_type_hobby;
-            $data = array(
-                "loan_type_name" => $loan_type,
-                "loan_type_age" => $age,
-                "loan_type_gender" => $gender,
-                "loan_type_hobby" => $hobby,
-
-            );
-
-            $view = array("title" => $this->site_model->display_page_title(),
-                "content" => $this->load->view("welcome_here", $data, true));
-            $this->load->view("site/layouts/layout", $view);
-        } else {
-
-            $this->session->set_flash_data("error_message", "could not find you loan_type");
-            redirect('loan_types');
-        }
-
-    }
 
     public function new_loan_type()
     {
@@ -113,7 +92,7 @@ class Loan_Types extends MX_Controller
             $loan_type_id = $this->loan_types_model->add_loan_type();
             if ($loan_type_id > 0) {
                 $this->session->set_flashdata("success_message", "new loan_type has been added");
-                redirect("loan_types");
+                redirect("microfinance/loan_types");
             } else {
                 $this->session->set_flashdata("error_message", "unable to add loan_type");
             }
@@ -123,7 +102,7 @@ class Loan_Types extends MX_Controller
 
         $v_data["add_loan_type"] = "loan_types/loan_types_model";
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("loan_types/add_loan_type", $v_data, true),
+            "content" => $this->load->view("microfinance/loan_types/add_loan_type", $v_data, true),
 
         );
         $this->load->view("site/layouts/layout", $data);
@@ -135,10 +114,10 @@ class Loan_Types extends MX_Controller
         $my_loan_type = $this->loan_types_model->get_delete_loan_type($loan_type_id);
         if ($my_loan_type > 0) {
             $this->session->set_flashdata("success_message", "loan_type deleted");
-            redirect("loan_types");
+            redirect("microfinance/loan_types");
         } else {
             $this->session->set_flashdata("error_message", "unable to delete");
-            redirect("loan_types");
+            redirect("microfinance/loan_types");
         }
     }
 
@@ -147,18 +126,18 @@ class Loan_Types extends MX_Controller
         $my_loan_type = $this->loan_types_model->get_deactivate_loan_type($loan_type_id);
         if ($my_loan_type > 0) {
             $this->session->set_flashdata("success_message", "loan_type deactivated successfully");
-            redirect("loan_types");
+            redirect("microfinance/loan_types");
         } else {
             $this->session->set_flashdata("error_message", "unable to deactivate loan_type");
-            redirect("loan_types");
+            redirect("microfinance/loan_types");
         }
     }
 
     public function bulk_registration()
     {
-        $v_data["add_loan_type"] = "loan_types/loan_types_model";
+        $v_data["add_loan_type"] = "microfinance/loan_types/loan_types_model";
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("loan_types/bulk_registration", $v_data, true),
+            "content" => $this->load->view("microfinance/loan_types/bulk_registration", $v_data, true),
 
         );
         $this->load->view("site/layouts/layout", $data);
@@ -174,10 +153,10 @@ class Loan_Types extends MX_Controller
         $my_loan_type = $this->loan_types_model->get_activate_loan_type($loan_type_id);
         if ($my_loan_type > 0) {
             $this->session->set_flashdata("success_message", "loan_type activated successfully");
-            redirect("loan_types");
+            redirect("microfinance/loan_types");
         } else {
             $this->session->set_flashdata("error_message", "unable to activate loan_type");
-            redirect("loan_types");
+            redirect("microfinance/loan_types");
         }
     }
 
@@ -216,7 +195,7 @@ class Loan_Types extends MX_Controller
             );
 
             $view = array("title" => $this->site_model->display_page_title(),
-                "content" => $this->load->view("edit_loan_type", $data, true));
+                "content" => $this->load->view("microfinance/loan_types/edit_loan_type", $data, true));
             $this->load->view("site/layouts/layout", $view);
 
         }
@@ -242,7 +221,7 @@ class Loan_Types extends MX_Controller
             // var_dump($pal_id);die();
             if ($pal_id > 0) {
                 $this->session->set_flashdata("success_message", "Your loan_type" . $loan_type_id . "has been edited");
-                redirect("loan_types");
+                redirect("microfinance/loan_types");
             } else {
                 $this->session->set_flashdata("error_message", "unable to edit loan_type");
             }

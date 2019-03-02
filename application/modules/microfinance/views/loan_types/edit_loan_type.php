@@ -1,6 +1,6 @@
 <div class="card">
 <div class="card-body">
-<?php echo form_open_multipart('loan_types/edit_loan_type/'.$loan_type_id, array('onsubmit' => "return confirm('Do you want to update this record')")); ?>
+<?php echo form_open_multipart('microfinance/loan_types/edit_loan_type/'.$loan_type_id, array('onsubmit' => "return confirm('Do you want to update this record')")); ?>
 <div>
 	<input type="hidden" name="loan_type_name" value="<?php echo $loan_type_id; ?>" >
 </div>

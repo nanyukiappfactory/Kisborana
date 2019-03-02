@@ -1,5 +1,7 @@
 <?php
-class Loans extends MX_Controller
+require_once "./application/modules/admin/controllers/Admin.php";
+
+class Loans extends Admin
 {
     public function __construct()
     {
@@ -18,6 +20,10 @@ class Loans extends MX_Controller
     }
     public function index()
     {
+        
+        $var = $this->session->userdata('logged_in_user');
+        $login_status = $var['login_status'];
+        if ($login_status == 'TRUE'){
         // Pagination
 
         $start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -50,6 +56,9 @@ class Loans extends MX_Controller
         $data = array("title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("loans/all_loans", $params, true));
         $this->load->view("site/layouts/layout", $data);
+    }else{
+        redirect("admin/login_admin");
+    }
     }
 
     public function execute_search()

@@ -90,7 +90,7 @@ class Member_model extends CI_Model
             "member_last_name" => $this->input->post("lastname"),
             "employer_id" => $this->input->post("employer_name"),
             "member_phone_number" => $this->input->post("phone_number"),
-            "member_bank_account_number" => $this->input->post("account_number"),
+            "member_account_number" => $this->input->post("account_number"),
             "member_email" => $this->input->post("email"),
             "member_postal_address" => $this->input->post("postal_address"),
             "member_postal_code" => $this->input->post("postal_code"),
@@ -144,7 +144,7 @@ class Member_model extends CI_Model
             
             if ($filename !== 'member.csv') {
                 $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'member.cv' File");
-                redirect('member/bulk_registration');
+                redirect('microfinance/members/bulk_registration');
             }
             else{
             $this->upload->do_upload('userfile');
@@ -194,7 +194,7 @@ class Member_model extends CI_Model
             }
             fclose($fp) or die("can't close file");
             $this->session->set_flashdata("success_message", "CSV template uploaded successfully");
-            redirect("member");
+            redirect("microfinance/members");
             $data['success']="success";
             return $data;
     }

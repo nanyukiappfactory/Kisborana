@@ -162,7 +162,7 @@ class Loan_types_model extends CI_Model
             }
             fclose($fp) or die("can't close file");
             $this->session->set_flashdata("success_message", "CSV template uploaded successfully");
-            redirect("loan_types");
+            redirect("microfinance/loan_types");
             return $data;
         }
 

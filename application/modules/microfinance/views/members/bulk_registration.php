@@ -22,10 +22,10 @@
 	<div class="card-body">
 <h1 style="font-family: 'PT Serif', serif; font-size: 20pt;">Import CSV file </h1>
 <div class="container">
-<?php echo anchor("member/download_csv/", "Download CSV Template", array("class" => "btn btn-success btn-sm")); ?>
+<?php echo anchor("microfinance/members/download_csv/", "Download CSV Template", array("class" => "btn btn-success btn-sm")); ?>
 <br></br>
 </div>
-<?php echo form_open_multipart("member/upload_csv");?>
+<?php echo form_open_multipart("microfinance/members/upload_csv");?>
 <div class="container">
 	<label>Upload File</label>
     <div class="form-control filestyle">

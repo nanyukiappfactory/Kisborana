@@ -3,16 +3,16 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Member extends MX_Controller
+class Members extends MX_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
         //load required model
-        $this->load->model("auth/auth_model");
+        $this->load->model("admin/auth_model");
         $this->load->model("site/site_model");
-        $this->load->model("member/member_model");
+        $this->load->model("member_model");
 
         // load upload library
         $this->load->helper('download');
@@ -26,7 +26,7 @@ class Member extends MX_Controller
                             "employer_details"=>$employer_details);
 
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("member/all_members", $v_data, true),
+            "content" => $this->load->view("microfinance/members/all_members", $v_data, true),
 
         );
         $this->load->view("site/layouts/layout", $data);
@@ -61,7 +61,7 @@ class Member extends MX_Controller
             } else {
                 $this->session->set_flashdata("error", "Error when saving");
             }
-            redirect("member");
+            redirect("microfinance/members");
         }
         $v_data = array(
             "add_member" => "member/Member_model",
@@ -69,7 +69,7 @@ class Member extends MX_Controller
             "employer_details" => $employer_details,
         );
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("member/add_member", $v_data, true),
+            "content" => $this->load->view("microfinance/members/add_member", $v_data, true),
         );
         //var_dump($data);die();
         $this->load->view("site/layouts/layout", $data);
@@ -83,7 +83,7 @@ class Member extends MX_Controller
         } else {
             $this->session->set_flashdata("error", "Cannot be activated");
         }
-        redirect('member');
+        redirect('microfinance/members');
     }
 
     // A function that deactivates a member
@@ -94,7 +94,7 @@ class Member extends MX_Controller
         } else {
             $this->session->set_flashdata("error", "Cannot be deactivated");
         }
-        redirect('member');
+        redirect('microfinance/members');
     }
 
     // A function that deletes a member
@@ -105,7 +105,7 @@ class Member extends MX_Controller
         } else {
             $this->session->set_flashdata("error", "Cannot be deleted");
         }
-        redirect('member');
+        redirect('microfinance/members');
     }
 
     //A function that edits member deatails
@@ -129,7 +129,7 @@ class Member extends MX_Controller
         //if the edit form is submitted do this
         if ($this->form_validation->run()) {
             $member_id = $this->member_model->update_member($member_id);
-            redirect("member");
+            redirect("microfinance/members");
         } else {
             $validation_errors = validation_errors();
             if (!empty($validation_errors)) {
@@ -182,7 +182,7 @@ class Member extends MX_Controller
         //2. Load view with the data from step 1
         $data = array(
             "title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("member/edit_member", $v_data, true),
+            "content" => $this->load->view("microfinance/members/edit_member", $v_data, true),
         );
 
         $this->load->view("site/layouts/layout", $data);
@@ -191,7 +191,7 @@ class Member extends MX_Controller
     {
         $v_data["add_member"] = "member/member_model";
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("member/bulk_registration", $v_data, true),
+            "content" => $this->load->view("microfinance/members/bulk_registration", $v_data, true),
 
         );
         $this->load->view("site/layouts/layout", $data);
