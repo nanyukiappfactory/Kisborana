@@ -30,7 +30,7 @@
         </tbody>
 
     </table>
-    <?php echo anchor("saving_types/saving_types", "Back", array("class"=>"btn btn-primary btn-sm")); ?><br></br>
+    <?php echo anchor("microfinance/saving_types", "Back", array("class"=>"btn btn-primary btn-sm")); ?><br></br>
 
 </div>
 </div>
