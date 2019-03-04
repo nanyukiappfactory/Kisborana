@@ -234,7 +234,7 @@ class Loan_Types extends Admin
             }
         }
         else {
-            $this->session->set_flashdata("error_message", "Fill in the details correctly");
+            $this->session->set_flashdata("error_message", validation_errors());
             $this->edit($loan_type_id);
         }
     }
