@@ -49,5 +49,21 @@ class Auth_model extends CI_Model
         //     );
 
     }
+    public function validate_login_session(){
+        // $var = $this->session->userdata('logged_in_user');
+        // $login_status = $var['login_status'];
+        // if ($login_status == 'TRUE'){
+        //     return TRUE;
+        // }
+        // else{
+        //     return FALSE;
+        // }
+        if($this->session->userdata('logged_in_user')){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
+    }
 }
 ?>

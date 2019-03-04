@@ -6,7 +6,6 @@ class Loan_Types extends Admin
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("site/site_model");
         $this->load->model("loan_types_model");
 
         // load pagination library
@@ -20,9 +19,6 @@ class Loan_Types extends Admin
     }
     public function index()
     {
-        $var = $this->session->userdata('logged_in_user');
-        $login_status = $var['login_status'];
-        if ($login_status == 'TRUE'){
         // Pagination
 
         $start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -48,12 +44,12 @@ class Loan_Types extends Admin
 
         $var2 = $this->loan_types_model->get_loan_type($limit_per_page, $start_index);
 
-        $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/loan_types/all_loan_types", $params, true));
+        $data = array(
+            "title" => $this->site_model->display_page_title(),
+            "content" => $this->load->view("microfinance/loan_types/all_loan_types", $params, true)
+        );
         $this->load->view("site/layouts/layout", $data);
-    }else{
-        redirect("admin/login_admin");
-    }
+    
     }
 
     //search function
@@ -230,7 +226,11 @@ class Loan_Types extends Admin
                 redirect("microfinance/loan_types");
             } else {
                 $this->session->set_flashdata("error_message", "unable to edit loan_type");
+                redirect("microfinance/loan_types/edit");
             }
+        }
+        else {
+            $this->session->set_flashdata("error_message", "Fill in the details correctly");
         }
     }
     public function download_csv(){
