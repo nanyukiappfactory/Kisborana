@@ -97,7 +97,7 @@ class Saving_types extends Admin
         }
 
         //1. get data for the saving type with the passed saving_type_id from the model
-        $single_saving_type_data = $this->saving_type_model->get_single_saving_type($saving_type_id);
+        $single_saving_type_data = $this->saving_types_model->get_single_saving_type($saving_type_id);
         
        
         if($single_saving_type_data->num_rows()>0)

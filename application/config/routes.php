@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'auth/auth/login_admin';
+$route['default_controller'] = 'admin/admin';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
@@ -59,6 +59,7 @@ $route['translate_uri_dashes'] = FALSE;
 ****/
 
 $route['admin/login'] = 'auth/admin/login_admin';
+
 
 
 /****
@@ -98,5 +99,15 @@ $route['members/bulk_registration'] = 'microfinance/members/bulk_registration';
 $route['members/edit/(:num)'] = 'microfinance/members/display_edit_form/$1';
 $route['members/deactivate/(:num)'] = 'microfinance/members/deactivate/$1';
 $route['members/activate/(:num)'] = 'microfinance/members/activate/$1';
-$route['members/delete/(:num)'] = 'microfinance/members/delete_member/$1';
+$route['members/gitdelete/(:num)'] = 'microfinance/members/delete_member/$1';
 $route['members/execute_search'] = 'microfinance/members/execute_search';
+
+//saving_types routes
+$route['saving_types'] = 'microfinance/saving_types/index';
+$route['loan_types/new_loan_type'] = 'microfinance/loan_types/new_loan_type';
+$route['loan_types/bulk_registration'] = 'microfinance/loan_types/bulk_registration';
+$route['loan_types/edit/(:num)'] = 'microfinance/loan_types/edit/$1';
+$route['loan_types/deactivate/(:num)'] = 'microfinance/loan_types/deactivate/$1';
+$route['loan_types/activate/(:num)'] = 'microfinance/loan_types/activate/$1';
+$route['loan_types/delete/(:num)'] = 'microfinance/loan_types/delete/$1';
+$route['loan_types/execute_search'] = 'microfinance/loan_types/execute_search';

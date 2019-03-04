@@ -17,7 +17,7 @@ class Auth extends MX_Controller
     public function login_admin ()
     {
         //1. create Form validation rules
-        $this->form_validation->set_rules("user_email","Email address", "required|valid_email");
+        $this->form_validation->set_rules("user_email","Email address", "required");
 
         $this->form_validation->set_rules("user_password","Password", "required");
 

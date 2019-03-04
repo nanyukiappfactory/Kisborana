@@ -52,6 +52,7 @@ class Loan_Types extends Admin
     
     }
 
+    //search function
     public function execute_search()
     {
         // Retrieve the posted search term.
@@ -68,7 +69,7 @@ class Loan_Types extends Admin
 
     }
 
-
+// adding a new loan_type
     public function new_loan_type()
     {
         //form validation
@@ -109,6 +110,7 @@ class Loan_Types extends Admin
 
     }
 
+    //deleting a loan type
     public function delete($loan_type_id)
     {
         $my_loan_type = $this->loan_types_model->get_delete_loan_type($loan_type_id);
@@ -121,6 +123,7 @@ class Loan_Types extends Admin
         }
     }
 
+    //deactivating a loan type
     public function deactivate($loan_type_id)
     {
         $my_loan_type = $this->loan_types_model->get_deactivate_loan_type($loan_type_id);
@@ -133,6 +136,7 @@ class Loan_Types extends Admin
         }
     }
 
+    //impoting records from a csv file
     public function bulk_registration()
     {
         $v_data["add_loan_type"] = "microfinance/loan_types/loan_types_model";
@@ -148,6 +152,7 @@ class Loan_Types extends Admin
         $this->loan_types_model->db_upload_cv();
     }
 
+    //activating a loan type
     public function activate($loan_type_id)
     {
         $my_loan_type = $this->loan_types_model->get_activate_loan_type($loan_type_id);
@@ -160,6 +165,7 @@ class Loan_Types extends Admin
         }
     }
 
+   //editing a loan type
     public function edit($loan_type_id)
     {
         $my_loan_type = $this->loan_types_model->get_single_loan_type($loan_type_id);

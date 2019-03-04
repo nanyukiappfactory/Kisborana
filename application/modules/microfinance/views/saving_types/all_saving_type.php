@@ -197,11 +197,11 @@
                  <!-- end of modal body -->
 
                  
-                    <?php echo anchor("saving_types/saving_types/update_saving_type/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
+                    <?php echo anchor("microfinance/saving_types/update_saving_type/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
                 
 
                  
-                    <?php echo anchor("saving_types/saving_types/delete_saving_type/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
+                    <?php echo anchor("microfinance/saving_types/delete_saving_type/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
                
                  
                  
