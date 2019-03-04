@@ -152,7 +152,7 @@ class Imports extends CI_Controller {
 
         $this->load->helper('download');
         $name = "posts.csv";
-        $data = file_get_contents('uploads/posts.csv'); 
+        $data = file_get_contents('assets/downloads/posts.csv'); 
         force_download($name, $data); 
 
         

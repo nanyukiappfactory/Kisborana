@@ -19,12 +19,12 @@
 
 <?php
 $output = '';
-$output .= form_open_multipart('saving_types/imports/save');
+$output .= form_open_multipart('microfinance/imports/save');
 $output .= '<div class="row">';
 $output .= '<div class="col-lg-12 col-sm-12"><div class="form-group">';
 $output .= form_label('import Saving Types', 'image');
 
- echo anchor("saving_types/imports/download", "Download Template", array("class"=>"btn btn-primary btn-sm")); ?><br></br>
+ echo anchor("microfinance/imports/download", "Download Template", array("class"=>"btn btn-primary btn-sm")); ?><br></br>
 <?php
 $data = array(
     'name' => 'userfile',
