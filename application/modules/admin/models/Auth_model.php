@@ -23,6 +23,7 @@ class Auth_model extends CI_Model
         }
         else
         {
+            $this->session->set_flashdata("error_message", "Wrong Details ");
             return FALSE;
         }
 
