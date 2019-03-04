@@ -6,7 +6,6 @@ class Loan_Types extends Admin
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("site/site_model");
         $this->load->model("loan_types_model");
 
         // load pagination library
@@ -20,9 +19,6 @@ class Loan_Types extends Admin
     }
     public function index()
     {
-        $var = $this->session->userdata('logged_in_user');
-        $login_status = $var['login_status'];
-        if ($login_status == 'TRUE'){
         // Pagination
 
         $start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -53,9 +49,7 @@ class Loan_Types extends Admin
             "content" => $this->load->view("microfinance/loan_types/all_loan_types", $params, true)
         );
         $this->load->view("site/layouts/layout", $data);
-    }else{
-        redirect("admin/login_admin");
-    }
+    
     }
 
     public function execute_search()
@@ -226,7 +220,11 @@ class Loan_Types extends Admin
                 redirect("microfinance/loan_types");
             } else {
                 $this->session->set_flashdata("error_message", "unable to edit loan_type");
+                redirect("microfinance/loan_types/edit");
             }
+        }
+        else {
+            $this->session->set_flashdata("error_message", "Fill in the details correctly");
         }
     }
     public function download_csv(){

@@ -1,12 +1,34 @@
 <div class="card">
     <div class="card-body">
+    <div class="container">
+            <?php
+                $success = $this->session->flashdata("success_message");
+                $error = $this->session->flashdata("error_message");
+
+                if (!empty($success)) {?>
+                            <div class="alert alert-success" role="alert">
+                                <?php
+                echo $success; ?>
+                            </div>
+                            <?php
+                }
+
+                if (!empty($error)) {?>
+                            <div class="alert alert-dark" role="alert">
+                                <?php
+                echo $error; ?>
+                            </div>
+                            <?php
+                }
+            ?>
+        </div>
         <?php echo form_open_multipart('microfinance/loan_types/edit_loan_type/'.$loan_type_id, array('onsubmit' => "return confirm('Do you want to update this record')")); ?>
         <div>
-            <input type="hidden" name="loan_type_name" value="<?php echo $loan_type_id; ?>">
+            <input type="hidden" name="loan_type_id" value="<?php echo $loan_type_id; ?>">
         </div>
         <div class="form-group">
             <label for='loan_type_name'>Loan Type Name: </label>
-            <input type="text" name="loan_type_name" value="<?php echo $loan_type_name; ?>" class="form-control">
+            <input type="text" name="loan_type_name" value="<?php echo $loan_type_name; ?>" class="form-control" required>
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
@@ -51,7 +73,7 @@
             <div class="form-group col-md-3">
                 <label for='minimum_number_of_guarantors'>Minimum number of guarantors: </label>
                 <input type="number" name="minimum_number_of_guarantors"
-                    value="<?php echo $minimum_number_of_guarantors; ?>" class="form-control">
+                    value="<?php echo $minimum_number_of_guarantors; ?>" class="form-control" required>
             </div>
             <div class="form-group col-md-3">
                 <label for='custom_number_of_guarantors'>Custom number of guarantors: </label>
