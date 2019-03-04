@@ -13,7 +13,7 @@
 <?php } else {?>
 <link href="<?php echo base_url();?>assets/themes/custom/style.css" rel="stylesheet">
 
-<?php }?>
+<?php }?>  
 <link rel ="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/themes/custom/style.css">
 <link href="<?php echo base_url(); ?>assets/vendor/bootstrap/css/bootstrap.min.css "rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
