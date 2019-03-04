@@ -84,7 +84,9 @@ class Loan_Types extends Admin
         $this->form_validation->set_rules("custom_number_of_guarantors", "Custom number of guarantors", "numeric");
         $this->form_validation->set_rules("interest_rate", "Interest rate", "numeric|required");
 
-        if ($this->form_validation->run()) {
+        if ($this->form_validation->run()) 
+        {
+            
             $loan_type_id = $this->loan_types_model->add_loan_type();
             if ($loan_type_id > 0) {
                 $this->session->set_flashdata("success_message", "new loan_type has been added");
@@ -93,15 +95,17 @@ class Loan_Types extends Admin
                 $this->session->set_flashdata("error_message", "unable to add loan_type");
             }
         }
-        $data["form_error"] = validation_errors();
-        // $this->load->view("add_loan_type", $data);
-
-        $v_data["add_loan_type"] = "loan_types/loan_types_model";
-        $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/loan_types/add_loan_type", $v_data, true),
-
-        );
-        $this->load->view("site/layouts/layout", $data);
+        else
+        {
+            $this->session->set_flashdata("error_message", validation_errors());
+            $v_data["add_loan_type"] = "loan_types/loan_types_model";
+            $data = array("title" => $this->site_model->display_page_title(),
+                "content" => $this->load->view("microfinance/loan_types/add_loan_type", $v_data, true),
+    
+            );
+            $this->load->view("site/layouts/layout", $data);
+        }
+        
 
     }
 
@@ -225,6 +229,7 @@ class Loan_Types extends Admin
         }
         else {
             $this->session->set_flashdata("error_message", "Fill in the details correctly");
+            $this->edit($loan_type_id);
         }
     }
     public function download_csv(){
