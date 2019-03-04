@@ -4,7 +4,7 @@ if ( ! defined ('BASEPATH')) exit('No direct script access allowed');
 class Admin extends MX_Controller
 
 {
-    function __construct()
+    public function __construct()
     {
         parent:: __construct();
 
@@ -16,6 +16,12 @@ class Admin extends MX_Controller
             redirect("auth/login_admin");
         }
         
+    }
+
+    //a function tht displays a default when logged in 
+    public function index()
+    {
+        redirect("loan_types");
     }
 
 }

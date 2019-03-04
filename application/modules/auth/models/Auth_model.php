@@ -15,7 +15,7 @@ class Auth_model extends CI_Model
 
         $this->session->set_userdata('logged_in_user',$where);
 
-        if($email == 'admin@admin.com' && $pass == md5(123456))
+        if($email == 'admin' && $pass == md5(123456))
         {
             
             $this->session->set_flashdata("success", "Welcome back ");
@@ -49,15 +49,9 @@ class Auth_model extends CI_Model
         //     );
 
     }
+   //function that validates if a user is logged in or not. When called, if a user is not logged in they are redirected to the login page
     public function validate_login_session(){
-        // $var = $this->session->userdata('logged_in_user');
-        // $login_status = $var['login_status'];
-        // if ($login_status == 'TRUE'){
-        //     return TRUE;
-        // }
-        // else{
-        //     return FALSE;
-        // }
+       
         if($this->session->userdata('logged_in_user')){
             return TRUE;
         }
