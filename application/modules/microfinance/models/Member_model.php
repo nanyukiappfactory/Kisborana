@@ -132,6 +132,24 @@ class Member_model extends CI_Model
         }
  
     }
+
+// Search function
+public function get_results($search_term='default')
+{
+    // Use the Active Record class for safer queries.
+    $this->db->select('*');
+    $this->db->from('member');
+    $this->db->like('member_first_name',$search_term);
+    $this->db->or_like('member_last_name', $search_term);
+
+    // Execute the query.
+    $query = $this->db->get();
+
+    // Return the results.
+    return $query->result_array();
+}
+
+
     public function db_upload_cv(){
         $file_csv = $this->input->post('userfile');
 

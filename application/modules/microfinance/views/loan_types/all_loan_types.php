@@ -26,7 +26,7 @@ echo $error; ?>
 
 <?php
 
-echo form_open('microfinance/loan_types/execute_search');
+echo form_open('loan_types/execute_search');
 
 ?>
 <table style="width: 100%; margin-top: 10px;">
@@ -53,9 +53,9 @@ echo form_submit('search_submit', 'Search', array('class' => 'btn-secondary btn-
 </table>
 <br></br>
 <div style="padding-bottom: 8px;">
-<?php echo anchor("microfinance/loan_types/new_loan_type", "Add loan type", array("class" => "btn btn-primary btn-sm")); ?>
+<?php echo anchor("loan_types/new_loan_type", "Add loan type", array("class" => "btn btn-primary btn-sm")); ?>
 
-<?php echo anchor("microfinance/loan_types/bulk_registration/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
+<?php echo anchor("loan_types/bulk_registration/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
 </div>
 <div class="table-responsive">
     <table class="table table-sm table-condensed table-striped table-sm table-bordered">
@@ -190,20 +190,20 @@ if ($all_loan_types->num_rows() > 0) {
 
                                         <td>
 
-                                            <?php echo anchor("microfinance/loan_types/edit/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
+                                            <?php echo anchor("loan_types/edit/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
 
                                         </td>
                                         <td>
-                                            <?php echo anchor("microfinance/loan_types/delete/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
+                                            <?php echo anchor("loan_types/delete/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
 
                                         </td>
 
                                         <td>
                                             <?php
 												if ($check == '1') {
-															echo anchor("microfinance/loan_types/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
+															echo anchor("loan_types/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
 														} else {
-															echo anchor("microfinance/loan_types/activate/" . $id, "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
+															echo anchor("loan_types/activate/" . $id, "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
 														}?>
                                         </td>
                                 </table>
@@ -221,18 +221,18 @@ if ($all_loan_types->num_rows() > 0) {
             </td>
 
             <td>
-                <?php echo anchor("microfinance/loan_types/edit/" . $id, '<i class="fas fa-edit"></i>', array('onclick' => "return confirm('Are you sure you want to edit?')", 'class' => "btn btn-info btn-sm")); ?>
+                <?php echo anchor("loan_types/edit/" . $id, '<i class="fas fa-edit"></i>', array('onclick' => "return confirm('Are you sure you want to edit?')", 'class' => "btn btn-info btn-sm")); ?>
             </td>
             <td>
                 <?php
 if ($check == '1') {
-            echo anchor("microfinance/loan_types/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
+            echo anchor("loan_types/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
         } else {
-            echo anchor("microfinance/loan_types/activate/" . $id, "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
+            echo anchor("loan_types/activate/" . $id, "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
         }?>
             </td>
             <td>
-                <?php echo anchor("microfinance/loan_types/delete/" . $id, "<i class='fas fa-trash-alt'></i>", array('onclick' => "return confirm('Do you want to delete this record')", 'class' => "btn btn-danger btn-sm"), img('assets/images/lock.png')); ?>
+                <?php echo anchor("loan_types/delete/" . $id, "<i class='fas fa-trash-alt'></i>", array('onclick' => "return confirm('Do you want to delete this record')", 'class' => "btn btn-danger btn-sm"), img('assets/images/lock.png')); ?>
             </td>
         </tr>
         <?php }}?>

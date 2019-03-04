@@ -148,8 +148,8 @@ class loans_model extends CI_Model
         // Use the Active Record class for safer queries.
         $this->db->select('*');
         $this->db->from('loan');
-        $this->db->like('loan_name',$search_term);
-        $this->db->or_like('loan_hobby', $search_term);
+        $this->db->like('loan_amount',$search_term);
+        $this->db->or_like('approved_amount', $search_term);
 
         // Execute the query.
         $query = $this->db->get();

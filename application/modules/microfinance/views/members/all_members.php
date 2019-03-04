@@ -26,7 +26,7 @@ echo $error; ?>
 
         <?php
 
-echo form_open('microfinance/members/execute_search');
+echo form_open('members/execute_search');
 
 ?>
 
@@ -59,9 +59,9 @@ echo form_open('microfinance/members/execute_search');
 
 
             <div>
-                <?php echo anchor("microfinance/members/new_member", "Add Member", array("class"=>"btn btn-primary btn-sm")); ?>
+                <?php echo anchor("members/new_member", "Add Member", array("class"=>"btn btn-primary btn-sm")); ?>
 
-                <?php echo anchor("microfinance/members/bulk_registration/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
+                <?php echo anchor("members/bulk_registration/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
             </div>
 
         </div>
@@ -208,19 +208,19 @@ echo form_open('microfinance/members/execute_search');
                                             </td>
 
                                             <td>
-                                                <?php echo anchor("microfinance/members/display_edit_form/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
+                                                <?php echo anchor("members/edit/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
                                             </td>
 
                                             <td>
-                                                <?php echo anchor("microfinance/members/delete_member/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
+                                                <?php echo anchor("members/delete_member/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
                                             </td>
 
                                             <td>
                                                 <?php if( $status  == 1){
-                                            echo anchor("microfinance/members/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", "class ='btn btn-danger btn-sm'");
+                                            echo anchor("members/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", "class ='btn btn-danger btn-sm'");
                                             }
                                             else{
-                                                echo anchor("microfinance/members/activate/" . $id, "<i class='far fa-thumbs-up'></i>", "class ='btn btn-primary btn-sm'");
+                                                echo anchor("members/activate/" . $id, "<i class='far fa-thumbs-up'></i>", "class ='btn btn-primary btn-sm'");
                                             }?>
                                             </td>
 
@@ -239,18 +239,18 @@ echo form_open('microfinance/members/execute_search');
                     <!-- End of modal body -->
 
                     <td>
-                    <?php echo anchor("microfinance/members/display_edit_form/" . $id, "<i class='fas fa-edit'></i>", "class ='btn btn-info btn-sm'"); ?>
+                    <?php echo anchor("members/edit/" . $id, "<i class='fas fa-edit'></i>", "class ='btn btn-info btn-sm'"); ?>
                     </td>
                     <td>
-                    <?php echo anchor("microfinance/members/delete_member/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
+                    <?php echo anchor("members/delete/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
                     </td>
 
                     <td>
                     <?php if( $status  == 1){
-                        echo anchor("microfinance/members/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", "class ='btn btn-danger btn-sm'");
+                        echo anchor("members/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", "class ='btn btn-danger btn-sm'");
                     }
                     else{
-                        echo anchor("microfinance/members/activate/" . $id, "<i class='far fa-thumbs-up'></i>", "class ='btn btn-primary btn-sm'");
+                        echo anchor("members/activate/" . $id, "<i class='far fa-thumbs-up'></i>", "class ='btn btn-primary btn-sm'");
                     }?>
                 </td>
 

@@ -201,7 +201,25 @@ class Members extends MX_Controller
     {
         $this->member_model->db_upload_cv();
     }
+
     public function download_csv(){
         force_download("./assets/downloads/member.csv", NULL);
     }
+
+    public function execute_search()
+    {
+        // Retrieve the posted search term.
+        $search_term = $this->input->post('search');
+
+        // Use a model to retrieve the results.
+        $data['results'] = $this->member_model->get_results($search_term);
+
+        // Pass the results to the view.
+
+        $data = array("title" => $this->site_model->display_page_title(),
+            "content" => $this->load->view("microfinance/members/search_results", $data, true));
+        $this->load->view("site/layouts/layout", $data);
+
+    }
+
 }

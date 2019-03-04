@@ -8,7 +8,7 @@
     <li class="nav-item">
         <a class="nav-link" href="#" >
           <!-- <span data-feather="file"></span> -->
-          <div align="center"><?php echo anchor("microfinance/members","<i class='fas fa-users'> MEMBER</i>", array("class"=> "text-dark", "style"=>"color:black;font-family: 'PT Serif', serif; font-weight:bold;"));?> <span class="sr-only">(current)</span>
+          <div align="center"><?php echo anchor("members","<i class='fas fa-users'> MEMBER</i>", array("class"=> "text-dark", "style"=>"color:black;font-family: 'PT Serif', serif; font-weight:bold;"));?> <span class="sr-only">(current)</span>
         </div>
         </a>
       </li>
@@ -39,7 +39,7 @@
           </a>
           </div>
 
-          <div align="right" class="collapse" id="collapseExample1"><?php echo anchor("microfinance/loan_types","Loan Types", array("class"=> "text-dark", "style"=>"color:black;font-family: 'PT Serif', serif;"));?> <span class="sr-only">(current)</span>
+          <div align="right" class="collapse" id="collapseExample1"><?php echo anchor("loan_types","Loan Types", array("class"=> "text-dark", "style"=>"color:black;font-family: 'PT Serif', serif;"));?> <span class="sr-only">(current)</span>
           </div>
         </a>
       </li>
