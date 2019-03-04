@@ -48,8 +48,10 @@ class Loan_Types extends Admin
 
         $var2 = $this->loan_types_model->get_loan_type($limit_per_page, $start_index);
 
-        $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/loan_types/all_loan_types", $params, true));
+        $data = array(
+            "title" => $this->site_model->display_page_title(),
+            "content" => $this->load->view("microfinance/loan_types/all_loan_types", $params, true)
+        );
         $this->load->view("site/layouts/layout", $data);
     }else{
         redirect("admin/login_admin");
