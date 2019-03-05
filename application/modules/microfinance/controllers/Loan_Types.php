@@ -23,6 +23,7 @@ class Loan_Types extends Admin
 
         $start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $total_records = $this->loan_types_model->get_total();
+        
         $config = array();
         $limit_per_page = 2;
 
@@ -32,7 +33,7 @@ class Loan_Types extends Admin
         $config['total_rows'] = $total_records;
         $config['per_page'] = 2;
         $config["uri_segment"] = 3;
-        $config['num_links'] = 1;
+        $config['num_links'] = 2;
 
         $this->pagination->initialize($config);
 
@@ -80,7 +81,7 @@ class Loan_Types extends Admin
             'all_loan_types' => $data['results'],
             'page' => $start_index,
         );
-               
+
         // Pass the results to the view.
 
         $data = array("title" => $this->site_model->display_page_title(),
