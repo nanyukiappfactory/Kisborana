@@ -92,20 +92,21 @@ class Loan_types_model extends CI_Model
 
     }
     // Search function
-    public function get_results($search_term = 'default')
+    public function get_results($search_term = 'default',$limit, $start)
     {
         // Use the Active Record class for safer queries.
         $this->db->select('*');
         $this->db->from('loan_type');
         $this->db->like('loan_type_name', $search_term);
-        // $this->db->or_like('loan_type_hobby', $search_term);
+        $this->db->limit($limit, $start);
 
         // Execute the query.
         $query = $this->db->get();
 
         // Return the results.
-        return $query->result_array();
+        return $query;
     }
+
     public function db_upload_cv()
     {
         $file_csv = $this->input->post('userfile');
