@@ -25,6 +25,24 @@
     
     return $field_name;
   }
+
+  //getting total number of rows for loan types
+  public function get_count_loan_types($table)
+  {
+    $total_loan_types = $this->db->count_all_results($table);
+    return $total_loan_types;
+  }
+
+  public function get_all_results($table,$limit_per_page, $start_index)
+    {
+        
+        //$this->db->where($where);
+        $this->db->limit($limit_per_page, $start_index);
+        $query = $this->db->get($table);
+        return $query;
+
+    }
+  
  }
 
 ?>

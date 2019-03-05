@@ -39,7 +39,7 @@
           </a>
           </div>
 
-          <div align="right" class="collapse" id="collapseExample1"><?php echo anchor("loan-types","Loan Types", array("class"=> "text-dark", "style"=>"color:black;font-family: 'PT Serif', serif;"));?> <span class="sr-only">(current)</span>
+          <div align="right" class="collapse" id="collapseExample1"><?php echo anchor("loan-types/all-loan-types","Loan Types", array("class"=> "text-dark", "style"=>"color:black;font-family: 'PT Serif', serif;"));?> <span class="sr-only">(current)</span>
           </div>
         </a>
       </li>
