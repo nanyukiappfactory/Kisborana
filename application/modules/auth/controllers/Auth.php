@@ -27,7 +27,7 @@ class Auth extends MX_Controller
         {
             if($this->auth_model->validate_user())
             {
-                redirect("loan-types");
+                redirect("loan-types/all-loan-types");
             }
         }
         //3. condition if validation rules fail

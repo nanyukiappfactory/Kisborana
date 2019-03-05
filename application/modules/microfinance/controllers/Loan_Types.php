@@ -19,25 +19,38 @@ class Loan_Types extends Admin
         // load upload library
         $this->load->library('upload');
     }
-    public function index()
+    public function index( $order_column = 'loan_type_name', $order_method = 'ASC' )
     {
+        
         // Pagination
         $table = "loan_type";
-        //$where = "deleted = 0";        
-        $total_records = $this->site_model->get_count_loan_types($table);
-        //var_dump($total_records);die();
-        //$config = array();
-        $limit_per_page = 5;
-        $segment = 3;
+        $where = "deleted = 0"; 
+        // $search_results = '';
+        
+      
+        $search_results = $this->session->userdata("search_session");
+
+
+        if(!empty($search_results) && $search_results != null){
+            $where =  $search_results;
+
+        }
+
+
+        
+       
+
         
 
-        // get current page records
-       
-        $config['base_url'] = site_url().'loan-types/all-loan-types/';
+        $total_records = $this->site_model->get_count_loan_types($table);
+        $limit_per_page = 5;
+        $segment = 5;
+             
+        $config['base_url'] = site_url().'loan-types/all-loan-types/'.$order_column.'/'.$order_method;
         $config['total_rows'] = $total_records;
         $config['uri_segment'] = $segment;
         $config['per_page'] =  $limit_per_page ;
-        $config['num_links'] = 3;
+        $config['num_links'] = 5;
 
         $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
         $config['full_tag_close'] = '</ul></nav></div>';
@@ -46,27 +59,40 @@ class Loan_Types extends Admin
         $config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
         $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
         $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['next_tagl_close'] = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['next_tag_close'] = '<span aria-hidden="true">&raquo;</span></span></li>';
         $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['prev_tagl_close'] = '</span></li>';
+        $config['prev_tag_close'] = '</span></li>';
         $config['first_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['first_tagl_close'] = '</span></li>';
+        $config['first_tag_close'] = '</span></li>';
         $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
-        $config['last_tagl_close'] = '</span></li>';
+        $config['last_tag_close'] = '</span></li>';
 
         $this->pagination->initialize($config);
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         // build paging links
         $v_data = $this->pagination->create_links();
-        $query = $this->site_model->get_all_results($table,$limit_per_page, $start_index);
+        
+        $query = $this->site_model->get_all_results($search_results, $table,$limit_per_page, $start_index, $where, $order_column, $order_method);
+        // var_dump($order_method);die();
+        //lets order
+       
+        if($order_method == 'DESC')
+        {
+          
+            $order_method = 'ASC';
+        }
+        else{
+            $order_method = 'DESC';
+        }
 
         $params = array('links' => $v_data,
                         'all_loan_types' => $query,
                          'page' => $start_index,
+                         'order_method' => $order_method,
+                         'order_column' => $order_column,
         );
-        
-        //$var2 = $this->loan_types_model->get_loan_type($limit_per_page, $start_index);
 
+        
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/loan_types/all_loan_types", $params, true)
@@ -76,22 +102,32 @@ class Loan_Types extends Admin
     
     }
 
+   
+
     //search function
     public function execute_search()
     {
-        // Retrieve the posted search term.
-        $search_term = $this->input->post('search');
+        $search_results = $this->input->post("search");
+        $this->form_validation->set_rules("search","Search", "required");
+        
+        if ($this->form_validation->run())
+        {
+            $search_session = $this->session->set_userdata("search_session",$search_results);
+        } else
+        {
+            $this->session->unset_userdata("search_session");
+        }
+       
+        redirect("loan-types/all-loan-types");
 
-        // Use a model to retrieve the results.
-        $data['results'] = $this->loan_types_model->get_results($search_term);
-
-        // Pass the results to the view.
-
-        $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/loan_types/search_results", $data, true));
-        $this->load->view("site/layouts/layout", $data);
-
+       
     }
+    public function close_search_session()
+    {
+        $this->session->unset_userdata("search_session");
+    }
+
+    
 
 // adding a new loan_type
     public function new_loan_type()

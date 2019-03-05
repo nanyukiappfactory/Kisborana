@@ -84,16 +84,17 @@ class Loan_types_model extends CI_Model
 
     
     // Search function
-    public function get_results($search_term = 'default',$limit, $start)
+    public function get_results($search_term = 'default', $start_index ,$limit_per_page)
     {
         // Use the Active Record class for safer queries.
         $this->db->select('*');
         $this->db->from('loan_type');
         $this->db->like('loan_type_name', $search_term);
-        $this->db->limit($limit, $start);
+        $this->db->limit($start_index, $limit_per_page);
 
         // Execute the query.
         $query = $this->db->get();
+        var_dump($query->result());die();
 
         // Return the results.
         return $query;
