@@ -21,7 +21,7 @@ class Admin extends MX_Controller
     //a function tht displays a default when logged in 
     public function index()
     {
-        redirect("loan_types");
+        redirect("loan-types");
     }
 
 }

@@ -98,6 +98,7 @@ class Loan_types_model extends CI_Model
         $this->db->select('*');
         $this->db->from('loan_type');
         $this->db->like('loan_type_name', $search_term);
+        $this->db->where("deleted",0);
         // $this->db->or_like('loan_type_hobby', $search_term);
 
         // Execute the query.

@@ -90,10 +90,10 @@ class Loan_Types extends Admin
             
             $loan_type_id = $this->loan_types_model->add_loan_type();
             if ($loan_type_id > 0) {
-                $this->session->set_flashdata("success_message", "new loan_type has been added");
-                redirect("microfinance/loan_types");
+                $this->session->set_flashdata("success_message", "New Loan Type has been Added");
+                redirect("loan-types");
             } else {
-                $this->session->set_flashdata("error_message", "unable to add loan_type");
+                $this->session->set_flashdata("error_message", "Unable to Add Loan Type");
             }
         }
         else
@@ -115,11 +115,11 @@ class Loan_Types extends Admin
     {
         $my_loan_type = $this->loan_types_model->get_delete_loan_type($loan_type_id);
         if ($my_loan_type > 0) {
-            $this->session->set_flashdata("success_message", "loan_type deleted");
-            redirect("microfinance/loan_types");
+            $this->session->set_flashdata("success_message", "Loan Type Deleted Successfully");
+            redirect("loan-types");
         } else {
-            $this->session->set_flashdata("error_message", "unable to delete");
-            redirect("microfinance/loan_types");
+            $this->session->set_flashdata("error_message", "Unable to Delete Loan Type");
+            redirect("loan-types");
         }
     }
 
@@ -128,11 +128,11 @@ class Loan_Types extends Admin
     {
         $my_loan_type = $this->loan_types_model->get_deactivate_loan_type($loan_type_id);
         if ($my_loan_type > 0) {
-            $this->session->set_flashdata("success_message", "loan_type deactivated successfully");
-            redirect("microfinance/loan_types");
+            $this->session->set_flashdata("success_message", "Loan Type Deactivated Successfully");
+            redirect("loan-types");
         } else {
-            $this->session->set_flashdata("error_message", "unable to deactivate loan_type");
-            redirect("microfinance/loan_types");
+            $this->session->set_flashdata("error_message", "Unable to Deactivate Loan Type");
+            redirect("loan-types");
         }
     }
 
@@ -144,6 +144,7 @@ class Loan_Types extends Admin
             "content" => $this->load->view("microfinance/loan_types/bulk_registration", $v_data, true),
 
         );
+        
         $this->load->view("site/layouts/layout", $data);
     }
 
@@ -157,11 +158,11 @@ class Loan_Types extends Admin
     {
         $my_loan_type = $this->loan_types_model->get_activate_loan_type($loan_type_id);
         if ($my_loan_type > 0) {
-            $this->session->set_flashdata("success_message", "loan_type activated successfully");
-            redirect("microfinance/loan_types");
+            $this->session->set_flashdata("success_message", "Loan Type Activated Successfully");
+            redirect("loan-types");
         } else {
-            $this->session->set_flashdata("error_message", "unable to activate loan_type");
-            redirect("microfinance/loan_types");
+            $this->session->set_flashdata("error_message", "Unable to Activate Loan Type");
+            redirect("loan-types");
         }
     }
 
@@ -226,11 +227,11 @@ class Loan_Types extends Admin
             $pal_id = $this->loan_types_model->get_update_loan_type($loan_type_id);
             // var_dump($pal_id);die();
             if ($pal_id > 0) {
-                $this->session->set_flashdata("success_message", "Your loan_type" . $loan_type_id . "has been edited");
-                redirect("microfinance/loan_types");
+                $this->session->set_flashdata("success_message", "Your loan type has been edited");
+                redirect("loan-types");
             } else {
                 $this->session->set_flashdata("error_message", "unable to edit loan_type");
-                redirect("microfinance/loan_types/edit");
+                redirect("edit-loan-types");
             }
         }
         else {

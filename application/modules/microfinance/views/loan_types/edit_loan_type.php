@@ -92,7 +92,7 @@
             </br>
         </div>
         <div class="form-group col-md-3">
-            <input type="submit" value="Enter Loan Type" class="btn btn-primary">
+            <input type="submit" value="Update Loan Type" class="btn btn-primary">
         </div>
         <?php echo form_close(); ?>
     </div>
