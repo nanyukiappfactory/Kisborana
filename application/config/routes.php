@@ -80,10 +80,14 @@ $route['loan/delete/(:num)'] = 'microfinance/loan/delete/$1';
 ****/
 
 
-$route['loan-types'] = 'microfinance/loan_types/index';
+
 $route['add-loan_type'] = 'microfinance/loan_types/new_loan_type';
 $route['import-loan-types'] = 'microfinance/loan_types/bulk_registration';
+$route['loan-types'] = 'microfinance/loan_types/index';
+$route['loan-types/(:any)/(:any)/(:num)'] = 'microfinance/loan_types/index/$1/$2/$3';
 $route['edit-loan-types/(:num)'] = 'microfinance/loan_types/edit/$1';
+
+
 $route['deactivate-loan-types/(:num)'] = 'microfinance/loan_types/deactivate/$1';
 $route['activate-loan-types/(:num)'] = 'microfinance/loan_types/activate/$1';
 $route['delete-loan-types/(:num)'] = 'microfinance/loan_types/delete/$1';

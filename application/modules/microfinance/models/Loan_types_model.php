@@ -82,11 +82,11 @@ class Loan_types_model extends CI_Model
         return $this->db->count_all("loan_type");
     }
 
-    public function get_loan_type($limit, $start)
+    public function get_loan_type($start,$limit)
     {
         $where = "deleted = 0";
         $this->db->where($where);
-        $this->db->limit($limit, $start);
+        $this->db->limit($start,$limit);
         $query = $this->db->get("loan_type");
         return $query;
 
@@ -98,12 +98,7 @@ class Loan_types_model extends CI_Model
         $this->db->select('*');
         $this->db->from('loan_type');
         $this->db->like('loan_type_name', $search_term);
-<<<<<<< HEAD
-        $this->db->where("deleted",0);
-        // $this->db->or_like('loan_type_hobby', $search_term);
-=======
         $this->db->limit($limit, $start);
->>>>>>> 28250413de5e3bdbf4d5bf9fc40c23358f13ee5c
 
         // Execute the query.
         $query = $this->db->get();

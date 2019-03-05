@@ -77,7 +77,7 @@ echo form_submit('search_submit', 'Search', array('class' => 'btn-secondary btn-
                 </tr>
                 <?php
 
-$count = $page;
+$count = strlen($page);
 if ($all_loan_types->num_rows() > 0) {
     foreach ($all_loan_types->result() as $row) {
         $count++;

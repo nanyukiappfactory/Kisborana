@@ -24,15 +24,15 @@ class Loan_Types extends Admin
         $start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $total_records = $this->loan_types_model->get_total();
         $config = array();
-        $limit_per_page = 2;
+        $limit_per_page = 5;
 
         // get current page records
        
-        $config['base_url'] = base_url() . 'microfinance/loan_types/index';
+        $config['base_url'] = base_url(). 'microfinance/loan_types/index';
         $config['total_rows'] = $total_records;
-        $config['per_page'] = 2;
+        $config['per_page'] = 5;
         $config["uri_segment"] = 3;
-        $config['num_links'] = 1;
+        $config['num_links'] = 3;
 
         $this->pagination->initialize($config);
 
@@ -42,7 +42,7 @@ class Loan_Types extends Admin
             'page' => $start_index,
         );
 
-        // $var2 = $this->loan_types_model->get_loan_type($limit_per_page, $start_index);
+        $var2 = $this->loan_types_model->get_loan_type($limit_per_page, $start_index);
 
         $data = array(
             "title" => $this->site_model->display_page_title(),
@@ -58,33 +58,13 @@ class Loan_Types extends Admin
         // Retrieve the posted search term.
         $search_term = $this->input->post('search');
 
-        // Pagination
-        $start_index = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $total_records = $this->loan_types_model->get_total();
-        $config = array();
-        $limit_per_page = 2;
-
-        // get current page records
-       
-        $config['base_url'] = base_url() . 'microfinance/loan_types/index';
-        $config['total_rows'] = $total_records;
-        $config['per_page'] = 2;
-        $config["uri_segment"] = 3;
-        $config['num_links'] = 1;
-
         // Use a model to retrieve the results.
-        $data['results'] = $this->loan_types_model->get_results($search_term, $limit_per_page, $start_index);            
+        $data['results'] = $this->loan_types_model->get_results($search_term);
 
-        // build paging links
-        $params = array('links' => $this->pagination->create_links(),
-            'all_loan_types' => $data['results'],
-            'page' => $start_index,
-        );
-               
         // Pass the results to the view.
 
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/loan_types/all_loan_types", $params, true));
+            "content" => $this->load->view("microfinance/loan_types/search_results", $data, true));
         $this->load->view("site/layouts/layout", $data);
 
     }
@@ -255,7 +235,7 @@ class Loan_Types extends Admin
             }
         }
         else {
-            $this->session->set_flashdata("error_message", validation_errors());
+            $this->session->set_flashdata("error_message", "Fill in the details correctly");
             $this->edit($loan_type_id);
         }
     }
