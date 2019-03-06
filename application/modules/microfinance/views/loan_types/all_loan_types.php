@@ -49,8 +49,7 @@ echo form_submit('search_submit', 'Search', array('class' => 'btn-secondary btn-
                         </div>
                         <br></br>
                         <div class="input-group-append">
-                            <?php
-echo form_submit('search_submit', 'Close Search', array('class' => 'btn-secondary btn-sm'));
+                            <?php echo anchor('loan_types/close_search_session', 'Close Search', array('class' => 'btn btn-primary btn-sm'));
 
 ?>
                         </div>

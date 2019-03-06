@@ -120,6 +120,7 @@ class Loan_Types extends Admin
     public function close_search_session()
     {
         $this->session->unset_userdata("search_session");
+        redirect("loan-types/all-loan-types");
     }
 
     

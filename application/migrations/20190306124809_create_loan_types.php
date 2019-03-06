@@ -70,7 +70,6 @@ class Migration_Create_Loan_types extends CI_Migration
                 'constraint' => '11',
                 'null' => true,
             ),
-
             'interest_rate' => array(
                 'type' => 'DECIMAL',
                 'constraint' => '11',

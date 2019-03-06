@@ -76,6 +76,21 @@ class Migration_Create_member extends CI_Migration {
                             'type' => 'VARCHAR',
                             'constraint' => '100',
                         ),
+                        'member_password' => array(
+                            'type' => 'VARCHAR',
+                            'constraint' => '32',
+                            'null' => false,
+                        ),
+                        'member_loan_balance' => array(
+                            'type' => 'INT',
+                            'constraint' => '100',
+                            'null' => false,
+                        ),
+                        'member_share_balance' => array(
+                            'type' => 'INT',
+                            'constraint' => '100',
+                            'null' => false,
+                        ),
                         ));
                     $this->dbforge->add_field("`member_status` tinyint NOT NULL DEFAULT 1");
                     $this->dbforge->add_field("`created_by` int NOT NULL ");
