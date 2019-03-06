@@ -217,5 +217,13 @@ public function get_results($search_term='default')
             return $data;
     }
 }
+
+public function get_all_members()
+    {
+        
+        $member_details =$this->db->get("member");
+
+        return $member_details;
+    }
 }
 ?>

@@ -9,6 +9,25 @@ class Members extends MX_Controller
     {
         parent::__construct();
 
+        // Allow from any origin
+		if (isset($_SERVER['HTTP_ORIGIN'])) {
+			header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+			header('Access-Control-Allow-Credentials: true');
+			header('Access-Control-Max-Age: 86400');    // cache for 1 day
+		}
+	
+		// Access-Control headers are received during OPTIONS requests
+		if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+	
+			if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+				header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
+	
+			if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+				header("Access-Control-Allow-Headers:        {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+	
+			exit(0);
+        }
+
         //load required model
         $this->load->model("auth/auth_model");
         $this->load->model("site/site_model");
@@ -221,5 +240,22 @@ class Members extends MX_Controller
         $this->load->view("site/layouts/layout", $data);
 
     }
+
+//get members to create web serrvice
+public function get_all_members()
+    {
+        $all_members = $this->member_model->get_all_members();
+
+        if($all_members->num_rows() > 0)
+        {
+            $members = $all_members->result();
+            $members_encoded = json_encode($members);
+            echo $members_encoded;
+        }
+
+        else{
+            echo "No members found";
+        }
+    }    
 
 }

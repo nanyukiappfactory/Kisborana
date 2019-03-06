@@ -6,55 +6,35 @@
   "isResponseAppended": true,
   "isLocationRequested": false,
   "questions": [{
-      "title": "Business Location",
-      "type": "Text",
+      "title": "ID Number",
+      "type": "Numeric",
       "isOptional": true
     }, 
     {
-      "title": "Business Name",
+      "title": "Password",
       "type": "Text",
       "isOptional": true
     },
     {
-      "title": "Category",
-      "type": "SingleSelect",
-      "options": [{
-          "title": "Banks"
-        },
-        {
-          "title": "Churches"
-        },
-        {
-          "title": "Service"
-        },
-        {
-          "title": "Hotels"
-        },
-        {
-          "title": "Restaurants"
-        }
-      ]
+      "title": "Confirm Password",
+      "type": "Text",
+      "isOptional": true
     },
     {
-      "title": "Phone Number",
-      "type": "Text"
+      "title": "Loan Balance",
+      "type": "Numeric",
+      "isOptional": true
+      
     },
     {
-      "valif": null,
-      "visif": "{}",
-      "title": "Business Image",
-      "type": "AttachmentList",
-      "displayType": "None",
-      "config": {
-        "addPageBreak": false,
-        "isCameraOnlyImageSource": false,
-        "attachmentListType": 1
-      },
-      "isInvisible": false,
-      "options": null,
-      "isExcludedFromReporting": false,
-      "isOptional": false
+      "title": "Shares Balance",
+      "type": "Numeric",
+      "isOptional": true
+      
     },
+
+    
+    
     {
       "title": "Name",
       "type": "Text"
