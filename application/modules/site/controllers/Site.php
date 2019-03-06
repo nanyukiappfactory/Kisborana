@@ -8,6 +8,7 @@ Class Site extends MX_Controller {
         $this->load->model("saving_type/saving_type_model");
         $this->load->model("member/member_model");
     }
+}
 
  
 ?>

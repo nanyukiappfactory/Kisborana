@@ -1,0 +1,35 @@
+{
+  "id": "com.nanyukiaf.kisborana",
+  "schemaVersion": 1,
+  "version": "1",
+  "minorVersion": 1,
+  "providerName": "Kisborana",
+  "displayName": "Account Statement",
+  "description": "Account Statement",
+  "icon": "icon-business.png",
+  "appModel": "AppModel.json",
+  "dials": {
+    "isLocalised": false,
+    "isPinned": false
+  },
+  "actionScope": "Group",
+  "views": {
+    "CreationView": {
+      "sourceLocation": "Response.html",
+      "showNativeToolbar": false
+    },
+    "ChatCanvasCardView": {
+      "showReceipts": false,
+      "showLikes": false,
+      "showComments": false,
+      "labelResponseSending": "Submitting your details",
+      "labelResponded": "Account Statement Complete",
+      "labelResponseFailed": "Account Statement Failed",
+      "isResponseEditable": false
+    },
+    "ResponseResultsView": {
+      "sourceLocation": "ResponseSummary.html",
+      "showNativeToolbar": false
+    }
+  }
+}

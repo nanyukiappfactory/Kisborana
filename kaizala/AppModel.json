@@ -1,0 +1,75 @@
+{
+  "title": "Register Business",
+  "visibility": "All",
+  "expiry": 0,
+  "isAnonymous": false,
+  "isResponseAppended": true,
+  "isLocationRequested": false,
+  "questions": [{
+      "title": "Business Location",
+      "type": "Text",
+      "isOptional": true
+    }, 
+    {
+      "title": "Business Name",
+      "type": "Text",
+      "isOptional": true
+    },
+    {
+      "title": "Category",
+      "type": "SingleSelect",
+      "options": [{
+          "title": "Banks"
+        },
+        {
+          "title": "Churches"
+        },
+        {
+          "title": "Service"
+        },
+        {
+          "title": "Hotels"
+        },
+        {
+          "title": "Restaurants"
+        }
+      ]
+    },
+    {
+      "title": "Phone Number",
+      "type": "Text"
+    },
+    {
+      "valif": null,
+      "visif": "{}",
+      "title": "Business Image",
+      "type": "AttachmentList",
+      "displayType": "None",
+      "config": {
+        "addPageBreak": false,
+        "isCameraOnlyImageSource": false,
+        "attachmentListType": 1
+      },
+      "isInvisible": false,
+      "options": null,
+      "isExcludedFromReporting": false,
+      "isOptional": false
+    },
+    {
+      "title": "Name",
+      "type": "Text"
+    },
+    {
+      "title": "Phone",
+      "type": "Text"
+    },
+    {
+      "title": "Location",
+      "type": "Location"
+    },
+    {
+      "title": "Response Time",
+      "type": "DateTime"
+    }
+  ]
+}
