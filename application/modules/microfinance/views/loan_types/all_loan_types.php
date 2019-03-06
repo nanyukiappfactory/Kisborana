@@ -47,6 +47,13 @@ echo form_submit('search_submit', 'Search', array('class' => 'btn-secondary btn-
 
 ?>
                         </div>
+                        <br></br>
+                        <div class="input-group-append">
+                            <?php
+echo form_submit('search_submit', 'Close Search', array('class' => 'btn-secondary btn-sm'));
+
+?>
+                        </div>
                     </div>
                 </td>
             </tr>

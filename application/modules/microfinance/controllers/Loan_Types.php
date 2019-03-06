@@ -35,12 +35,7 @@ class Loan_Types extends Admin
             $where =  $search_results;
 
         }
-
-
-        
-       
-
-        
+   
 
         $total_records = $this->site_model->get_count_loan_types($table);
         $limit_per_page = 5;
@@ -50,7 +45,7 @@ class Loan_Types extends Admin
         $config['total_rows'] = $total_records;
         $config['uri_segment'] = $segment;
         $config['per_page'] =  $limit_per_page ;
-        $config['num_links'] = 5;
+        $config['num_links'] = 3;
 
         $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
         $config['full_tag_close'] = '</ul></nav></div>';

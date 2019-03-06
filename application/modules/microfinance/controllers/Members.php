@@ -10,7 +10,7 @@ class Members extends MX_Controller
         parent::__construct();
 
         //load required model
-        $this->load->model("admin/auth_model");
+        $this->load->model("auth/auth_model");
         $this->load->model("site/site_model");
         $this->load->model("member_model");
 
