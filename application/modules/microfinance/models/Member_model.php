@@ -158,9 +158,9 @@ public function get_results($search_term='default')
             $config['file_name'] = $_FILES["userfile"]['name'];
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
-            $filename = $config['file_name'];
+            $filetype = $config['allowed_types'];
             
-            if ($filename !== 'member.csv') {
+            if ($filetype !== 'csv|CSV') {
                 $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'member.cv' File");
                 redirect('microfinance/members/bulk_registration');
             }
