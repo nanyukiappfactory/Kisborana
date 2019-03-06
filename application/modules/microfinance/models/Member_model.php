@@ -1,17 +1,22 @@
 <?php
-if ( ! defined ('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 class Member_model extends CI_Model
 {
-    public function get_bank_details(){
-       $query = $this->db->get('bank');
-       return $query;
+    public function get_bank_details()
+    {
+        $query = $this->db->get('bank');
+        return $query;
     }
-    public function get_employer_details(){
+    public function get_employer_details()
+    {
         $query = $this->db->get('employer');
         return $query;
     }
-    public function save_members(){ 
+    public function save_members()
+    {
         $data = array(
             "bank_id" => $this->input->post("bank_name"),
             "member_national_id" => $this->input->post("member_national_id"),
@@ -30,25 +35,26 @@ class Member_model extends CI_Model
             "created_on" => date('Y-m-d H:i:s'),
         );
         //var_dump($data);die();
-        if ($this->db->insert("member", $data)){
-        $member_id =$this->db->insert_id();
+        if ($this->db->insert("member", $data)) {
+            $member_id = $this->db->insert_id();
 
-        $member_number = "MN00". $member_id;
+            $member_number = "MN00" . $member_id;
 
-        $member_number_data = array(
-            "member_number" => $member_number
-         );
+            $member_number_data = array(
+                "member_number" => $member_number,
+            );
 
-        $this->db->set($member_number_data);
-        $this->db->where("member_id",$member_id);
-        $this->db->update("member");
+            $this->db->set($member_number_data);
+            $this->db->where("member_id", $member_id);
+            $this->db->update("member");
 
-        return $member_id;
-    } else {
-        return false;
+            return $member_id;
+        } else {
+            return false;
+        }
     }
-    }
-    public function get_members(){
+    public function get_members()
+    {
         // $this->db->select('employer_name');
         // $this->db->from('employer');
         // $this->db->join('member', 'member.employer_id = employer.employer_id');
@@ -57,32 +63,36 @@ class Member_model extends CI_Model
         $query = $this->db->get('member');
         return $query;
     }
-    public function deactivate($member_id){
+    public function deactivate($member_id)
+    {
         $this->db->where("member_id", $member_id);
         $this->db->set("member_status", 0);
         $query = $this->db->update("member");
         return $query;
-       
+
     }
-    public function activate($member_id){
+    public function activate($member_id)
+    {
         $this->db->where("member_id", $member_id);
-        $this->db->set("member_status",1);
+        $this->db->set("member_status", 1);
         $query = $this->db->update("member");
         return $query;
-       
+
     }
-    public function delete($member_id){
+    public function delete($member_id)
+    {
         $this->db->where("member_id", $member_id);
         $data = array(
-            "deleted"=>1,
+            "deleted" => 1,
             "deleted_by" => 1,
-            "deleted_on" => date('Y-m-d H:i:s')
+            "deleted_on" => date('Y-m-d H:i:s'),
         );
         $this->db->set($data);
         $query = $this->db->update("member");
         return $query;
     }
-    public function update_member($member_id){
+    public function update_member($member_id)
+    {
         $data = array(
             "bank_id" => $this->input->post("bank_name"),
             "member_national_id" => $this->input->post("member_national_id"),
@@ -100,85 +110,83 @@ class Member_model extends CI_Model
             "modified_by" => 1,
             "modified_on" => date('Y-m-d H:i:s'),
         );
-        $this->db->where("member_id",$member_id);
+        $this->db->where("member_id", $member_id);
         if ($this->db->update("member", $data)) {
-            $this->session->set_flashdata("success","successfuly updated");
+            $this->session->set_flashdata("success", "successfuly updated");
             return true;
         } else {
-            $this->session->set_flashdata("error","failed to update");
+            $this->session->set_flashdata("error", "failed to update");
 
             return false;
         }
     }
 
     //'SELECT * FROM member JOIN bank ON member.bank_id=bank.bank_id WHERE member.member_id='.$member_id
-    public function get_single_member($member_id){
+    public function get_single_member($member_id)
+    {
         // 'SELECT * FROM member JOIN bank ON member.bank_id = BANK.BANK_ID where member.member_id='. $member_id;
         $this->db->select('member.*, bank_name, employer_name');
         $this->db->from('member');
         $this->db->join('bank', 'member.bank_id = bank.bank_id');
         $this->db->join('employer', 'member.employer_id = employer.employer_id');
-        $this->db->where('member.member_id = '. $member_id);
+        $this->db->where('member.member_id = ' . $member_id);
         $query = $this->db->get();
         return $query;
     }
-    public function importdata($data) {
- 
-        $res = $this->db->insert_batch('member',$data);
-        if($res){
-            return TRUE;
-        }else{
-            return FALSE;
+    public function importdata($data)
+    {
+
+        $res = $this->db->insert_batch('member', $data);
+        if ($res) {
+            return true;
+        } else {
+            return false;
         }
- 
+
     }
 
 // Search function
-public function get_results($search_term='default')
-{
-    // Use the Active Record class for safer queries.
-    $this->db->select('*');
-    $this->db->from('member');
-    $this->db->like('member_first_name',$search_term);
-    $this->db->or_like('member_last_name', $search_term);
+    public function get_results($search_term = 'default')
+    {
+        // Use the Active Record class for safer queries.
+        $this->db->select('*');
+        $this->db->from('member');
+        $this->db->like('member_first_name', $search_term);
+        $this->db->or_like('member_last_name', $search_term);
 
-    // Execute the query.
-    $query = $this->db->get();
+        // Execute the query.
+        $query = $this->db->get();
 
-    // Return the results.
-    return $query->result_array();
-}
+        // Return the results.
+        return $query->result_array();
+    }
 
-
-    public function db_upload_cv(){
+    public function db_upload_cv()
+    {
         $file_csv = $this->input->post('userfile');
 
-            $config['upload_path']='./assets/uploads/';
-            $config['allowed_types'] = 'csv|CSV';
-            $config['file_name'] = $_FILES["userfile"]['name'];
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-            $filetype = $config['allowed_types'];
-            
-            if ($filetype !== 'csv|CSV') {
-                $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'member.cv' File");
-                redirect('microfinance/members/bulk_registration');
-            }
-            else{
+        $config['upload_path'] = './assets/uploads/';
+        $config['allowed_types'] = 'csv|CSV';
+        $config['file_name'] = $_FILES["userfile"]['name'];
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        $filetype = $config['allowed_types'];
+
+        if ($filetype !== 'csv|CSV') {
+            $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'member.cv' File");
+            redirect('microfinance/members/bulk_registration');
+        } else {
             $this->upload->do_upload('userfile');
             $data = $this->upload->data();
 
-            $count=0;
-            $fp = fopen($_FILES['userfile']['tmp_name'],'r') or die("can't open file");
-            while($csv_line = fgetcsv($fp,1024))
-            {
+            $count = 0;
+            $fp = fopen($_FILES['userfile']['tmp_name'], 'r') or die("can't open file");
+            while ($csv_line = fgetcsv($fp, 1024)) {
                 $count++;
-                if($count == 1)
-                {
+                if ($count == 1) {
                     continue;
-                }//keep this if condition if you want to remove the first row
-                for($i = 0, $j = count($csv_line); $i < $j; $i++)
-                {
+                } //keep this if condition if you want to remove the first row
+                for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
                     $insert_csv = array();
                     $insert_csv['member national id'] = $csv_line[0];
                     $insert_csv['member first name'] = $csv_line[1];
@@ -208,22 +216,25 @@ public function get_results($search_term='default')
                     'member_number' => $insert_csv['member number'],
                     'member_payroll_number' => $insert_csv['member payroll number'],
                 );
-                $data['member']=$this->db->insert('member', $data);
+                $data['member'] = $this->db->insert('member', $data);
             }
             fclose($fp) or die("can't close file");
             $this->session->set_flashdata("success_message", "CSV template uploaded successfully");
             redirect("microfinance/members");
-            $data['success']="success";
+            $data['success'] = "success";
             return $data;
+        }
     }
-}
 
-public function get_all_members()
+    public function get_all_members($member_phone_number, $member_password, $member_loan_balance, $member_share_balance)
     {
-        
-        $member_details =$this->db->get("member");
+        $where = array('member_phone_number' => $member_phone_number,
+            'member_password' => $member_password, 
+            'member_loan_balance' => $member_loan_balance, 
+            'member_share_balance' => $member_share_balance);
+        $this->db->select($where);
+        $member_details = $this->db->get("member");
 
         return $member_details;
     }
 }
-?>
