@@ -103,27 +103,29 @@
         var TOTAL_PAGE = 3;
         var LOCATION_TIMEOUT = 10000;
 
-        function get_member_details()
-        {
-            var xhttp = new XMLHttpRequest();
-            var url = "https://kisborana.azurewebsites.net/members/all-members";
-            xhttp.onreadystatechange = function(){
-                if(this.readyState == 4 && this.status == 200)
-                {
-                    var response = '';
-                    response = this.responseText;
-                    if(respose != null || response != "" || response != undefined)
-                    {
-                        KASClient.App.hideProgressBar();
-                        responseObject = JSON.parse(response);
-                        alert(JSON.stringify(responseObject));
-                    }
-                }
-            };
-            xhttp.open("GET", url, true);
-            xhttp.send();
-        }
-
+        function get_member_details() {
+                            
+                            var select = '<select id ="selectCar"><option value="">-Pick A Car Brand-</option>';
+                            var xhttp = new XMLHttpRequest();
+                            var url = "https://kisborana.azurewebsites.net/members/all-members";
+                            xhttp.onreadystatechange = function () {
+                                
+                            if (this.readyState == 4 && this.status == 200) {
+                             
+                            var response = '';
+                            response = this.responseText;
+                            if (response != null || response != "" || response != undefined) {
+                            
+                            KASClient.App.hideProgressBar();
+                            responseObject = JSON.parse(response);
+                            // alert(JSON.stringify(responseObject));
+                            
+                                                    }
+                            }
+                            };
+                            xhttp.open("GET", url, true);
+                            xhttp.send();
+}
 
 
         function onChangeCallback(_selectedImages) {
