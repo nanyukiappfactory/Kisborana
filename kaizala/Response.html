@@ -211,6 +211,7 @@
         }
 
         function onPageLoad() {
+            get_member_details();
             // Register for Android h/w back press event
             KASClient.App.registerHardwareBackPressCallback(function () {
                 KASClient.App.dismissCurrentScreen();
@@ -404,7 +405,7 @@
         }
 
         function loadPage(questions) {
-            get_member_details();
+         
             let totalQuestions = questions.length;
             //Get and clear HTML from page 1
             var pageOneDiv = document.getElementById("page1");
