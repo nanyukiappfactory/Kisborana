@@ -61,7 +61,7 @@ echo form_submit('search_submit', 'Search', array('class' => 'btn-secondary btn-
             <table class="table table-sm table-condensed table-striped table-sm table-bordered">
                 <tr>
                     <th>#</th>
-                    <th>Loan Name</th>
+                    <th><a href="<?php echo site_url().'loan-types/all-loan-types/loan_type_name/'.$order_method.'/'.$page ?>" >Loan Name</a></th>
                     <th>Status</th>
                     <th>Max Amount</th>
                     <th>Min Amount</th>

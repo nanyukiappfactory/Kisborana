@@ -33,11 +33,23 @@
     return $total_loan_types;
   }
 
-  public function get_all_results($table,$limit_per_page, $start_index)
+  public function get_all_results($search_results,$table, $limit_per_page, $start_index, $where, $order_column, $order_by)
     {
+     
+       if (!empty($search_results) && $search_results !=null)
+       {
+         $this->db->like("loan_type_name", $search_results);
+
+       }
+
+       else 
+       {
         
-        //$this->db->where($where);
+         $this->db->where($where);
+       }
+        
         $this->db->limit($limit_per_page, $start_index);
+        $this->db->order_by($order_column, $order_by);
         $query = $this->db->get($table);
         return $query;
 
