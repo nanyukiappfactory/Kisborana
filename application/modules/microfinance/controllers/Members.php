@@ -255,23 +255,8 @@ public function check_member_existence($phone)
         }
 
         else{
-            echo "No members found";
+    
+            echo (json_encode("No members found"));
         }
     } 
-    public function strip_number(){
-        $var = '+25478807403';
-    
-    
-       
-        $newstring = substr($var, -9);
-        $length = strlen($newstring);
-        if ($newstring[0] == 7 && $length == 9)
-        {
-            echo $newstring;
-        }
-        else{
-            echo 'false';
-        }
-   
-    }
 }

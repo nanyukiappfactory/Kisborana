@@ -111,7 +111,7 @@ $route['members/activate/(:num)'] = 'microfinance/members/activate/$1';
 $route['members/gitdelete/(:num)'] = 'microfinance/members/delete_member/$1';
 $route['members/execute_search'] = 'microfinance/members/execute_search';
 $route['members/check-member-existence/(:any)'] = 'microfinance/members/check_member_existence/$1';
-$route['members/strip'] = 'microfinance/members/strip_number';
+//$route['members/strip'] = 'microfinance/members/strip_number';
 
 
 //saving_types routes

@@ -248,10 +248,30 @@
             // alert(lastnumber);
             var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function () {
+				alert("Readystate"+this.readyState+"Status:"+this.status);
 				if(this.readyState == 4 && this.status == 200) {
                     KASClient.App.hideProgressBar();
-                    alert(JSON.stringify(this.responseText));
-                    
+					var members = JSON.stringify(this.responseText);
+					alert(members);
+					// var member = JSON.parse(this.responseText);
+					if(members=='"No members found"'){
+						alert ("you are not registred in the sacco");
+					}
+					else 
+                    {
+                        alert("you are here");
+                    }
+					
+					//var members ="";
+					//alert(members);
+                    // if(members == "" || members==null)
+                    // {
+                    //     alert ("you are not registred in the sacco")
+                    // }
+                    // else 
+                    // {
+                    //     alert("you are here");
+                    // }
                     
 				}
 			};
