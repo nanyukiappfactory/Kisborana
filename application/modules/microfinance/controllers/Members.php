@@ -242,9 +242,9 @@ class Members extends MX_Controller
     }
 
 //get members to create web serrvice
-public function get_all_members()
+public function check_member_existence($phone_number)
     {
-        $all_members = $this->member_model->get_all_members("member_national_id","member_phone_number","member_password","member_loan_balance","member_share_balance");
+        $all_members = $this->member_model->check_member_existence($phone_number);
 
         if($all_members->num_rows() > 0)
         {
