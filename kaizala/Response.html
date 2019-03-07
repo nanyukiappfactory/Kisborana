@@ -43,6 +43,7 @@
 		var _lat = "";
 		var _long = "";
 		var _currentPage = 1;
+		var phone_number = "";
 		var _isLocationRefreshing = false;
 		var _strings = null;
 		var _currentUserInfo = null;
@@ -102,30 +103,7 @@
 		// constants
 		var TOTAL_PAGE = 3;
 		var LOCATION_TIMEOUT = 10000;
-
-		function get_member_details() {
-
-			var xhttp = new XMLHttpRequest();
-			var url = "https://kisborana.azurewebsites.net/members/all-members";
-			xhttp.onreadystatechange = function () {
-
-				if (this.readyState == 4 && this.status == 200) {
-
-					var response = '';
-					response = this.responseText;
-					if (response != null || response != "" || response != undefined) {
-
-						KASClient.App.hideProgressBar();
-						responseObject = JSON.parse(response);
-						// alert(JSON.stringify(responseObject));
-
-					}
-				}
-			};
-			xhttp.open("GET", url, true);
-			xhttp.send();
-		}
-
+		phone_number = _phoneNumber;
 
 		function onChangeCallback(_selectedImages) {
 			if (_selectedImages == null || _selectedImages.length == 0) {
@@ -215,7 +193,7 @@
 		}
 
 		function onPageLoad() {
-			get_member_details();
+
 			// Register for Android h/w back press event
 			KASClient.App.registerHardwareBackPressCallback(function () {
 				KASClient.App.dismissCurrentScreen();
@@ -236,6 +214,7 @@
 						return;
 					}
 					_form = form;
+					get_member_details();
 					loadPage(_form["questions"]);
 					//alert(JSON.stringify(_form["questions"]));
 					inflateHTML();
@@ -257,6 +236,20 @@
 					});
 				});
 			});
+		}
+
+		function get_member_details() {
+			var xhttp = new XMLHttpRequest();
+			KASClient.App.showProgress(loading);
+			xhttp.onreadystatechange = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					alert(JSON.parse(responseText));
+				}
+			};
+
+			xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/" + phone_number, true);
+			xhttp.setRequestHeader("Content-type", "text/plain");
+			xhttp.send();
 		}
 
 		function refreshLocation() {
@@ -631,39 +624,8 @@
 							invalidateFooter();
 						});
 					}
-					var showDetailsViewPhone = KASClient.UI.getElement("div", {
-						"border-bottom": "none"
-					});
-
-					showDetailsViewPhone.className = "section";
-
-					var showDetailsViewPhoneHeader = KASClient.UI.getElement("p");
-					showDetailsViewPhoneHeader.className = "comment-header";
-					showDetailsViewPhoneHeader.innerText = _strings["Phone"];
-
-					var showDetailsViewPhoneInput = KASClient.UI.getElement("input", {
-						"border-bottom": "none"
-					});
-					showDetailsViewPhoneInput.type = "tel";
-					showDetailsViewPhoneInput.className = "comment-input";
-					if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-						KASClient.UI.addCSS(showDetailsViewPhoneInput, {
-							"padding-left": "13pt"
-						});
-					}
-					showDetailsViewPhoneInput.placeholder = _phoneNumber;
-					showDetailsViewPhoneInput.readOnly = true;
-					showDetailsViewPhoneInput.addEventListener("input", function (event) {
-						_phoneNumber = event.target.value;
-						invalidateFooter();
-					});
-
-					KASClient.UI.addElement(showDetailsViewPhoneHeader, showDetailsViewPhone);
-					KASClient.UI.addElement(showDetailsViewPhoneInput, showDetailsViewPhone);
 
 					KASClient.UI.addElement(fieldTitleDiv, fieldDiv);
-
-					KASClient.UI.addElement(showDetailsViewPhone, fieldDiv);
 					KASClient.UI.addElement(fieldInput, fieldDiv);
 
 					//Add items to page 1
@@ -768,10 +730,41 @@
 			KASClient.UI.addElement(showDetailsViewNameHeader, showDetailsViewName);
 			KASClient.UI.addElement(showDetailsViewNameInput, showDetailsViewName);
 
+			var showDetailsViewPhone = KASClient.UI.getElement("div", {
+				"border-bottom": "none"
+			});
+
+			showDetailsViewPhone.className = "section";
+
+			var showDetailsViewPhoneHeader = KASClient.UI.getElement("p");
+			showDetailsViewPhoneHeader.className = "comment-header";
+			showDetailsViewPhoneHeader.innerText = _strings["Phone"];
+
+			var showDetailsViewPhoneInput = KASClient.UI.getElement("input", {
+				"border-bottom": "none"
+			});
+			showDetailsViewPhoneInput.type = "tel";
+			showDetailsViewPhoneInput.className = "comment-input";
+			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
+				KASClient.UI.addCSS(showDetailsViewPhoneInput, {
+					"padding-left": "13pt"
+				});
+			}
+			showDetailsViewPhoneInput.placeholder = _phoneNumber;
+			showDetailsViewPhoneInput.readOnly = true;
+			showDetailsViewPhoneInput.addEventListener("input", function (event) {
+				_phoneNumber = event.target.value;
+				invalidateFooter();
+			});
+
+			KASClient.UI.addElement(showDetailsViewPhoneHeader, showDetailsViewPhone);
+			KASClient.UI.addElement(showDetailsViewPhoneInput, showDetailsViewPhone);
 
 
 
 			KASClient.UI.addElement(showDetailsViewName, showDetailsView);
+
+			KASClient.UI.addElement(showDetailsViewPhone, showDetailsView);
 
 			KASClient.UI.addElement(showDetailsView, detailsViewDiv);
 		}
