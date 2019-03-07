@@ -227,12 +227,11 @@ class Member_model extends CI_Model
     }
 
     public function check_member_existence($member_phone_number)
-    {
-         
-        $this->db->select('member_first_name','member_national_id','member_password','member_loan_balance','member_share_balance');
-        $this->db->like('member_phone_number', $member_phone_number);
+    {        
+        $this->db->select('member_first_name,member_national_id,member_password,member_loan_balance,member_share_balance');
+        $this->db->where('member_phone_number', $member_phone_number);
         $member_details = $this->db->get("member");
-
+        var_dump($member_details->result()); die();
         return $member_details;
     }
 }

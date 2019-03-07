@@ -110,7 +110,7 @@ $route['members/deactivate/(:num)'] = 'microfinance/members/deactivate/$1';
 $route['members/activate/(:num)'] = 'microfinance/members/activate/$1';
 $route['members/gitdelete/(:num)'] = 'microfinance/members/delete_member/$1';
 $route['members/execute_search'] = 'microfinance/members/execute_search';
-$route['members/check-member-existence/(:num)'] = 'microfinance/members/check_member_existence/$phone';
+$route['members/check-member-existence/(:any)'] = 'microfinance/members/check_member_existence/$1';
 
 //saving_types routes
 $route['saving_types'] = 'microfinance/saving_types/index';
