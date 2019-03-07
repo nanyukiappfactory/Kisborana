@@ -17,41 +17,57 @@ class Member_model extends CI_Model
     }
     public function save_members()
     {
-        $data = array(
-            "bank_id" => $this->input->post("bank_name"),
-            "member_national_id" => $this->input->post("member_national_id"),
-            "member_first_name" => $this->input->post("firstname"),
-            "member_last_name" => $this->input->post("lastname"),
-            "employer_id" => $this->input->post("employer_name"),
-            "member_phone_number" => $this->input->post("phone_number"),
-            "member_account_number" => $this->input->post("account_number"),
-            "member_email" => $this->input->post("email"),
-            "member_postal_address" => $this->input->post("postal_address"),
-            "member_postal_code" => $this->input->post("postal_code"),
-            "member_location" => $this->input->post("location"),
-            "member_number" => "MN",
-            "member_payroll_number" => $this->input->post("member_payroll_number"),
-            "created_by" => 1,
-            "created_on" => date('Y-m-d H:i:s'),
-        );
-        //var_dump($data);die();
-        if ($this->db->insert("member", $data)) {
-            $member_id = $this->db->insert_id();
-
-            $member_number = "MN00" . $member_id;
-
-            $member_number_data = array(
-                "member_number" => $member_number,
+        $phone_number = $this->input->post("phone_number");
+        
+        $newstring = substr($phone_number, -9);
+        $length = strlen($newstring);
+        
+        if ($newstring[0] == 7 && $length == 9)
+        {
+            $data = array(
+                "bank_id" => $this->input->post("bank_name"),
+                "member_national_id" => $this->input->post("member_national_id"),
+                "member_first_name" => $this->input->post("firstname"),
+                "member_last_name" => $this->input->post("lastname"),
+                "employer_id" => $this->input->post("employer_name"),
+                "member_phone_number" => $newstring,
+                "member_account_number" => $this->input->post("account_number"),
+                "member_email" => $this->input->post("email"),
+                "member_postal_address" => $this->input->post("postal_address"),
+                "member_postal_code" => $this->input->post("postal_code"),
+                "member_location" => $this->input->post("location"),
+                "member_number" => "MN",
+                "member_payroll_number" => $this->input->post("member_payroll_number"),
+                "created_by" => 1,
+                "created_on" => date('Y-m-d H:i:s'),
             );
-
-            $this->db->set($member_number_data);
-            $this->db->where("member_id", $member_id);
-            $this->db->update("member");
-
-            return $member_id;
-        } else {
+            //var_dump($data);die();
+    
+            if ($this->db->insert("member", $data)) {
+                $member_id = $this->db->insert_id();
+    
+                $member_number = "MN00" . $member_id;
+    
+                $member_number_data = array(
+                    "member_number" => $member_number,
+                );
+    
+                $this->db->set($member_number_data);
+                $this->db->where("member_id", $member_id);
+                $this->db->update("member");
+    
+                return $member_id;
+            } else {
+                return false;
+            }
+           
+        }
+        else{
             return false;
         }
+
+       
+     
     }
     public function get_members()
     {

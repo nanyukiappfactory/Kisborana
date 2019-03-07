@@ -103,7 +103,7 @@
 		// constants
 		var TOTAL_PAGE = 3;
 		var LOCATION_TIMEOUT = 10000;
-		phone_number = _phoneNumber;
+		
 
 		function onChangeCallback(_selectedImages) {
 			if (_selectedImages == null || _selectedImages.length == 0) {
@@ -198,8 +198,24 @@
 			KASClient.App.registerHardwareBackPressCallback(function () {
 				KASClient.App.dismissCurrentScreen();
 			});
-
-			getCurrentLocation();
+            KASClient.App.getCurrentUserIdAsync(function (userId, error) {
+                if (error != null) {
+                    handleError(error);
+                    return;
+                }
+                KASClient.App.getUsersDetailsAsync([userId], function (users, error) {
+                    if (error != null) {
+                        handleError(error);
+                        return;
+                    }
+                    _currentUserInfo = users[userId];
+                    _name = _currentUserInfo.originalName;
+                    _phoneNumber = _currentUserInfo.phoneNumber;
+                    // get_member_details();
+                    inflateDetailsView();
+                });
+			});
+			//getCurrentLocation();
 
 			KASClient.App.getLocalizedStringsAsync(function (strings, error) {
 				if (error != null) {
@@ -215,39 +231,32 @@
 					}
 					_form = form;
 					get_member_details();
-					loadPage(_form["questions"]);
+					//loadPage(_form["questions"]);
 					//alert(JSON.stringify(_form["questions"]));
-					inflateHTML();
-					KASClient.App.getCurrentUserIdAsync(function (userId, error) {
-						if (error != null) {
-							handleError(error);
-							return;
-						}
-						KASClient.App.getUsersDetailsAsync([userId], function (users, error) {
-							if (error != null) {
-								handleError(error);
-								return;
-							}
-							_currentUserInfo = users[userId];
-							_name = _currentUserInfo.originalName;
-							_phoneNumber = _currentUserInfo.phoneNumber;
-							inflateDetailsView();
-						});
-					});
+					//inflateHTML();
+					
 				});
 			});
+            
 		}
 
 		function get_member_details() {
-			var xhttp = new XMLHttpRequest();
-			KASClient.App.showProgress(loading);
+            KASClient.App.showProgressBar("Validating member");
+            // alert(JSON.stringify(_name));
+            phone_number = _phoneNumber;
+            var lastnumber = phone_number.substr(phone_number.length - 9);
+            // alert(lastnumber);
+            var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function () {
-				if (this.readyState == 4 && this.status == 200) {
-					alert(JSON.parse(responseText));
+				if(this.readyState == 4 && this.status == 200) {
+                    KASClient.App.hideProgressBar();
+                    alert(JSON.stringify(this.responseText));
+                    
+                    
 				}
 			};
 
-			xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/" + phone_number, true);
+			xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/"+lastnumber, true);
 			xhttp.setRequestHeader("Content-type", "text/plain");
 			xhttp.send();
 		}

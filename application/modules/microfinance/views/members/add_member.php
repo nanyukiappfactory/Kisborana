@@ -53,7 +53,7 @@
 		</div>
 		<div class="form-group">
 			<label for="phone_number"><b>Phone number</b></label>
-			<input type="number" name="phone_number" class="form-control form-control-lg inputform" />
+			<input type="text" name="phone_number" class="form-control form-control-lg inputform" />
 		</div>
 		<div class="form-group">
 			<label for="account_number"><b>Account number</b></label>
