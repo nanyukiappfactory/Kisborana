@@ -217,6 +217,31 @@ input[type="radio"]:checked {
   font-weight: normal;
   color: rgb(50, 72, 95);
 }
+.main_holder{
+  margin: 3pt;
+}
+.mainBody {
+  padding: 15pt;
+  font-size: 13.5pt;
+  font-weight: normal;
+  color: rgb(50, 72, 95);
+}
+.sorry_body{
+  padding: 15pt;
+  font-size: 13.5pt;
+  font-weight: normal;
+  color: rgb(50, 72, 95);
+  border: 1px solid blue;
+  
+}
+.message_bdy{
+  padding: 15pt;
+  font-size: 13.5pt;
+  font-weight: normal;
+  color: rgb(50, 72, 95);
+  border: 1px solid blue;
+  margin-top: 25pt;
+}
 
 .options {
   height: 24pt;
@@ -312,3 +337,4 @@ input[type="radio"]:checked {
 .pac-item-query {
   font-size: 15pt;
 }
+
