@@ -18,6 +18,7 @@ class Member_model extends CI_Model
     public function save_members()
     {
         $phone_number = $this->input->post("phone_number");
+        $member_password = $this->input->post("member_password");
         
         $newstring = substr($phone_number, -9);
         $length = strlen($newstring);
@@ -38,6 +39,7 @@ class Member_model extends CI_Model
                 "member_location" => $this->input->post("location"),
                 "member_number" => "MN",
                 "member_payroll_number" => $this->input->post("member_payroll_number"),
+                "member_password" =>  $member_password,
                 "created_by" => 1,
                 "created_on" => date('Y-m-d H:i:s'),
             );
@@ -216,6 +218,8 @@ class Member_model extends CI_Model
                     $insert_csv['member location'] = $csv_line[9];
                     $insert_csv['member number'] = $csv_line[10];
                     $insert_csv['member payroll number'] = $csv_line[11];
+                    $insert_csv['member loan balance'] = $csv_line[12];
+                    $insert_csv['member share balance'] = $csv_line[13];
                 }
                 $i++;
                 $data = array(
@@ -231,6 +235,8 @@ class Member_model extends CI_Model
                     'member_location' => $insert_csv['member location'],
                     'member_number' => $insert_csv['member number'],
                     'member_payroll_number' => $insert_csv['member payroll number'],
+                    'member_loan_balance' => $insert_csv['member loan balance'],
+                    'member_share_balance' => $insert_csv['member share balance'],
                 );
                 $data['member'] = $this->db->insert('member', $data);
             }
@@ -242,12 +248,21 @@ class Member_model extends CI_Model
         }
     }
 
-    public function check_member_existence($member_phone_number)
+    public function check_member_existence($member_phone_number, $member_password)
     {        
-        $this->db->select('member_first_name,member_national_id,member_password,member_loan_balance,member_share_balance');
+        $this->db->select('member_first_name,member_national_id,member_loan_balance,member_share_balance');
         $this->db->where('member_phone_number', $member_phone_number);
         $member_details = $this->db->get("member");
         
         return $member_details;
+    }
+
+    function save_member_password($save_data){
+        if($this->db->set("member",$save_data)){
+            return TRUE;
+        }
+        else{
+            return FALSE;
+        }
     }
 }
