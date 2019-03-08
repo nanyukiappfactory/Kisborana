@@ -256,7 +256,6 @@ class Member_model extends CI_Model
         
         return $member_details;
     }
-<<<<<<< HEAD
 //trial===========================
     public function member_existence()
     {        
@@ -265,7 +264,6 @@ class Member_model extends CI_Model
         $member_details = $this->db->get("member");
         
         return $member_details;
-=======
 
     function save_member_password($save_data){
         if($this->db->set("member",$save_data)){
@@ -274,6 +272,6 @@ class Member_model extends CI_Model
         else{
             return FALSE;
         }
->>>>>>> 8df99e43971bbdbf05834eb2216624a28d22e941
     }
+}
 }

@@ -262,7 +262,6 @@ public function check_member_existence($phone, $member_password)
         
     } 
 
-<<<<<<< HEAD
     //trial ========
     //get members to create web serrvice
 public function member_existence()
@@ -283,7 +282,6 @@ public function member_existence()
     }
 } 
 //===========
-=======
     
         //save encoded data to db
     public function update_member_table(){
@@ -317,5 +315,4 @@ public function member_existence()
         // 4. request to save data
         // 5. send confirmation
     }
->>>>>>> 8df99e43971bbdbf05834eb2216624a28d22e941
 }
