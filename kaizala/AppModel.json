@@ -32,7 +32,7 @@
       "type": "Numeric",
       "isOptional": true
       
-    },   
+    },
     {
       "title": "Name",
       "type": "Text"

@@ -8,7 +8,7 @@
   "Name": "Name",
   "Phone": "Phone Number",
   "Location": "Location",  
-  "Enter Password" : "Enter Password", 
+  "Enter ID Numbeber" : "Enter ID Numbeber", 
   "strMiniAppYourDetails": "Your Details",
   "strNoLocationLabel": "Due to poor network connectivity, your location could not be fetched",
   "strRefreshLabel": "REFRESH",

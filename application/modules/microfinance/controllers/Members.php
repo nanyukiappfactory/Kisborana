@@ -242,10 +242,10 @@ class Members extends MX_Controller
     }
 
 //get members to create web serrvice
-public function check_member_existence($phone)
+public function check_member_existence($phone, $member_password)
     {
        
-        $all_members = $this->member_model->check_member_existence($phone);
+        $all_members = $this->member_model->check_member_existence($phone, $member_password);
 
         if($all_members->num_rows() > 0)
         {
@@ -258,8 +258,11 @@ public function check_member_existence($phone)
     
             echo (json_encode("No members found"));
         }
+
+        
     } 
 
+<<<<<<< HEAD
     //trial ========
     //get members to create web serrvice
 public function member_existence()
@@ -280,4 +283,39 @@ public function member_existence()
     }
 } 
 //===========
+=======
+    
+        //save encoded data to db
+    public function update_member_table(){
+        // 1. Receive json post
+        $json_string = file_get_contents("php://input");
+        
+        // 2. convert json to array
+        $json_object = json_decode($json_string);
+      
+        // 3. validate
+        if(is_array($json_object) && (count($json_object) > 0)){
+            // Retreive the data
+                $row = $json_object[0];
+                $date_submitted = date("Y-m-d H:i:s");
+                $data = array(
+                    "member_password" => $row-> member=-password,
+                    
+                );
+
+            // 4. Request to submit
+             $this->member_model ->save_member_password($data);
+
+           
+
+        }
+        else{
+            // send invalid data message
+            echo "invalid data provided";
+
+        }
+        // 4. request to save data
+        // 5. send confirmation
+    }
+>>>>>>> 8df99e43971bbdbf05834eb2216624a28d22e941
 }
