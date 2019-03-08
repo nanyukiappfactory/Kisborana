@@ -259,4 +259,25 @@ public function check_member_existence($phone)
             echo (json_encode("No members found"));
         }
     } 
+
+    //trial ========
+    //get members to create web serrvice
+public function member_existence()
+{
+   
+    $all_members = $this->member_model->member_existence();
+
+    if($all_members->num_rows() > 0)
+    {
+        $members = $all_members->result();
+        $members_encoded = json_encode($members);
+        echo $members_encoded;
+    }
+
+    else{
+
+        echo (json_encode("No members found"));
+    }
+} 
+//===========
 }
