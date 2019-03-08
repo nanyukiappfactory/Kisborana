@@ -261,7 +261,7 @@
 						//alert ("you are not registred in the sacco");
 						member_nonexistence();
 					}
-					else if((member_password=="" || member_password==null || member_password==undefined))
+					else 
                     {
 						
 						
@@ -527,7 +527,7 @@
 							
 							passwordfieldInput.placeholder = _strings["Enter Password"];
 							passwordfieldInput.addEventListener("input", function(event){
-								invalidateFooter();
+								//invalidateFooter();
 							});
 						}
 						// var fieldInput = KASClient.UI.getElement("input");
@@ -654,7 +654,7 @@
 				
 				passwordfieldInput.placeholder = _strings[fieldTitle];
 				passwordfieldInput.addEventListener("input", function(event){
-					// alert("footerview");
+					alert("footerview");
 					invalidateFooter();
 				});
 			}
@@ -1011,7 +1011,7 @@
 			});
 			nextButton.type = "submit";
 			nextButton.className = (_currentPage == TOTAL_PAGE ? "footer-action-send" : "footer-action-next");
-			nextButton.value = (_currentPage == TOTAL_PAGE ? _strings["strSendResponseLabel"] : "");
+			nextButton.value = (_currentPage == TOTAL_PAGE ? _strings["strSendResponseLabel"] : _currentPage == 1 ? "Register" : "");
 			var nextButtonIsDisabled = false;
 			if (_currentPage == 1) {
 				let questions = _form["questions"];
@@ -1029,8 +1029,8 @@
 					if ((fieldTitle != "Name") && (fieldTitle != "Phone") && (fieldTitle != "Location") && (fieldTitle !=
 							"Response Time") && (fieldTitle != "ID Number") && (fieldTitle != "Loan Balance") && (fieldTitle != "Shares Balance")) {
 						let formValue = "";
-						let formValue1 = document.getElementById("Password").value;
-						let	formValue2 = document.getElementById("ConfirmPassword").value;
+						// let formValue1 = document.getElementById("Password").value;
+						// let	formValue2 = document.getElementById("ConfirmPassword").value;
 						if (fieldType == 0) {
 							formValue = selectedOptions[compressedTitle];
 
@@ -1042,8 +1042,6 @@
 						} else if (fieldType == 8) {
 							formValue = document.getElementById(compressedTitle).getAttribute("src");
 						} else {
-							
-							//alert(formValue1,formValue2);
 							if ((formValue == "") || (formValue == null)) {
 								nextButtonIsDisabled = true;
 							}
