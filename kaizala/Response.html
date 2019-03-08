@@ -242,7 +242,7 @@
 		}
 
 		function get_member_details() {
-            KASClient.App.showProgressBar("Validating member");
+          //KASClient.App.showProgressBar("Validating member");
             // alert(JSON.stringify(_name));
             phone_number = _phoneNumber;
 			var lastnumber = phone_number.substr(phone_number.length - 9);
@@ -525,7 +525,7 @@
 								});
 							}
 							
-							passwordfieldInput.placeholder = _strings["Enter Password"];
+							passwordfieldInput.placeholder = _strings["Enter ID Numbeber"];
 							passwordfieldInput.addEventListener("input", function(event){
 								//invalidateFooter();
 							});
