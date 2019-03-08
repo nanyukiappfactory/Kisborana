@@ -56,6 +56,7 @@
 		var gridView = "";
 		var response = "";
 		var _images = "";
+		var member_password="";
 		var config = {
 			"addPageBreak": false,
 			"isCameraOnlyImageSource": false,
@@ -212,7 +213,7 @@
                     _name = _currentUserInfo.originalName;
                     _phoneNumber = _currentUserInfo.phoneNumber;
                     // get_member_details();
-                    inflateDetailsView();
+                    //inflateDetailsView();
                 });
 			});
 			//getCurrentLocation();
@@ -233,7 +234,8 @@
 					get_member_details();
 					//loadPage(_form["questions"]);
 					//alert(JSON.stringify(_form["questions"]));
-					//inflateHTML();
+					inflateHTML();
+					invalidateFooter();
 					
 				});
 			});
@@ -244,22 +246,29 @@
             KASClient.App.showProgressBar("Validating member");
             // alert(JSON.stringify(_name));
             phone_number = _phoneNumber;
-            var lastnumber = phone_number.substr(phone_number.length - 9);
+			var lastnumber = phone_number.substr(phone_number.length - 9);
+			let questions = _form["questions"];
             // alert(lastnumber);
             var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function () {
-				alert("Readystate"+this.readyState+"Status:"+this.status);
+				//alert("Readystate"+this.readyState+"Status:"+this.status);
 				if(this.readyState == 4 && this.status == 200) {
                     KASClient.App.hideProgressBar();
-					var members = JSON.stringify(this.responseText);
-					alert(members);
+					var members = JSON.parse(this.responseText);
+					member_password = "";
+					//alert(members);
 					// var member = JSON.parse(this.responseText);
-					if(members=='"No members found"'){
-						alert ("you are not registred in the sacco");
+					if(members=="No members found"){
+						//alert ("you are not registred in the sacco");
+						member_nonexistence();
 					}
-					else 
+					else if((member_password=="" || member_password==null || member_password==undefined))
                     {
-                        alert("you are here");
+						
+						
+						member_registration(questions);
+						//invalidateFooter();
+						//loadPage(questions);
                     }
 					
 					//var members ="";
@@ -431,6 +440,7 @@
 		}
 
 		function loadPage(questions) {
+			alert("loadpage func");
 			let totalQuestions = questions.length;
 			//Get and clear HTML from page 1
 			var pageOneDiv = document.getElementById("page1");
@@ -486,9 +496,7 @@
 						fieldInputType = "text";
 				}
 				//Create the field
-				if ((fieldTitle != "Name") && (fieldTitle != "Loan Balance") && (fieldTitle != "Shares Balance") && (fieldTitle !=
-						"Location") && (fieldTitle !=
-						"Response Time")) {
+				if ((fieldTitle != "Name") && (fieldTitle !="Location") && (fieldTitle !="Response Time")) {
 					if (x == (totalQuestions - 1)) {
 						var fieldDiv = KASClient.UI.getElement("div", {
 							"border-bottom": "none"
@@ -503,169 +511,162 @@
 					fieldTitleDiv.className = "question-title";
 					fieldTitleDiv.innerText = _strings[fieldTitle];
 
-					if (fieldInputType == "image") {
-						var fieldInput = KASClient.UI.getElement("div", {
-							"padding-left": "16px",
-							"padding-right": "16px"
-						});
-						var imageDiv = KASClient.UI.getElement("div");
+						if (member_password=="" || member_password==null || member_passwoord==undefined)
+						{
+							var passwordfieldInput = KASClient.UI.getElement("input");
+							passwordfieldInput.type = fieldInputType;
+							passwordfieldInput.className = "comment-input";
+							passwordfieldInput.id = compressedTitle;
 
-						KASClient.UI.clearElement(fieldInput);
-
-						// var headerDiv = KASClient.UI.getElement("div", {
-						//     "display": "flex",
-						//     "justify-content": "space-between",
-						//     "align-items": "center"
-						// });
-						// KASClient.UI.addElement(headerDiv, fieldInput);
-
-						// clearLabel.onclick = function () {
-						//     if (_images == "")
-						//         return;
-						//     resetQuestionResponseUI();
-						//     };
-						// KASClient.UI.addElement(clearLabel, headerDiv);
-
-
-						//put an image tag icon
-						var img = KASClient.UI.getElement("img", {
-							"width": "40",
-							"height": "40",
-							"padding-left": "15pt",
-							"padding-top": "5px",
-							"padding-bottom": "10pt"
-						});
-						img.id = compressedTitle;
-
-						img.setAttribute("src", "addition.png");
-
-						imageDiv.onclick = function () {
-							props[KASClient.KASAttachmentListQuestionConfig.MAX_IMAGE_COUNT_KEY] = 1;
-							KASClient.App.showAttachmentPickerAsync([KASClient.KASAttachmentType.Image], null,
-								function (selectedAttachments, error) {
-									// alert("showAttachmentPickerAsync");
-									// alert(error);
-									//alert(JSON.stringify(selectedAttachments));
-									if (error != null || selectedAttachments == null || selectedAttachments.length ==
-										0) {
-										return;
-									}
-									if (selectedAttachments.length > 1) {
-										KASClient.UI.showAlertDailog("Image Upload",
-											"MultipleImageSelectionError", "Ok", null, "", null);
-									}
-									_images = (selectedAttachments.length === 0) ? "" : selectedAttachments[0].localPath;
-									//setClearButtonEnabled(_images != "");
-									refreshImageContainer(imageDiv);
-									// KASClient.UI.clearElement(imageContainer);
-
-								});
-						}
-						//set an event for when the tag is clicked
-						// img.onclick = function () {
-						//     KASClient.App.showAttachmentPickerAsync([KASClient.KASAttachmentType.Image], null, function (selectedAttachments, error) {
-						//         // alert("showAttachmentPickerAsync");
-						//         // alert(error);
-						//         //alert(JSON.stringify(selectedAttachments));
-						//         if (error != null || selectedAttachments == null || selectedAttachments.length == 0) {
-						//             return;
-						//         }
-						//         for (var i in selectedAttachments) {
-						//             imageAttachmentList.push(selectedAttachments[i]);
-						//             KASClient.UI.KASImageGridAlbumView("", selectedAttachments[i], false, null, function(imageAttachmentList){
-						//                 alert("sth");
-						//                 if(imageAttachmentList == null || imageAttachmentList.length == 0){
-						//                     questionToAnswerMap[x] =  "";
-						//                 }
-						//                 else{
-						//                     for(var i = 0; i<= imageAttachmentList.length; i++){
-						//                         imageAttachmentList[i].generateThumbnailServerUrl = true;
-						//                     }
-						//                     alert(JSON.stringify(imageAttachmentList));
-						//                     _images = JSON.stringify(imageAttachmentList);
-						//                 }
-						//             });
-
-						//         }
-						//         //refreshAlbumView(fieldInput,imageDiv);
-						//         //KASClient.UI.addElement(imageDiv, fieldInput);
-						//         // var ImagePaths = selectedAttachments[0].localPath;
-						//         // img.setAttribute("src", ImagePaths);
-
-						//     //selectedAttachments is an array of KASAttachment. It will have info like serverPath that you might need
-						//     });
-						// };
-						//adds image element to the imageDiv
-
-						//KASClient.UI.addElement(img, fieldInput);
-						KASClient.UI.addElement(imageDiv, imageContainer);
-						KASClient.UI.addElement(imageContainer, fieldInput);
-						refreshImageContainer(imageDiv);
-					} else if (fieldInputType == "select") {
-						var fieldInput = KASClient.UI.getElement("div");
-						fieldInput.className = "option-div";
-
-						for (i = 0; i < fieldDescription["options"].length; i++) {
-							var option = fieldDescription["options"][i];
-
-							var options = KASClient.UI.getElement("div");
-							options.className = "options";
-							options.value = option.id;
-							options.onclick = function () {
-								this.checked = true;
-								selectedOptions[compressedTitle] = this.value;
-								invalidateFooter();
-							};
-
-							var title = KASClient.UI.getElement("label", {
-								"width": "85%",
-								"padding-left": "6pt"
-							});
-							title.innerText = _strings[option.text];
-
-							var radio = KASClient.UI.getElement("input");
-							radio.type = "radio";
-							// radio.name = option.text + option.id;
-							radio.name = compressedTitle + fieldId;
-							radio.id = option.text + option.id;
-
-							KASClient.UI.addElement(title, options);
-							KASClient.UI.addElement(radio, options);
-
-							KASClient.UI.addElement(options, fieldInput);
-						}
-					} else {
-						var fieldInput = KASClient.UI.getElement("input");
-						fieldInput.type = fieldInputType;
-						fieldInput.className = "comment-input";
-						fieldInput.id = compressedTitle;
-
-						//dependancy for IOS for just adding padding
-						if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-							KASClient.UI.addCSS(fieldInput, {
+							//dependancy for IOS for just adding padding
+							if (KASClient.getPlatform() == KASClient.Platform.iOS) {
+								KASClient.UI.addCSS(passwordfieldInput, {
 								"padding-left": "13pt"
+								});
+							}
+							
+							passwordfieldInput.placeholder = _strings["Enter Password"];
+							passwordfieldInput.addEventListener("input", function(event){
+								invalidateFooter();
 							});
 						}
+						// var fieldInput = KASClient.UI.getElement("input");
+						// fieldInput.type = fieldInputType;
+						// fieldInput.className = "comment-input";
+						// fieldInput.id = compressedTitle;
 
-						fieldInput.placeholder = _strings["strTapToEnter"];
+						// //dependancy for IOS for just adding padding
+						// if (KASClient.getPlatform() == KASClient.Platform.iOS) {
+						// 	KASClient.UI.addCSS(fieldInput, {
+						// 		"padding-left": "13pt"
+						// 	});
+						// }
 
-						fieldInput.addEventListener("input", function (event) {
-							invalidateFooter();
-						});
-					}
+						// fieldInput.placeholder = _strings["strTapToEnter"];
+
+						// fieldInput.addEventListener("input", function (event) {
+						// 	invalidateFooter();
+						// });
+					
 
 					KASClient.UI.addElement(fieldTitleDiv, fieldDiv);
-					KASClient.UI.addElement(fieldInput, fieldDiv);
+					KASClient.UI.addElement(passwordfieldInput, fieldDiv);
 
 					//Add items to page 1
 					KASClient.UI.addElement(fieldDiv, pageOneDiv);
-					initialize();
+					//initialize();
 
 				}
 			}
 
 		}
 
+		//function that displays to a person when he or she doesn't exist in the sacco
+		function member_nonexistence()
+		{
+			var pageOneDiv = document.getElementById("page1");
+			KASClient.UI.clearElement(pageOneDiv);
+			pageOneDiv.className = "main_holder";
+
+			var memberDiv = KASClient.UI.getElement("div");
+			memberDiv.className = "mainBody";			
+			var membertitleDiv = KASClient.UI.getElement("div");
+			membertitleDiv.className = "sorry_body";
+			membertitleDiv.innerText = "Sorry!..";
+			var messageDiv = KASClient.UI.getElement("div");
+			messageDiv.className ="message_bdy";
+			messageDiv.innerText = "Your number is not registered with the SACCO.. contact admin [+254708807403]";
+
+			//add elements created
+			KASClient.addElement(membertitleDiv,memberDiv);
+			KASClient.addElement(messageDiv,memberDiv);
+			KASClient.addElement(memberDiv,pageOneDiv);
+			
+		}
+		//function that displays to a person when phone number exists in the sacco
+		function member_registration(questions)
+		{
+			alert("anything woiii");
+			let totalQuestions = questions.length;
+			var pageOneDiv = document.getElementById("page1");
+			KASClient.UI.clearElement(pageOneDiv);
+			pageOneDiv.className = "main_holder";
+			
+
+			for (var x = 0; x < totalQuestions; x++) {
+				let fieldDescription = questions[x];
+				let fieldId = fieldDescription["id"];
+				let fieldTitle = fieldDescription["title"];
+				let fieldType = fieldDescription["type"];
+				let optional = fieldDescription["isResponseOptional"];
+				let fieldInputType = "";
+				let compressedTitle = fieldTitle.replace(/\s+/g, '');
+
+				switch (fieldType) {
+					case 0:
+						fieldInputType = "select";
+						break;
+					case 2:
+						fieldInputType = "text";
+						break;
+					case 3:
+						fieldInputType = "number";
+						break;
+					case 5:
+						fieldInputType = "datetime-local";
+						break;
+					case 8:
+						fieldInputType = "image";
+						break;
+					case 10:
+						fieldInputType = "date";
+						break;
+					default:
+						fieldInputType = "text";
+				}
+			
+			
+			 if ((fieldTitle !="ID Number") && (fieldTitle !="Loan Balance") && (fieldTitle !="Shares Balance") && (fieldTitle !="Name")&& (fieldTitle !="Phone")&& (fieldTitle !="Location")&& (fieldTitle !="Response Time"))
+			 {
+				if (x == (totalQuestions - 1)) {
+						var fieldDiv = KASClient.UI.getElement("div", {
+							"border-bottom": "none"
+						});
+				} else {
+						var fieldDiv = KASClient.UI.getElement("div");
+				}
+				var fieldDiv = KASClient.UI.getElement("div");
+				fieldDiv.className = "section";
+				var fieldTitleDiv = KASClient.UI.getElement("div");
+				fieldTitleDiv.className = "question-title";
+				fieldTitleDiv.innerText = _strings[fieldTitle];
+				var passwordfieldInput = KASClient.UI.getElement("input");
+				passwordfieldInput.type = fieldInputType;
+				passwordfieldInput.className = "comment-input";
+				passwordfieldInput.id = compressedTitle;
+
+				//dependancy for IOS for just adding padding
+				if (KASClient.getPlatform() == KASClient.Platform.iOS) {
+					KASClient.UI.addCSS(passwordfieldInput, {
+					"padding-left": "13pt"
+					});
+				}
+				
+				passwordfieldInput.placeholder = _strings[fieldTitle];
+				passwordfieldInput.addEventListener("input", function(event){
+					alert("footerview");
+					//invalidateFooter();
+				});
+			}
+			KASClient.UI.addElement(fieldTitleDiv, fieldDiv);
+			KASClient.UI.addElement(passwordfieldInput, fieldDiv);
+			//invalidateFooter();
+			//Add items to page 1
+			KASClient.UI.addElement(fieldDiv, pageOneDiv);
+			}
+			
+		}
+	
 		function refreshAlbumView(fieldInput, imageDiv) {
 			KASClient.UI.clearElement(imageDiv);
 			var imageInputModule = new KASClient.UI.KASFormModule();
@@ -1026,7 +1027,7 @@
 					var compressedTitle = fieldTitle.replace(/\s+/g, '');
 
 					if ((fieldTitle != "Name") && (fieldTitle != "Phone") && (fieldTitle != "Location") && (fieldTitle !=
-							"Response Time") && (fieldTitle != "Business Location") && (fieldTitle != "Business Image")) {
+							"Response Time") && (fieldTitle != "ID Number") && (fieldTitle != "Loan Balance") && (fieldTitle != "Shares Balance")) {
 						let formValue = "";
 						if (fieldType == 0) {
 							formValue = selectedOptions[compressedTitle];

@@ -5,11 +5,7 @@
   "isAnonymous": false,
   "isResponseAppended": true,
   "isLocationRequested": false,
-  "questions": [{
-      "title": "ID Number",
-      "type": "Numeric",
-      "isOptional": true
-    }, 
+  "questions": [
     {
       "title": "Password",
       "type": "Text",
@@ -21,6 +17,11 @@
       "isOptional": true
     },
     {
+      "title": "ID Number",
+      "type": "Numeric",
+      "isOptional": true
+    }, 
+    {
       "title": "Loan Balance",
       "type": "Numeric",
       "isOptional": true
@@ -31,10 +32,7 @@
       "type": "Numeric",
       "isOptional": true
       
-    },
-
-    
-    
+    },   
     {
       "title": "Name",
       "type": "Text"
