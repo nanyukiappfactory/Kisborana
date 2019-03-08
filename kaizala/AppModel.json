@@ -32,9 +32,6 @@
       "isOptional": true
       
     },
-
-    
-    
     {
       "title": "Name",
       "type": "Text"
