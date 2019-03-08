@@ -471,6 +471,7 @@
 				let optional = fieldDescription["isResponseOptional"];
 				let fieldInputType = "";
 				let compressedTitle = fieldTitle.replace(/\s+/g, '');
+				//alert(compressedTitle);
 
 				switch (fieldType) {
 					case 0:
@@ -1028,6 +1029,8 @@
 					if ((fieldTitle != "Name") && (fieldTitle != "Phone") && (fieldTitle != "Location") && (fieldTitle !=
 							"Response Time") && (fieldTitle != "ID Number") && (fieldTitle != "Loan Balance") && (fieldTitle != "Shares Balance")) {
 						let formValue = "";
+						let formValue1 = document.getElementById("Password").value;
+						let	formValue2 = document.getElementById("ConfirmPassword").value;
 						if (fieldType == 0) {
 							formValue = selectedOptions[compressedTitle];
 
@@ -1039,8 +1042,8 @@
 						} else if (fieldType == 8) {
 							formValue = document.getElementById(compressedTitle).getAttribute("src");
 						} else {
-							formValue = document.getElementById(compressedTitle).value;
-
+							
+							//alert(formValue1,formValue2);
 							if ((formValue == "") || (formValue == null)) {
 								nextButtonIsDisabled = true;
 							}
