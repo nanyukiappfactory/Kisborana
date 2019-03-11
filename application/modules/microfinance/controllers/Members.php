@@ -241,8 +241,8 @@ class Members extends MX_Controller
 
     }
 
-//get members to create web serrvice
-public function check_member_existence($phone, $nationalid)
+    //get members to create web serrvice
+    public function check_member_existence($phone, $nationalid)
     {
        
         $all_members = $this->member_model->check_member_existence($phone, $nationalid);
@@ -268,7 +268,18 @@ public function check_member_existence($phone, $nationalid)
         }
 
         
-    } 
+    }
+    //updates member password field for a specific member
+    public function save_member_password($nationalid, $password){
+
+        $update_password = $this->member_model->save_member_password($nationalid, $password);
+        if($update_password == true){
+            echo (json_encode("Password saved successfully"));
+        }
+        else{
+            echo (json_encode("Error: Password not saved"));
+        }
+    }
 
     //trial ========
     //get members to create web serrvice
