@@ -250,7 +250,7 @@ class Member_model extends CI_Model
 
     public function check_member_existence($member_phone_number, $nationalid)
     {    
-        $this->db->select('member_first_name,member_loan_balance,member_share_balance,member_phone_number');    
+        $this->db->select('member_first_name,member_last_name,member_loan_balance,member_share_balance,member_phone_number,member_password');    
         $this->db->where('member_national_id', $nationalid);
         $member_details = $this->db->get("member");
         return $member_details;
