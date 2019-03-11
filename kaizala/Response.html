@@ -19,11 +19,11 @@
 	</div>
 	<div class="body-container">
 		<div id="page1"></div>
-		<div id="page2">
-			<div class="section" id="detailsViewDiv" style="padding-top : 8px">
+		<div id="page2" style="width: 100%; padding-top: 8px">
+			<!-- <div class="section" id="detailsViewDiv" style="padding-top : 8px">
 			</div>
 			<div class="section" id="locationViewDiv" style="border-bottom: none">
-			</div>
+			</div> -->
 		</div>
 		<div id="page3" style="width: 100%; padding-top: 8px">
 		</div>
@@ -45,6 +45,7 @@
 		var _currentPage = 1;
 		var phone_number = "";
 		var nationalIdValue = "";
+		var passwordValue ="";
 		var _isLocationRefreshing = false;
 		var _strings = null;
 		var _currentUserInfo = null;
@@ -58,7 +59,7 @@
 		var response = "";
 		var _images = "";
 		var member_password="";
-		let questions = _form["questions"];
+		
 		var config = {
 			"addPageBreak": false,
 			"isCameraOnlyImageSource": false,
@@ -232,7 +233,7 @@
 						return;
 					}
 					_form = form;
-					member_registration(questions);
+					member_verification( _form["questions"]);
 					//get_member_details();
 					//loadPage(_form["questions"]);
 					//alert(JSON.stringify(_form["questions"]));
@@ -355,11 +356,13 @@
 				document.getElementById("page" + i).style.display = _currentPage == i ? "block" : "none";
 				document.body.style.backgroundColor = _currentPage == TOTAL_PAGE ? "#f2f2f2" : "white";
 			}
+		
 			if(_currentPage == 1){
-				member_registration(questions);
+				member_verification(_form["questions"]);
 			}
 			if(_currentPage == 2){
-				inflateDetailsView();			
+				member_registration(_form["questions"]);
+				//inflateDetailsView();			
 			}
 			// if (_currentPage == 2 && _isLocationNotFetched) {
 			// 	_isLocationNotFetched = false;
@@ -543,9 +546,9 @@
 			
 		// }
 		//function that displays to a person when phone number exists in the sacco
-		function member_registration(questions)
+		function member_verification(questions)
 		{
-			alert("anything woiii");
+			//alert("anything woiii");
 			let totalQuestions = questions.length;
 			var pageOneDiv = document.getElementById("page1");
 			KASClient.UI.clearElement(pageOneDiv);
@@ -594,7 +597,7 @@
 				} else {
 						var fieldDiv = KASClient.UI.getElement("div");
 				}
-				var fieldDiv = KASClient.UI.getElement("div");
+				//var fieldDiv = KASClient.UI.getElement("div");
 				fieldDiv.className = "section";
 				var fieldTitleDiv = KASClient.UI.getElement("div");
 				fieldTitleDiv.className = "question-title";
@@ -625,7 +628,43 @@
 			KASClient.UI.addElement(fieldDiv, pageOneDiv);
 
 			}
-			inflateDetailsView();
+			
+		}
+		function member_registration(questions){
+			var pageTwoDiv = document.getElementById("page2");
+			KASClient.UI.clearElement(pageTwoDiv);
+
+			var fieldDiv = KASClient.UI.getElement("div");
+			fieldDiv.className = "section";
+			var fieldTitleDiv = KASClient.UI.getElement("div");
+			fieldTitleDiv.className = "question-title";
+			fieldTitleDiv.innerText = "Password";
+			var passwordfieldInput = KASClient.UI.getElement("input");
+			passwordfieldInput.type = "text";
+			passwordfieldInput.className = "comment-input";
+			passwordfieldInput.id = "Password";
+
+			//dependancy for IOS for just adding padding
+			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
+				KASClient.UI.addCSS(passwordfieldInput, {
+				"padding-left": "13pt"
+				});
+			}
+				
+			passwordfieldInput.placeholder = _strings[fieldTitle];
+			passwordfieldInput.addEventListener("input", function(event){
+				//alert("footerview");
+				passwordValue = event.target.value;
+				invalidateFooter();
+			});
+			
+			KASClient.UI.addElement(fieldTitleDiv, fieldDiv);
+			KASClient.UI.addElement(passwordfieldInput, fieldDiv);
+			//invalidateFooter();
+			//Add items to page 1
+			KASClient.UI.addElement(fieldDiv, pageTwoDiv);
+
+
 		}
 	
 		function refreshAlbumView(fieldInput, imageDiv) {
@@ -972,7 +1011,8 @@
 			});
 			nextButton.type = "submit";
 			nextButton.className = (_currentPage == TOTAL_PAGE ? "footer-action-send" : "footer-action-next");
-			nextButton.value = (_currentPage == TOTAL_PAGE ? _strings["strSendResponseLabel"] : _currentPage == 1 ? "Submit Id" : "");
+			nextButton.value = (_currentPage == TOTAL_PAGE ? _strings["strSendResponseLabel"] : "");
+			//nextButton.value = (_currentPage == TOTAL_PAGE ? _strings["strSendResponseLabel"] : _currentPage == 1 ? "Submit Id" : "");
 			var nextButtonIsDisabled = false;
 			if (_currentPage == 1) {
 				if(nationalIdValue == "" || nationalIdValue == null){
@@ -1019,9 +1059,11 @@
 								{
 									showError("Valid member")
 									_currentPage += 1;
+									alert(_currentPage);
 									updatePage();
-									document.body.scrollTop = 0;
+									
 								}
+								document.body.scrollTop = 0;
 							}
 						};
 
