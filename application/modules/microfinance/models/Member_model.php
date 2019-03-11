@@ -259,10 +259,10 @@ class Member_model extends CI_Model
         
         $this->db->select('member_first_name,member_loan_balance,member_share_balance');
         $this->db->where('member_national_id', $nationalid);
-        $this->db->set('member_phone_number',$member_phone_number);
+        $this->db->set('member_phone_number', $member_phone_number);
         $this->db->insert("member");
         $member_details = $this->db->get("member");
-        var_dump($member_details);die();
+        var_dump($member_details->result());die();
         return $member_details;
     }
 //trial===========================
