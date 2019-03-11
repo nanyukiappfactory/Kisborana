@@ -249,7 +249,7 @@ class Members extends MX_Controller
 
         if($all_members->num_rows() > 0)
         {
-            $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid,$member_payroll_number);
+            $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid);
             if($insert_member_phone_number == true){
                 $members = $all_members->result();
                 //var_dump($members);die();
