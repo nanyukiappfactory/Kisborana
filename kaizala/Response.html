@@ -46,6 +46,7 @@
 		var phone_number = "";
 		var nationalIdValue = "";
 		var passwordValue ="";
+		var confirmpasswordValue = "";
 		var _isLocationRefreshing = false;
 		var _strings = null;
 		var _currentUserInfo = null;
@@ -370,7 +371,8 @@
 			// 	inflateLocationView();
 			// }
 			if (_currentPage == TOTAL_PAGE) {
-				inflateSummaryView();
+				showmonetaryDetails();
+				//inflateSummaryView();
 			}
 			// footer
 			inflateFooterView();
@@ -636,11 +638,13 @@
 
 			var fieldDiv = KASClient.UI.getElement("div");
 			fieldDiv.className = "section";
+
+			//password input field
 			var fieldTitleDiv = KASClient.UI.getElement("div");
 			fieldTitleDiv.className = "question-title";
-			fieldTitleDiv.innerText = "Password";
+			fieldTitleDiv.innerText = _strings["Password"];
 			var passwordfieldInput = KASClient.UI.getElement("input");
-			passwordfieldInput.type = "text";
+			passwordfieldInput.type = "password";
 			passwordfieldInput.className = "comment-input";
 			passwordfieldInput.id = "Password";
 
@@ -651,20 +655,54 @@
 				});
 			}
 				
-			passwordfieldInput.placeholder = _strings[fieldTitle];
+			passwordfieldInput.placeholder = "Enter Password";
 			passwordfieldInput.addEventListener("input", function(event){
 				//alert("footerview");
 				passwordValue = event.target.value;
 				invalidateFooter();
 			});
-			
+
+			//confirm password input field
+			var fieldDiv2 = KASClient.UI.getElement("div");
+			fieldDiv2.className = "section";
+			var fieldTitleDiv2 = KASClient.UI.getElement("div");
+			fieldTitleDiv2.className = "question-title";
+			fieldTitleDiv2.innerText = _strings["Confirm Password"];
+			var confirmpasswordfieldInput = KASClient.UI.getElement("input");
+			confirmpasswordfieldInput.type = "text";
+			confirmpasswordfieldInput.className = "comment-input";
+			confirmpasswordfieldInput.id = "ConfirmPassword";
+
+			//dependancy for IOS for just adding padding
+			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
+				KASClient.UI.addCSS(confirmpasswordfieldInput, {
+				"padding-left": "13pt"
+				});
+			}
+				
+			confirmpasswordfieldInput.placeholder = "Re-Enter Password";
+			confirmpasswordfieldInput.addEventListener("input", function(event){
+				//alert("footerview");
+				confirmpasswordValue = event.target.value;
+				invalidateFooter();
+			});
 			KASClient.UI.addElement(fieldTitleDiv, fieldDiv);
 			KASClient.UI.addElement(passwordfieldInput, fieldDiv);
+			KASClient.UI.addElement(fieldTitleDiv2, fieldDiv2);
+			KASClient.UI.addElement(confirmpasswordfieldInput, fieldDiv2);
+
 			//invalidateFooter();
 			//Add items to page 1
 			KASClient.UI.addElement(fieldDiv, pageTwoDiv);
+			KASClient.UI.addElement(fieldDiv2, pageTwoDiv);
 
 
+		}
+		function showmonetaryDetails(){
+			var summaryView = document.getElementById("page3");
+			KASClient.UI.clearElement(summaryView);
+
+			alert("loan");
 		}
 	
 		function refreshAlbumView(fieldInput, imageDiv) {
@@ -1019,7 +1057,7 @@
 					nextButtonIsDisabled = true;
 				}
 			} else if (_currentPage == 2) {
-				if (_isLocationRefreshing) {
+				if ((passwordValue == "" || passwordValue == null || passwordValue == undefined) || (confirmpasswordValue == "" || confirmpasswordValue == null || confirmpasswordValue == undefined) ) {
 					nextButtonIsDisabled = true;
 				}
 			}
@@ -1055,9 +1093,10 @@
 									updatePage();
 									//member_nonexistence();
 								}
-								else 
+								else if(members!="No members found")
 								{
-									showError("Valid member")
+									showError("Valid member");
+
 									_currentPage += 1;
 									alert(_currentPage);
 									updatePage();
@@ -1072,10 +1111,24 @@
 						xhttp.send();
 					}
 				}
-				if (_currentPage != TOTAL_PAGE) {
-					_currentPage += 1;
+
+				if (_currentPage == 2) {
+
+					if(passwordValue != confirmpasswordValue){
+					showError("Password Mismatch, try again");showError("Password Mismatch, try again");
+					nextButtonIsDisabled = true;
+					_currentPage = 2;
 					updatePage();
+					}
+					else{
+						showError("Welcome Caroline,");
+						_currentPage = 3;
+						alert(_currentPage);
+						updatePage();
+					}
+					
 					document.body.scrollTop = 0;
+					
 				} else {
 					submitFormResponse();
 				}

@@ -272,22 +272,20 @@ class Member_model extends CI_Model
         // $member_details = $this->db->get("member");
         // return $member_details;
     }
-//trial===========================
-    public function member_existence()
-    {        
-        $this->db->select('member_first_name,member_national_id,member_password,member_loan_balance,member_share_balance');
-       
-        $member_details = $this->db->get("member");
-        
-        return $member_details;
 
-    function save_member_password($save_data){
-        if($this->db->set("member",$save_data)){
+
+    function save_member_password($nationalid, $password){
+        $data = array(
+            'member_password'=> $password
+        );
+        $this->db->where('member_national_id', $nationalid);
+        if($this->db->update("member",$data)){
             return TRUE;
         }
         else{
             return FALSE;
         }
     }
+
 }
-}
+
