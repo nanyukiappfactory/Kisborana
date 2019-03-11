@@ -260,7 +260,6 @@ class Member_model extends CI_Model
         $data = array(
             'member_phone_number'=> $member_phone_number
         );
-        var_dump($data);die();
         $this->db->where('member_national_id', $nationalid);
         if($this->db->update("member",$data))
         {
