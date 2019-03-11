@@ -257,10 +257,12 @@ class Member_model extends CI_Model
     }
     public function insert_phone_number($member_phone_number, $nationalid){
         
-        //$this->db->select('member_first_name,member_loan_balance,member_share_balance,member_phone_number');
+        $data = array(
+            'member_phone_number'=> $member_phone_number
+        );
+        var_dump($data);die();
         $this->db->where('member_national_id', $nationalid);
-        $this->db->set('member_phone_number', $member_phone_number);
-        if($this->db->insert("member"))
+        if($this->db->update("member",$data))
         {
             return true;
         }
