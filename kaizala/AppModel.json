@@ -34,6 +34,12 @@
       
     },
     {
+      "title": "Payroll Numbers",
+      "type": "Numeric",
+      "isOptional": true
+      
+    },
+    {
       "title": "Name",
       "type": "Text"
     },
