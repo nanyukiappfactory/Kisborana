@@ -111,7 +111,7 @@ class Members extends MX_Controller
         if ($this->member_model->deactivate($member_id)) {
             $this->session->set_flashdata("success", "Successfully deactivated");
         } else {
-            $this->session->set_flashdata("error", "Cannot be deactivated");
+            $this->session->set_flashdata("error", "Cannot deactivate");
         }
         redirect('microfinance/members');
     }
