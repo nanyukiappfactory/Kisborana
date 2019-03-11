@@ -47,6 +47,10 @@
 		var nationalIdValue = "";
 		var passwordValue ="";
 		var confirmpasswordValue = "";
+		var members = "";
+		var member_names = "";
+		var share_balance = "";
+		var loan_balance = "";
 		var _isLocationRefreshing = false;
 		var _strings = null;
 		var _currentUserInfo = null;
@@ -702,7 +706,35 @@
 			var summaryView = document.getElementById("page3");
 			KASClient.UI.clearElement(summaryView);
 
-			alert("loan");
+			var divAttributes = {
+				"background-color": "white",
+				"color": "#32485f",
+				"font-size": "13.5pt",
+				"margin": "16px",
+				"margin-top": "8px",
+				"margin-bottom": "8px",
+				"box-shadow": "0px 0px 1px 0px rgba(0,0,0,0.12)",
+				"border-radius": "4px"
+			};
+			var fieldDiv = KASClient.UI.getElement("div");
+			fieldDiv.className = "section";
+
+			//password input field
+			var fieldTitleDiv = KASClient.UI.getElement("div");
+			fieldTitleDiv.className = "question-title";
+			fieldTitleDiv.innerText = "Account for: "+member_names;
+			var shareFieldDiv = KASClient.UI.getElement("div");
+			shareFieldDiv.innerText = "Your share balance is :" + share_balance;
+			var loanFieldDiv = KASClient.UI.getElement("div");
+			loanFieldDiv.innerText = "Your loan balance is :" + loan_balance;
+
+			//adding share and loan balance
+			KASClient.UI.addElement(fieldTitleDiv,fieldDiv);
+			KASClient.UI.addElement(shareFieldDiv,fieldDiv);
+			KASClient.UI.addElement(loanFieldDiv,fieldDiv);
+			KASClient.UI.addElement(fieldDiv,summaryView);
+
+			//alert("loan");
 		}
 	
 		function refreshAlbumView(fieldInput, imageDiv) {
@@ -1082,16 +1114,15 @@
 							//alert("Readystate"+this.readyState+"Status:"+this.status);
 							if(this.readyState == 4 && this.status == 200) {
 								KASClient.App.hideProgressBar();
-								var members = JSON.parse(this.responseText);
-								member_password = "";
-								//alert(members);
-								// var member = JSON.parse(this.responseText);
+								members = JSON.parse(this.responseText);
+						
+								member_names = members[0].member_first_name + " " + members[0].member_last_name;
+								share_balance = members[0].member_share_balance;
+								loan_balance = members[0].member_loan_balance;
 								if(members=="No members found"){
-									//alert ("you are not registred in the sacco");
-									showError("check the number and try again");
 									_currentPage = 1;
 									updatePage();
-									//member_nonexistence();
+									showError("check the number and try again");
 								}
 								else if(members!="No members found")
 								{
@@ -1099,6 +1130,9 @@
 
 									_currentPage += 1;
 									alert(_currentPage);
+									alert(JSON.stringify(members));
+									alert(JSON.stringify(members[0].member_first_name));
+									alert(members[0].member_first_name);
 									updatePage();
 									
 								}
@@ -1115,16 +1149,43 @@
 				if (_currentPage == 2) {
 
 					if(passwordValue != confirmpasswordValue){
-					showError("Password Mismatch, try again");showError("Password Mismatch, try again");
 					nextButtonIsDisabled = true;
 					_currentPage = 2;
 					updatePage();
+					showError("Password Mismatch, try again");showError("Password Mismatch, try again");
 					}
+					//send the password value to update member_password field
 					else{
-						showError("Welcome Caroline,");
-						_currentPage = 3;
-						alert(_currentPage);
-						updatePage();
+						var xhttp2 = new XMLHttpRequest();
+						xhttp2.onreadystatechange = function () {
+							//alert("Readystate"+this.readyState+"Status:"+this.status);
+							if(this.readyState == 4 && this.status == 200) {
+								KASClient.App.hideProgressBar();
+								var password_message = JSON.parse(this.responseText);
+								//member_password = "";
+								//alert(members);
+								// var member = JSON.parse(this.responseText);
+								if(password_message == "Password saved successfully"){
+									_currentPage = 3;
+									alert(_currentPage);
+									updatePage();
+									showError("Welcome Caroline,");
+								}
+								else if(password_message != "Password saved successfully")
+								{
+									_currentPage = 2;
+									alert(_currentPage);
+									updatePage();
+									showError("Error: Password not saved");
+									
+								}
+								document.body.scrollTop = 0;
+							}
+						};
+
+						xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/"+nationalIdValue+ "/" +passwordValue , true);
+						xhttp2.setRequestHeader("Content-type", "text/plain");
+						xhttp2.send();
 					}
 					
 					document.body.scrollTop = 0;
