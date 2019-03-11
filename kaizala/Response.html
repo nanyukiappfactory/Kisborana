@@ -243,54 +243,6 @@
             
 		}
 
-		function get_member_details() {
-          //KASClient.App.showProgressBar("Validating member");
-            // alert(JSON.stringify(_name));
-            phone_number = _phoneNumber;
-			var lastnumber = phone_number.substr(phone_number.length - 9);
-			
-            // alert(lastnumber);
-            var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function () {
-				//alert("Readystate"+this.readyState+"Status:"+this.status);
-				if(this.readyState == 4 && this.status == 200) {
-                    KASClient.App.hideProgressBar();
-					var members = JSON.parse(this.responseText);
-					member_password = "";
-					//alert(members);
-					// var member = JSON.parse(this.responseText);
-					if(members=="No members found"){
-						//alert ("you are not registred in the sacco");
-						member_nonexistence();
-					}
-					else 
-                    {
-						
-						
-						
-						//invalidateFooter();
-						//loadPage(questions);
-                    }
-					
-					//var members ="";
-					//alert(members);
-                    // if(members == "" || members==null)
-                    // {
-                    //     alert ("you are not registred in the sacco")
-                    // }
-                    // else 
-                    // {
-                    //     alert("you are here");
-                    // }
-                    
-				}
-			};
-
-			xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/"+lastnumber, true);
-			xhttp.setRequestHeader("Content-type", "text/plain");
-			xhttp.send();
-		}
-
 		function refreshLocation() {
 			if (_isLocationRefreshing == true)
 				return;
@@ -403,12 +355,17 @@
 				document.getElementById("page" + i).style.display = _currentPage == i ? "block" : "none";
 				document.body.style.backgroundColor = _currentPage == TOTAL_PAGE ? "#f2f2f2" : "white";
 			}
-
-			if (_currentPage == 2 && _isLocationNotFetched) {
-				_isLocationNotFetched = false;
-				refreshLocation();
-				inflateLocationView();
+			if(_currentPage == 1){
+				member_registration(questions);
 			}
+			if(_currentPage == 2){
+				inflateDetailsView();			
+			}
+			// if (_currentPage == 2 && _isLocationNotFetched) {
+			// 	_isLocationNotFetched = false;
+			// 	refreshLocation();
+			// 	inflateLocationView();
+			// }
 			if (_currentPage == TOTAL_PAGE) {
 				inflateSummaryView();
 			}
@@ -564,27 +521,27 @@
 		}
 
 		//function that displays to a person when he or she doesn't exist in the sacco
-		function member_nonexistence()
-		{
-			var pageOneDiv = document.getElementById("page1");
-			KASClient.UI.clearElement(pageOneDiv);
-			pageOneDiv.className = "main_holder";
+		// function member_nonexistence()
+		// {
+		// 	var pageOneDiv = document.getElementById("page1");
+		// 	KASClient.UI.clearElement(pageOneDiv);
+		// 	pageOneDiv.className = "main_holder";
 
-			var memberDiv = KASClient.UI.getElement("div");
-			memberDiv.className = "mainBody";			
-			var membertitleDiv = KASClient.UI.getElement("div");
-			membertitleDiv.className = "sorry_body";
-			membertitleDiv.innerText = "Sorry!..";
-			var messageDiv = KASClient.UI.getElement("div");
-			messageDiv.className ="message_bdy";
-			messageDiv.innerText = "Your number is not registered with the SACCO.. contact admin [+254708807403]";
+		// 	var memberDiv = KASClient.UI.getElement("div");
+		// 	memberDiv.className = "mainBody";			
+		// 	var membertitleDiv = KASClient.UI.getElement("div");
+		// 	membertitleDiv.className = "sorry_body";
+		// 	membertitleDiv.innerText = "Sorry!..";
+		// 	var messageDiv = KASClient.UI.getElement("div");
+		// 	messageDiv.className ="message_bdy";
+		// 	messageDiv.innerText = "Your number is not registered with the SACCO.. contact admin [+254708807403]";
 
-			//add elements created
-			KASClient.addElement(membertitleDiv,memberDiv);
-			KASClient.addElement(messageDiv,memberDiv);
-			KASClient.addElement(memberDiv,pageOneDiv);
+		// 	//add elements created
+		// 	KASClient.addElement(membertitleDiv,memberDiv);
+		// 	KASClient.addElement(messageDiv,memberDiv);
+		// 	KASClient.addElement(memberDiv,pageOneDiv);
 			
-		}
+		// }
 		//function that displays to a person when phone number exists in the sacco
 		function member_registration(questions)
 		{
@@ -666,8 +623,9 @@
 			//invalidateFooter();
 			//Add items to page 1
 			KASClient.UI.addElement(fieldDiv, pageOneDiv);
+
 			}
-			
+			inflateDetailsView();
 		}
 	
 		function refreshAlbumView(fieldInput, imageDiv) {
@@ -1014,7 +972,7 @@
 			});
 			nextButton.type = "submit";
 			nextButton.className = (_currentPage == TOTAL_PAGE ? "footer-action-send" : "footer-action-next");
-			nextButton.value = (_currentPage == TOTAL_PAGE ? _strings["strSendResponseLabel"] : _currentPage == 1 ? "Register" : "");
+			nextButton.value = (_currentPage == TOTAL_PAGE ? _strings["strSendResponseLabel"] : _currentPage == 1 ? "Submit Id" : "");
 			var nextButtonIsDisabled = false;
 			if (_currentPage == 1) {
 				if(nationalIdValue == "" || nationalIdValue == null){
@@ -1052,28 +1010,18 @@
 								// var member = JSON.parse(this.responseText);
 								if(members=="No members found"){
 									//alert ("you are not registred in the sacco");
-									member_nonexistence();
+									showError("check the number and try again");
+									_currentPage = 1;
+									updatePage();
+									//member_nonexistence();
 								}
 								else 
 								{
-									
-									
-									
-									//invalidateFooter();
-									//loadPage(questions);
+									showError("Valid member")
+									_currentPage += 1;
+									updatePage();
+									document.body.scrollTop = 0;
 								}
-								
-								//var members ="";
-								//alert(members);
-								// if(members == "" || members==null)
-								// {
-								//     alert ("you are not registred in the sacco")
-								// }
-								// else 
-								// {
-								//     alert("you are here");
-								// }
-								
 							}
 						};
 
