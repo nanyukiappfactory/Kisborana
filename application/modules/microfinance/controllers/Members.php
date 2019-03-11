@@ -250,9 +250,15 @@ public function check_member_existence($phone, $nationalid)
         if($all_members->num_rows() > 0)
         {
             $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid);
-            $members = $insert_member_phone_number->result();
-            $members_encoded = json_encode($members);
-            echo $members_encoded;
+            if($insert_member_phone_number == true){
+                $members = $insert_member_phone_number->result();
+                $members_encoded = json_encode($members);
+                echo $members_encoded;
+            }
+            else{
+                echo (json_encode("Phone not successfully saved"));
+            }
+            
         }
 
         else{
