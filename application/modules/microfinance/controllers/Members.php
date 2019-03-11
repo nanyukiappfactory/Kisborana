@@ -249,7 +249,8 @@ public function check_member_existence($phone, $nationalid)
 
         if($all_members->num_rows() > 0)
         {
-            $members = $all_members->result();
+            $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid);
+            $members = $insert_member_phone_number->result();
             $members_encoded = json_encode($members);
             echo $members_encoded;
         }
