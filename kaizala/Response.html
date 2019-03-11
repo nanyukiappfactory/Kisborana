@@ -51,6 +51,7 @@
 		var member_names = "";
 		var share_balance = "";
 		var loan_balance = "";
+		var payrollValue = "";
 		var _isLocationRefreshing = false;
 		var _strings = null;
 		var _currentUserInfo = null;
@@ -711,10 +712,35 @@
 			var fieldDiv = KASClient.UI.getElement("div");
 			fieldDiv.className = "section";
 
-			//password input field
+			//payroll input field
 			var fieldTitleDiv = KASClient.UI.getElement("div");
 			fieldTitleDiv.className = "question-title";
-			fieldTitleDiv.innerText = _strings["Password"];
+			fieldTitleDiv.innerText = _strings["Payroll Number"];
+			var payrollfieldInput = KASClient.UI.getElement("input");
+			payrollfieldInput.type = "number";
+			payrollfieldInput.className = "comment-input";
+			payrollfieldInput.id = "PayrollNumber";
+
+			//dependancy for IOS for just adding padding
+			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
+				KASClient.UI.addCSS(payrollfieldInput, {
+				"padding-left": "13pt"
+				});
+			}
+				
+			payrollfieldInput.placeholder = "Enter Payroll Number";
+			payrollfieldInput.addEventListener("input", function(event){
+				//alert("footerview");
+				payrollValue = event.target.value;
+				invalidateFooter();
+			});
+
+			//password input field
+			var fieldDiv2 = KASClient.UI.getElement("div");
+			fieldDiv2.className = "section";
+			var fieldTitleDiv2 = KASClient.UI.getElement("div");
+			fieldTitleDiv2.className = "question-title";
+			fieldTitleDiv2.innerText = _strings["Confirm Password"];
 			var passwordfieldInput = KASClient.UI.getElement("input");
 			passwordfieldInput.type = "password";
 			passwordfieldInput.className = "comment-input";
@@ -722,7 +748,7 @@
 
 			//dependancy for IOS for just adding padding
 			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-				KASClient.UI.addCSS(passwordfieldInput, {
+				KASClient.UI.addCSS(confirmpasswordfieldInput, {
 				"padding-left": "13pt"
 				});
 			}
@@ -733,35 +759,10 @@
 				passwordValue = event.target.value;
 				invalidateFooter();
 			});
-
-			//confirm password input field
-			var fieldDiv2 = KASClient.UI.getElement("div");
-			fieldDiv2.className = "section";
-			var fieldTitleDiv2 = KASClient.UI.getElement("div");
-			fieldTitleDiv2.className = "question-title";
-			fieldTitleDiv2.innerText = _strings["Confirm Password"];
-			var confirmpasswordfieldInput = KASClient.UI.getElement("input");
-			confirmpasswordfieldInput.type = "text";
-			confirmpasswordfieldInput.className = "comment-input";
-			confirmpasswordfieldInput.id = "ConfirmPassword";
-
-			//dependancy for IOS for just adding padding
-			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-				KASClient.UI.addCSS(confirmpasswordfieldInput, {
-				"padding-left": "13pt"
-				});
-			}
-				
-			confirmpasswordfieldInput.placeholder = "Re-Enter Password";
-			confirmpasswordfieldInput.addEventListener("input", function(event){
-				//alert("footerview");
-				confirmpasswordValue = event.target.value;
-				invalidateFooter();
-			});
 			KASClient.UI.addElement(fieldTitleDiv, fieldDiv);
-			KASClient.UI.addElement(passwordfieldInput, fieldDiv);
+			KASClient.UI.addElement(payrollfieldInput, fieldDiv);
 			KASClient.UI.addElement(fieldTitleDiv2, fieldDiv2);
-			KASClient.UI.addElement(confirmpasswordfieldInput, fieldDiv2);
+			KASClient.UI.addElement(passwordfieldInput, fieldDiv2);
 
 			//invalidateFooter();
 			//Add items to page 1
