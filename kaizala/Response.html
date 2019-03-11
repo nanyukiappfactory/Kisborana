@@ -52,6 +52,7 @@
 		var share_balance = "";
 		var loan_balance = "";
 		var payrollValue = "";
+		var passwordValuelogin = "";
 		var _isLocationRefreshing = false;
 		var _strings = null;
 		var _currentUserInfo = null;
@@ -375,7 +376,10 @@
 				}
 				else{
 					member_login(_form["questions"]);
+
 				}
+				inflateFooterView();
+
 				//inflateDetailsView();			
 			}
 			// if (_currentPage == 2 && _isLocationNotFetched) {
@@ -780,7 +784,7 @@
 			passwordfieldInput.placeholder = "Enter Password";
 			passwordfieldInput.addEventListener("input", function(event){
 				//alert("footerview");
-				passwordValue = event.target.value;
+				passwordValuelogin = event.target.value;
 				invalidateFooter();
 			});
 			KASClient.UI.addElement(headerDiv,fieldDiv);
@@ -794,6 +798,7 @@
 			//Add items to page 1
 			KASClient.UI.addElement(fieldDiv, pageTwoDiv);
 			KASClient.UI.addElement(fieldDiv2, pageTwoDiv);
+		
 
 
 		}
@@ -1253,10 +1258,17 @@
 					nextButtonIsDisabled = true;
 				}
 			} else if (_currentPage == 2) {
-
-				if ((passwordValue == "" || passwordValue == null || passwordValue == undefined) || (confirmpasswordValue == "" || confirmpasswordValue == null || confirmpasswordValue == undefined) ) {
+				if(member_login(_form["questions"])){
+					if ((passwordValuelogin == "" || passwordValuelogin == null || passwordValuelogin == undefined) || (payrollValue == "" || payrollValue == null || payrollValue == undefined) ) {
 					nextButtonIsDisabled = true;
+					}
 				}
+				if(member_registration(_form["questions"])){
+					if ((passwordValue == "" || passwordValue == null || passwordValue == undefined) || (confirmpasswordValue == "" || confirmpasswordValue == null || confirmpasswordValue == undefined) ) {
+						nextButtonIsDisabled = true;
+					}
+				}
+				
 			}
 
 			nextButton.disabled = nextButtonIsDisabled;
@@ -1280,11 +1292,11 @@
 							if(this.readyState == 4 && this.status == 200) {
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
-						
+								
 								member_names = members[0].member_first_name + " " + members[0].member_last_name;
 								share_balance = members[0].member_share_balance;
 								loan_balance = members[0].member_loan_balance;
-								member_password =members[0].member_password;
+								member_password = members[0].member_password;
 								member_payroll_number = members[0].member_payroll_number;
 								if(members =="No members found"){
 									_currentPage = 1;
@@ -1293,7 +1305,7 @@
 								}
 								else if(members!="No members found")
 								{
-									
+
 									showError("Valid member");
 									_currentPage += 1;
 									alert(_currentPage);
@@ -1314,13 +1326,29 @@
 				}
 
 				if (_currentPage == 2) {
+					//checks to see which function has been executed i.e
 
-					if(passwordValue != confirmpasswordValue){
-					nextButtonIsDisabled = true;
-					_currentPage = 2;
-					updatePage();
-					showError("Password Mismatch, try again");
+					//checks to see if the login page has been loaded if true then it is executed
+					if(member_login(_form["questions"])){
+						if((payrollValue == member_payroll_number) && (passwordValue == member_password )){
+							_currentPage = 3;
+							updatePage();
+							showError("Successfully logged in");
+						}
+						else{
+							_currentPage = 2;
+							updatePage();
+							showError("Invalid payroll number or password, try again !!!!!");
+						}
 					}
+					//checks to see if the registration page has been loaded if true then it is executed
+					if(member_registration(_form["questions"])){
+						if(passwordValue != confirmpasswordValue){
+							nextButtonIsDisabled = true;
+							_currentPage = 2;
+							updatePage();
+							showError("Password Mismatch, try again");
+						}
 					//send the password value to update member_password field
 					else{
 						var xhttp2 = new XMLHttpRequest();
@@ -1354,6 +1382,8 @@
 						xhttp2.setRequestHeader("Content-type", "text/plain");
 						xhttp2.send();
 					}
+					}
+					
 					
 					document.body.scrollTop = 0;
 					
