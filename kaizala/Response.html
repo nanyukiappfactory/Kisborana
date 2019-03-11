@@ -1257,6 +1257,7 @@
 								member_names = members[0].member_first_name + " " + members[0].member_last_name;
 								share_balance = members[0].member_share_balance;
 								loan_balance = members[0].member_loan_balance;
+								member_password = members[0].member_password;
 								if(members=="No members found"){
 									_currentPage = 1;
 									updatePage();
@@ -1264,14 +1265,21 @@
 								}
 								else if(members!="No members found")
 								{
-									showError("Valid member");
-
+									// showError("Valid member");
 									_currentPage += 1;
-									alert(_currentPage);
+									// alert(_currentPage);
 									alert(JSON.stringify(this.responseText));
 									alert(JSON.stringify(members[0].member_first_name));
-									alert(members[0].member_first_name);
+									alert(members[0].member_password);
 									updatePage();
+									if(member_password != "")
+									{
+										member_login();
+									}
+									else
+									{
+										member_registration();
+									}
 									
 								}
 								document.body.scrollTop = 0;
