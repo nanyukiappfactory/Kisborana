@@ -10,22 +10,24 @@ class Members extends MX_Controller
         parent::__construct();
 
         // Allow from any origin
-		if (isset($_SERVER['HTTP_ORIGIN'])) {
-			header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-			header('Access-Control-Allow-Credentials: true');
-			header('Access-Control-Max-Age: 86400');    // cache for 1 day
-		}
-	
-		// Access-Control headers are received during OPTIONS requests
-		if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-	
-			if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-				header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
-	
-			if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
-				header("Access-Control-Allow-Headers:        {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
-	
-			exit(0);
+        if (isset($_SERVER['HTTP_ORIGIN'])) {
+            header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+            header('Access-Control-Allow-Credentials: true');
+            header('Access-Control-Max-Age: 86400'); // cache for 1 day
+        }
+
+        // Access-Control headers are received during OPTIONS requests
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) {
+                header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+            }
+
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) {
+                header("Access-Control-Allow-Headers:        {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+            }
+
+            exit(0);
         }
 
         //load required model
@@ -36,6 +38,7 @@ class Members extends MX_Controller
         // load upload library
         $this->load->helper('download');
         $this->load->library('pagination');
+        
     }
 
     // A function that displays all members
@@ -46,9 +49,8 @@ class Members extends MX_Controller
 
         $search_results = $this->session->userdata("search_session");
 
-
-        if(!empty($search_results) && $search_results != null){
-            $where =  $search_results;
+        if (!empty($search_results) && $search_results != null) {
+            $where = $search_results;
 
         }
 
@@ -59,7 +61,7 @@ class Members extends MX_Controller
         $config['base_url'] = site_url().'members/all-members/'.$order_column.'/'.$order_method;
         $config['total_rows'] = $total_members;
         $config['uri_segment'] = $segment;
-        $config['per_page'] =  $limit_per_page ;
+        $config['per_page'] = $limit_per_page;
         $config['num_links'] = 3;
 
         $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
@@ -77,26 +79,37 @@ class Members extends MX_Controller
         $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
         $config['last_tag_close'] = '</span></li>';
 
-
         $this->pagination->initialize($config);
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         // build paging links
+
         $links = $this->pagination->create_links();
 
         //$employer_details = $this->member_model->get_employer_details();
 
-        $query = $this->site_model->get_all_members($search_results, $table,$limit_per_page, $start_index, $where, $order_column, $order_method);
+        $query = $this->site_model->get_all_members($search_results, $table, $limit_per_page, $start_index, $where, $order_column, $order_method);
 
-        $v_data = array ("all_members"=>$query,
-                        
-                        "links"=>$links,
-                        "page"=>$start_index,
-                        'order_method' => $order_method,
-                        'order_column' => $order_column);
 
-        $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/members/all_members", $v_data, true),
+        if($order_method == 'DESC')
+        {
+          
+            $order_method = 'ASC';
+        }
+        else{
+            $order_method = 'DESC';
+        }
 
+
+        $params = array('links' => $links,
+            'all_members' => $query,
+            'page' => $start_index,
+            'order_method' => $order_method,
+            'order_column' => $order_column,
+        );
+        
+        $data = array(
+            "title" => $this->site_model->display_page_title(),
+            "content" => $this->load->view("microfinance/members/all_members", $params, true)
         );
         $this->load->view("site/layouts/layout", $data);
     }
@@ -271,8 +284,9 @@ class Members extends MX_Controller
         $this->member_model->db_upload_cv();
     }
 
-    public function download_csv(){
-        force_download("./assets/downloads/member.csv", NULL);
+    public function download_csv()
+    {
+        force_download("./assets/downloads/member.csv", null);
     }
 
     public function execute_search()
@@ -294,88 +308,78 @@ class Members extends MX_Controller
     //get members to create web serrvice
     public function check_member_existence($phone, $nationalid)
     {
-       
+
         $all_members = $this->member_model->check_member_existence($phone, $nationalid);
-        
-        if($all_members->num_rows() > 0)
-        {
+
+        if ($all_members->num_rows() > 0) {
             $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid);
-            if($insert_member_phone_number == true){
-                $members = $all_members->result();                
+            if ($insert_member_phone_number == true) {
+                $members = $all_members->result();
                 $members_encoded = json_encode($members);
                 echo $members_encoded;
-            }
-            else{
+            } else {
                 echo (json_encode("Phone not successfully saved"));
             }
-            
-        }
 
-        else{
-    
+        } else {
+
             echo (json_encode("No members found"));
         }
 
-        
     }
     //updates member password field for a specific member
-    public function save_member_password($nationalid, $password){
+    public function save_member_password($nationalid, $password)
+    {
 
         $update_password = $this->member_model->save_member_password($nationalid, $password);
-        if($update_password == true){
+        if ($update_password == true) {
             echo (json_encode("Password saved successfully"));
-        }
-        else{
+        } else {
             echo (json_encode("Error: Password not saved"));
         }
     }
 
     //trial ========
     //get members to create web serrvice
-public function member_existence()
-{
-   
-    $all_members = $this->member_model->member_existence();
-
-    if($all_members->num_rows() > 0)
+    public function member_existence()
     {
-        $members = $all_members->result();
-        $members_encoded = json_encode($members);
-        echo $members_encoded;
-    }
 
-    else{
+        $all_members = $this->member_model->member_existence();
 
-        echo (json_encode("No members found"));
+        if ($all_members->num_rows() > 0) {
+            $members = $all_members->result();
+            $members_encoded = json_encode($members);
+            echo $members_encoded;
+        } else {
+
+            echo (json_encode("No members found"));
+        }
     }
-} 
 //===========
-    
-        //save encoded data to db
-    public function update_member_table(){
+
+    //save encoded data to db
+    public function update_member_table()
+    {
         // 1. Receive json post
         $json_string = file_get_contents("php://input");
-        
+
         // 2. convert json to array
         $json_object = json_decode($json_string);
-      
+
         // 3. validate
-        if(is_array($json_object) && (count($json_object) > 0)){
+        if (is_array($json_object) && (count($json_object) > 0)) {
             // Retreive the data
-                $row = $json_object[0];
-                $date_submitted = date("Y-m-d H:i:s");
-                $data = array(
-                    "member_password" => $row-> member=-password,
-                    
-                );
+            $row = $json_object[0];
+            $date_submitted = date("Y-m-d H:i:s");
+            $data = array(
+                "member_password" => $row->member = -password,
+
+            );
 
             // 4. Request to submit
-             $this->member_model ->save_member_password($data);
+            $this->member_model->save_member_password($data);
 
-           
-
-        }
-        else{
+        } else {
             // send invalid data message
             echo "invalid data provided";
 

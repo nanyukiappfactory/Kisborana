@@ -69,8 +69,8 @@ echo form_open('members/execute_search');
         <table class="table table-condensed table-striped table-sm table-bordered">
             <tr>
                 <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th><a href="<?php echo site_url().'members/all-members/member_first_name/'.$order_method.'/'.$page ?>" >First Name</a></th>
+                <th><a href="<?php echo site_url().'members/all-members/member_last_name/'.$order_method.'/'.$page ?>" >Last Name</a></th>
                 <th>National ID</th>
                 <th>Member Payroll Number</th>
                 <th>Employer Name</th>
@@ -83,14 +83,11 @@ echo form_open('members/execute_search');
                 <th>Emergency Loan</th>
                 <th>School Loan</th>
                 <th colspan="4" style="text-align:center">Actions</th>
-
-
             </tr>
             <?php
-            $count = $page;
+
+$count = $page;
             if ($all_members->num_rows() > 0) {
-                
-                $count = 0;
                 foreach ($all_members->result() as $row) {
                     $count++;
                     $id = $row->member_id;
