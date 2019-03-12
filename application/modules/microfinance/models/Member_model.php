@@ -252,19 +252,27 @@ class Member_model extends CI_Model
         }
     }
 
-    public function check_member_existence($member_phone_number, $nationalid)
+    public function check_member_existence($member_phone_number, $nationalid, $payroll_number)
     {    
+        $data = array(
+            'member_national_id' => $nationalid,
+            'member_payroll_number' => $payroll_number
+        );
         $this->db->select('member_first_name,member_last_name,advance_loan,development_loan,emergency_loan,school_loan,member_share_balance,member_phone_number,member_password,member_payroll_number');    
-        $this->db->where('member_national_id', $nationalid);
+        $this->db->where($data);
         $member_details = $this->db->get("member");
         return $member_details;
     }
-    public function insert_phone_number($member_phone_number, $nationalid){
+    public function insert_phone_number($member_phone_number, $nationalid,$payroll_number){
         
         $data = array(
             'member_phone_number'=> $member_phone_number
         );
-        $this->db->where('member_national_id', $nationalid);
+        $where = array(
+            'member_national_id' => $nationalid,
+            'member_payroll_number' => $payroll_number
+        );
+        $this->db->where($where);
         if($this->db->update("member",$data))
         {
             return true;

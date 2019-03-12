@@ -306,15 +306,16 @@ class Members extends MX_Controller
     }
 
     //get members to create web serrvice
-    public function check_member_existence($phone, $nationalid)
+    public function check_member_existence($phone, $nationalid,$payroll_number)
     {
+       
+        $all_members = $this->member_model->check_member_existence($phone, $nationalid,$payroll_number);
 
-        $all_members = $this->member_model->check_member_existence($phone, $nationalid);
-
-        if ($all_members->num_rows() > 0) {
-            $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid);
-            if ($insert_member_phone_number == true) {
-                $members = $all_members->result();
+        if($all_members->num_rows() > 0)
+        {
+            $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid,$payroll_number);
+            if($insert_member_phone_number == true){
+                $members = $all_members->result();                
                 $members_encoded = json_encode($members);
                 echo $members_encoded;
             } else {
