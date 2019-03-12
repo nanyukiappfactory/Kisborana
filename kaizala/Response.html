@@ -549,22 +549,24 @@
 		//function that displays to a person when phone number exists in the sacco
 		function member_verification(questions)
 		{
-			//alert("anything woiii");
-			let totalQuestions = questions.length;
+			alert("anything woiii");
+			//let totalQuestions = questions.length;
 			var pageOneDiv = document.getElementById("page1");
 			KASClient.UI.clearElement(pageOneDiv);
 			pageOneDiv.className = "main_holder";			
 			
 			//National Id input
-			var fieldDiv = KASClient.UI.getElement("div");
+			var fieldDiv = KASClient.UI.getElement("div", {
+							"border-bottom": "none"
+			});
 			fieldDiv.className = "section";
 			var fieldTitleDiv = KASClient.UI.getElement("div");
 			fieldTitleDiv.className = "first-question-title";
-			fieldTitleDiv.innerText = _strings[ "ID Number"];
+			fieldTitleDiv.innerText = _strings["ID Number"];
 			var nationalidfieldInput = KASClient.UI.getElement("input");
 			nationalidfieldInput.type = "number";
 			nationalidfieldInput.className = "first-comment-input";
-			nationalidfieldInput.id =  "ID Number";
+			nationalidfieldInput.id =  "IDNumber";
 
 			//dependancy for IOS for just adding padding
 			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
@@ -573,7 +575,7 @@
 				});
 			}
 			
-			nationalidfieldInput.placeholder = _strings[fieldTitle];
+			nationalidfieldInput.placeholder = "Enter National Id";
 			nationalidfieldInput.addEventListener("input", function(event){
 				//alert("footerview");
 				nationalIdValue = event.target.value;
@@ -1200,8 +1202,10 @@
 								member_national_id = members[0].member_national_id;
 								if(members =="No members found"){
 									_currentPage = 1;
+									nationalIdValue = "";
+									payrollValue = "";
 									updatePage();
-									showError("check the number and try again");
+									showError("Invalid id number or payroll number, try again !!!");
 								}
 								else if(members!="No members found")
 								{
@@ -1268,7 +1272,7 @@
 
 					}
 					if(is_registration_form_page == false){
-						if((passwordValuelogin == member_password)){
+						if((passwordValuelogin == md5(member_password))){
 							_currentPage = 3;
 							updatePage();
 							showError("Successfully logged in");
