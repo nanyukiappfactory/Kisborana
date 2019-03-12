@@ -152,7 +152,7 @@ text-align: center;
   color: #6f7e8f;
 }
 .shares_loan {
-  background-color: #d1a207;
+  background-color: #08e287;
   margin: 15px;
   padding: 15px;
   margin-top: 5px;
@@ -176,6 +176,9 @@ text-align: center;
 }
 
 .comment-input::-webkit-input-placeholder {
+  color: #98a3af;
+}
+.first-comment-input::-webkit-input-placeholder {
   color: #98a3af;
 }
 
@@ -224,6 +227,32 @@ input[type="radio"]:checked {
   color: rgb(50, 72, 95);
   font-family: 'Times New Roman', Times, serif;  
 }
+.first-question-title{
+  padding: 15pt;
+  font-size: 13.5pt;
+  font-weight: normal;
+  color: rgb(50, 72, 95);
+  font-family: 'Times New Roman', Times, serif;
+  margin-top: 60px;
+  margin: 10px;
+}
+.first-comment-input{
+  padding-top: 15pt;
+  padding-bottom: 15pt;
+  padding-left: 15pt;
+  padding-right: 15pt;
+  font-size: 12pt;
+  font-weight: normal;
+  color: #32485f;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  width: calc(100%-30pt);
+  font-family: -apple-system, sans-serif;
+  margin-left: 10px;
+  margin-right: 10px;
+
+}
 .monetarySummary {
   padding: 15px;
   margin: 15px;
@@ -233,7 +262,7 @@ input[type="radio"]:checked {
   color: rgb(50, 72, 95);
   font-family: 'Times New Roman', Times, serif;
   text-align: center;
-  background-color: #d1a207;
+  background-color:  #08e287;;
 }
 
 .option-div {
