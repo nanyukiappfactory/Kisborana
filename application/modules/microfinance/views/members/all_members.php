@@ -72,14 +72,16 @@ echo form_open('members/execute_search');
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>National ID</th>
-                <th>Email</th>
-                <th>Location</th>
-                <th>Member Number</th>
                 <th>Member Payroll Number</th>
                 <th>Employer Name</th>
                 <th>Phone Number</th>
                 <th>Status</th>
                 <th>Registration Date</th>
+                <th>Share Balance</th>
+                <th>Advance Loan</th>
+                <th>Development Loan</th>
+                <th>Emergency Loan</th>
+                <th>School Loan</th>
                 <th colspan="4" style="text-align:center">Actions</th>
 
 
@@ -95,14 +97,16 @@ echo form_open('members/execute_search');
                     $first_name = $row->member_first_name;
                     $last_name = $row->member_last_name;
                     $national_id = $row->member_national_id;
-                    $email = $row->member_email;
-                    $location = $row->member_location;
-                    $member_number = $row->member_number;
                     $member_payroll_number = $row->member_payroll_number;
                     $employer = $row->employer_id;
                     $phone_number = $row->member_phone_number;
                     $status = $row->member_status;
                     $created_on = $row->created_on;
+                    $share_balance = $row->member_share_balance;
+                    $advance_loan = $row->advance_loan;
+                    $development_loan = $row->development_loan;
+                    $emergency_loan = $row->emergency_loan;
+                    $school_loan = $row->school_loan;
             ?>
 
 
@@ -120,26 +124,17 @@ echo form_open('members/execute_search');
                     <?php echo $national_id; ?>
                 </td>
                 <td>
-                    <?php echo $email; ?>
-                </td>
-                <td>
-                    <?php echo $location; ?>
-                </td>
-                <td>
-                    <?php echo $member_number; ?>
-                </td>
-                <td>
                     <?php echo $member_payroll_number; ?>
                 </td>
                 <td>
-                    <?php foreach($employer_details->result() as $row){
-                        $employer_name = $row->employer_name;
-                        $employer_id = $row->employer_id;
+                    <?php //foreach($employer_details->result() as $row){
+                        //$employer_name = $row->employer_name;
+                        //$employer_id = $row->employer_id;
 
-                        if ($employer == $employer_id){
-                            echo $employer_name;
-                        } 
-                    } ?>
+                        //if ($employer == $employer_id){
+                            //echo $employer_name;
+                       //} 
+                    //} ?>
                 </td>
                 <td>
                     <?php echo $phone_number; ?>
@@ -154,6 +149,21 @@ echo form_open('members/execute_search');
                 </td>
                 <td>
                     <?php echo $created_on; ?>
+                </td>
+                <td>
+                    <?php echo $share_balance; ?>
+                </td>
+                <td>
+                    <?php echo $advance_loan; ?>
+                </td>
+                <td>
+                    <?php echo $development_loan; ?>
+                </td>
+                <td>
+                    <?php echo $emergency_loan; ?>
+                </td>
+                <td>
+                    <?php echo $school_loan; ?>
                 </td>
 
                 <td>
@@ -197,7 +207,7 @@ echo form_open('members/execute_search');
                                                 <?php echo $member_number; ?>
                                             </td>
                                             <td>
-                                                <?php echo $employer_name; ?>
+                                                <?php //echo $employer_name; ?>
                                             </td>
                                             <td>
                                                 <?php if($status  == 0){ ?>
@@ -261,7 +271,7 @@ echo form_open('members/execute_search');
 
             <?php
                 }
-                }
+               }
 
                 ?>
         </table>

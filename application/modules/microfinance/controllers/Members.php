@@ -39,16 +39,27 @@ class Members extends MX_Controller
     }
 
     // A function that displays all members
-    public function index()
+    public function index($order_column = 'member_first_name', $order_method = 'ASC')
     {
-        $total_members = $this->member_model->get_total_members();
+        $table = 'member';
+        $where = 'deleted = 0';
+
+        $search_results = $this->session->userdata("search_session");
+
+
+        if(!empty($search_results) && $search_results != null){
+            $where =  $search_results;
+
+        }
+
+        $total_members = $this->site_model->get_count_loan_types($table);
         $limit_per_page = 5;
         $segment = 5;
 
-        $config['base_url'] = site_url().'members/all-members';
+        $config['base_url'] = site_url().'members/all-members/'.$order_column.'/'.$order_method;
         $config['total_rows'] = $total_members;
         $config['uri_segment'] = $segment;
-        $config['per_page'] = $limit_per_page;
+        $config['per_page'] =  $limit_per_page ;
         $config['num_links'] = 3;
 
         $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
@@ -72,12 +83,16 @@ class Members extends MX_Controller
         // build paging links
         $links = $this->pagination->create_links();
 
-        $employer_details = $this->member_model->get_employer_details();
+        //$employer_details = $this->member_model->get_employer_details();
 
-        $v_data = array ("all_members"=>$this->member_model->get_members($limit_per_page, $start_index),
-                        "employer_details"=>$employer_details,
+        $query = $this->site_model->get_all_members($search_results, $table,$limit_per_page, $start_index, $where, $order_column, $order_method);
+
+        $v_data = array ("all_members"=>$query,
+                        
                         "links"=>$links,
-                        "page"=>$start_index);
+                        "page"=>$start_index,
+                        'order_method' => $order_method,
+                        'order_column' => $order_column);
 
         $data = array("title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/members/all_members", $v_data, true),
@@ -286,8 +301,7 @@ class Members extends MX_Controller
         {
             $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid,$payroll_number);
             if($insert_member_phone_number == true){
-                $members = $all_members->result();
-                //var_dump($members);die();
+                $members = $all_members->result();                
                 $members_encoded = json_encode($members);
                 echo $members_encoded;
             }
