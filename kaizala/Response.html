@@ -764,20 +764,20 @@
 				invalidateFooter();
 			});
 
-			//password input field
+			//confirm password input field
 			var fieldDiv2 = KASClient.UI.getElement("div");
 			fieldDiv2.className = "section";
 			var fieldTitleDiv2 = KASClient.UI.getElement("div");
 			fieldTitleDiv2.className = "question-title";
 			fieldTitleDiv2.innerText = _strings["Password"];
 			var passwordfieldInput = KASClient.UI.getElement("input");
-			passwordfieldInput.type = "password";
+			passwordfieldInput.type = "text";
 			passwordfieldInput.className = "comment-input";
 			passwordfieldInput.id = "Password";
 
 			//dependancy for IOS for just adding padding
 			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-				KASClient.UI.addCSS(confirmpasswordfieldInput, {
+				KASClient.UI.addCSS(passwordfieldInput, {
 				"padding-left": "13pt"
 				});
 			}
@@ -1309,12 +1309,16 @@
 
 									showError("Valid member");
 									_currentPage += 1;
-									alert(_currentPage);
+									// alert(_currentPage);
 									alert(JSON.stringify(this.responseText));
 									alert(JSON.stringify(members[0].member_first_name));
-									alert(members[0].member_first_name);
-									updatePage();
+									alert(members[0].member_password);
 									
+									// if(member_password != "")
+									// {
+									// 	updatePassword();
+									// }
+									updatePage();
 								}
 								document.body.scrollTop = 0;
 							}
