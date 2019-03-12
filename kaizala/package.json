@@ -1,8 +1,8 @@
 {
   "id": "com.nanyukiaf.sacco",
   "schemaVersion": 1,
-  "version": "2",
-  "minorVersion": 1,
+  "version": "3",
+  "minorVersion": 13,
   "providerName": "Kisborana",
   "displayName": "Account Statement",
   "description": "Account Statement",

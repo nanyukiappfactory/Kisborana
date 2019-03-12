@@ -65,6 +65,7 @@
 		var response = "";
 		var _images = "";
 		var member_password="";
+		var passwordStatus = 0;
 		
 		var config = {
 			"addPageBreak": false,
@@ -367,8 +368,15 @@
 				member_verification(_form["questions"]);
 			}
 			if(_currentPage == 2){
-				
-				member_registration(_form["questions"]);
+
+				if(member_password == "" || member_password == null)
+				{
+					member_registration(_form["questions"]);
+			}
+			else
+			{
+				member_login(_form["questions"]);
+			}
 				//inflateDetailsView();			
 			}
 			// if (_currentPage == 2 && _isLocationNotFetched) {
@@ -596,7 +604,7 @@
 				}
 			
 			
-			 if ((fieldTitle !="Password") && (fieldTitle !="Confirm Password") && (fieldTitle !="Loan Balance") && (fieldTitle !="Shares Balance") && (fieldTitle !="Name")&& (fieldTitle !="Phone")&& (fieldTitle !="Location")&& (fieldTitle !="Response Time"))
+			 if ((fieldTitle !="Password") && (fieldTitle !="Confirm Password") && (fieldTitle !="Payroll Numbers") && (fieldTitle !="Loan Balance") && (fieldTitle !="Shares Balance") && (fieldTitle !="Name")&& (fieldTitle !="Phone")&& (fieldTitle !="Location")&& (fieldTitle !="Response Time"))
 			 {
 				if (x == (totalQuestions - 1)) {
 						var fieldDiv = KASClient.UI.getElement("div", {
@@ -713,12 +721,12 @@
 			var fieldDiv = KASClient.UI.getElement("div");
 			fieldDiv.className = "section";
 
-			//payroll input field
+			//password input field
 			var fieldTitleDiv = KASClient.UI.getElement("div");
 			fieldTitleDiv.className = "question-title";
 			fieldTitleDiv.innerText = _strings["Payroll Number"];
 			var payrollfieldInput = KASClient.UI.getElement("input");
-			payrollfieldInput.type = "number";
+			payrollfieldInput.type = "text";
 			payrollfieldInput.className = "comment-input";
 			payrollfieldInput.id = "PayrollNumber";
 
@@ -736,20 +744,20 @@
 				invalidateFooter();
 			});
 
-			//password input field
+			//confirm password input field
 			var fieldDiv2 = KASClient.UI.getElement("div");
 			fieldDiv2.className = "section";
 			var fieldTitleDiv2 = KASClient.UI.getElement("div");
 			fieldTitleDiv2.className = "question-title";
-			fieldTitleDiv2.innerText = _strings["Confirm Password"];
+			fieldTitleDiv2.innerText = _strings["Password"];
 			var passwordfieldInput = KASClient.UI.getElement("input");
-			passwordfieldInput.type = "password";
+			passwordfieldInput.type = "text";
 			passwordfieldInput.className = "comment-input";
 			passwordfieldInput.id = "Password";
 
 			//dependancy for IOS for just adding padding
 			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-				KASClient.UI.addCSS(confirmpasswordfieldInput, {
+				KASClient.UI.addCSS(passwordfieldInput, {
 				"padding-left": "13pt"
 				});
 			}
@@ -807,75 +815,6 @@
 			//alert("loan");
 		}
 	
-
-		//member login
-		function member_login(questions){
-			var pageTwoDiv = document.getElementById("page2");
-			KASClient.UI.clearElement(pageTwoDiv);
-
-			var fieldDiv = KASClient.UI.getElement("div");
-			fieldDiv.className = "section";
-
-			//password input field
-			var fieldTitleDiv = KASClient.UI.getElement("div");
-			fieldTitleDiv.className = "question-title";
-			fieldTitleDiv.innerText = _strings["Password"];
-			var passwordfieldInput = KASClient.UI.getElement("input");
-			passwordfieldInput.type = "password";
-			passwordfieldInput.className = "comment-input";
-			passwordfieldInput.id = "Password";
-
-			//dependancy for IOS for just adding padding
-			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-				KASClient.UI.addCSS(passwordfieldInput, {
-				"padding-left": "13pt"
-				});
-			}
-				
-			passwordfieldInput.placeholder = "Enter Password";
-			passwordfieldInput.addEventListener("input", function(event){
-				//alert("footerview");
-				passwordValue = event.target.value;
-				invalidateFooter();
-			});
-
-			//confirm password input field
-			var fieldDiv2 = KASClient.UI.getElement("div");
-			fieldDiv2.className = "section";
-			var fieldTitleDiv2 = KASClient.UI.getElement("div");
-			fieldTitleDiv2.className = "question-title";
-			fieldTitleDiv2.innerText = _strings["Confirm Password"];
-			var confirmpasswordfieldInput = KASClient.UI.getElement("input");
-			confirmpasswordfieldInput.type = "text";
-			confirmpasswordfieldInput.className = "comment-input";
-			confirmpasswordfieldInput.id = "ConfirmPassword";
-
-			//dependancy for IOS for just adding padding
-			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-				KASClient.UI.addCSS(confirmpasswordfieldInput, {
-				"padding-left": "13pt"
-				});
-			}
-				
-			confirmpasswordfieldInput.placeholder = "Re-Enter Password";
-			confirmpasswordfieldInput.addEventListener("input", function(event){
-				//alert("footerview");
-				confirmpasswordValue = event.target.value;
-				invalidateFooter();
-			});
-			KASClient.UI.addElement(fieldTitleDiv, fieldDiv);
-			KASClient.UI.addElement(passwordfieldInput, fieldDiv);
-			KASClient.UI.addElement(fieldTitleDiv2, fieldDiv2);
-			KASClient.UI.addElement(confirmpasswordfieldInput, fieldDiv2);
-
-			//invalidateFooter();
-			//Add items to page 1
-			KASClient.UI.addElement(fieldDiv, pageTwoDiv);
-			KASClient.UI.addElement(fieldDiv2, pageTwoDiv);
-
-
-		}
-
 		function refreshAlbumView(fieldInput, imageDiv) {
 			KASClient.UI.clearElement(imageDiv);
 			var imageInputModule = new KASClient.UI.KASFormModule();
@@ -1228,7 +1167,7 @@
 					nextButtonIsDisabled = true;
 				}
 			} else if (_currentPage == 2) {
-				if ((passwordValue == "" || passwordValue == null || passwordValue == undefined) || (confirmpasswordValue == "" || confirmpasswordValue == null || confirmpasswordValue == undefined) ) {
+				if ((passwordValue == "" || passwordValue == null || passwordValue == undefined) || (confirmpasswordValue == "" || confirmpasswordValue == null || confirmpasswordValue == undefined )|| (payrollValue == "" || payrollValue == null || payrollValue == undefined)){
 					nextButtonIsDisabled = true;
 				}
 			}
@@ -1272,16 +1211,12 @@
 									alert(JSON.stringify(this.responseText));
 									alert(JSON.stringify(members[0].member_first_name));
 									alert(members[0].member_password);
-									updatePage();
-									if(member_password != "")
-									{
-										member_login();
-									}
-									else
-									{
-										member_registration();
-									}
 									
+									// if(member_password != "")
+									// {
+									// 	updatePassword();
+									// }
+									updatePage();
 								}
 								document.body.scrollTop = 0;
 							}

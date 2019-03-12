@@ -85,6 +85,7 @@ echo form_open('members/execute_search');
 
             </tr>
             <?php
+            $count = $page;
             if ($all_members->num_rows() > 0) {
                 
                 $count = 0;
@@ -264,18 +265,7 @@ echo form_open('members/execute_search');
 
                 ?>
         </table>
-
-        <!-- pagination -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
-        <!-- end of pagination -->
     </div>
+    <?php echo $links; ?>
 </div>
 </div>
