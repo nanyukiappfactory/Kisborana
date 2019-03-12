@@ -653,6 +653,13 @@
 			}
 			
 		}
+		//function for removing commas
+		// function numberWithCommas(share_balance,loan_balance) {
+        //         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+               
+
+        //     }
+            
 		//member registration
 		function member_registration(questions){
 
@@ -836,11 +843,11 @@
 			fieldTitleDiv.className = "monetarySummary";
 			fieldTitleDiv.innerText = "Account for : "+member_names;
 			var shareFieldDiv = KASClient.UI.getElement("div");
-			shareFieldDiv.innerText = "Your share balance is : " + share_balance;
+			shareFieldDiv.innerText = "Your share balance is : Ksh. " + modified_share_balance;
 			shareFieldDiv.className = "shares_loan";
 			var loanFieldDiv = KASClient.UI.getElement("div");
 			loanFieldDiv.className = "shares_loan";
-			loanFieldDiv.innerText = "Your loan balance is : " + loan_balance;
+			loanFieldDiv.innerText = "Your loan balance is : Ksh. " + modified_loan_balance;
 
 			//adding share and loan balance
 			KASClient.UI.addElement(fieldTitleDiv,fieldDiv);
@@ -1260,6 +1267,9 @@
 								loan_balance = members[0].member_loan_balance;
 								member_password = members[0].member_password;
 								member_payroll_number = members[0].member_payroll_number;
+								modified_share_balance = share_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+								modified_loan_balance = loan_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 								if(members =="No members found"){
 									_currentPage = 1;
 									updatePage();
