@@ -838,12 +838,14 @@
 
 			//loan and shares displayed
 			var fieldTitleDiv = KASClient.UI.getElement("div");
-			fieldTitleDiv.className = "question-title";
-			fieldTitleDiv.innerText = "Account for: "+member_names;
+			fieldTitleDiv.className = "monetarySummary";
+			fieldTitleDiv.innerText = "Account for : "+member_names;
 			var shareFieldDiv = KASClient.UI.getElement("div");
-			shareFieldDiv.innerText = "Your share balance is :" + share_balance;
+			shareFieldDiv.innerText = "Your share balance is : " + share_balance;
+			shareFieldDiv.className = "shares_loan";
 			var loanFieldDiv = KASClient.UI.getElement("div");
-			loanFieldDiv.innerText = "Your loan balance is :" + loan_balance;
+			loanFieldDiv.className = "shares_loan";
+			loanFieldDiv.innerText = "Your loan balance is : " + loan_balance;
 
 			//adding share and loan balance
 			KASClient.UI.addElement(fieldTitleDiv,fieldDiv);
