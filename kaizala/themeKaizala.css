@@ -153,6 +153,7 @@ text-align: center;
 }
 .shares_loan {
   background-color: #08e287;
+  opacity: 30%;
   margin: 15px;
   padding: 15px;
   margin-top: 5px;
@@ -262,7 +263,8 @@ input[type="radio"]:checked {
   color: rgb(50, 72, 95);
   font-family: 'Times New Roman', Times, serif;
   text-align: center;
-  background-color:  #08e287;;
+  background-color:  #08e287;
+  opacity: 30%;
 }
 
 .option-div {
