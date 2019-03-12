@@ -352,6 +352,12 @@
 			// Finally submit the response
 			KASClient.Form.sumbitFormResponse(questionToAnswerMap, null, false, true /* showInChatCanvas */ );
 		}
+		function logout(){
+			member_password = "";
+			nationalIdValue = "";
+			member_payroll_number = "";
+			KASClient.App.dismissCurrentScreen();
+		}
 
 		// handling UI
 		function inflateHTML() {
@@ -807,18 +813,7 @@
 
 		}
 		//member login with payroll and password field
-		function member_login(questions){
-			var pageTwoDiv = document.getElementById("page2");
-			KASClient.UI.clearElement(pageTwoDiv);
-
-			var fieldDiv = KASClient.UI.getElement("div");
-			fieldDiv.className = "section";
-
-			
 		
-
-
-		}
 		function showmonetaryDetails(){
 			var summaryView = document.getElementById("page3");
 			KASClient.UI.clearElement(summaryView);
@@ -856,74 +851,6 @@
 			//alert("loan");
 		}
 	
-
-		// //member login
-		// function member_login(questions){
-		// 	var pageTwoDiv = document.getElementById("page2");
-		// 	KASClient.UI.clearElement(pageTwoDiv);
-
-		// 	var fieldDiv = KASClient.UI.getElement("div");
-		// 	fieldDiv.className = "section";
-
-		// 	//password input field
-		// 	var fieldTitleDiv = KASClient.UI.getElement("div");
-		// 	fieldTitleDiv.className = "question-title";
-		// 	fieldTitleDiv.innerText = _strings["Password"];
-		// 	var passwordfieldInput = KASClient.UI.getElement("input");
-		// 	passwordfieldInput.type = "password";
-		// 	passwordfieldInput.className = "comment-input";
-		// 	passwordfieldInput.id = "Password";
-
-		// 	//dependancy for IOS for just adding padding
-		// 	if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-		// 		KASClient.UI.addCSS(passwordfieldInput, {
-		// 		"padding-left": "13pt"
-		// 		});
-		// 	}
-				
-		// 	passwordfieldInput.placeholder = "Enter Password";
-		// 	passwordfieldInput.addEventListener("input", function(event){
-		// 		//alert("footerview");
-		// 		passwordValue = event.target.value;
-		// 		invalidateFooter();
-		// 	});
-
-		// 	//confirm password input field
-		// 	var fieldDiv2 = KASClient.UI.getElement("div");
-		// 	fieldDiv2.className = "section";
-		// 	var fieldTitleDiv2 = KASClient.UI.getElement("div");
-		// 	fieldTitleDiv2.className = "question-title";
-		// 	fieldTitleDiv2.innerText = _strings["Confirm Password"];
-		// 	var confirmpasswordfieldInput = KASClient.UI.getElement("input");
-		// 	confirmpasswordfieldInput.type = "text";
-		// 	confirmpasswordfieldInput.className = "comment-input";
-		// 	confirmpasswordfieldInput.id = "ConfirmPassword";
-
-		// 	//dependancy for IOS for just adding padding
-		// 	if (KASClient.getPlatform() == KASClient.Platform.iOS) {
-		// 		KASClient.UI.addCSS(confirmpasswordfieldInput, {
-		// 		"padding-left": "13pt"
-		// 		});
-		// 	}
-				
-		// 	confirmpasswordfieldInput.placeholder = "Re-Enter Password";
-		// 	confirmpasswordfieldInput.addEventListener("input", function(event){
-		// 		//alert("footerview");
-		// 		confirmpasswordValue = event.target.value;
-		// 		invalidateFooter();
-		// 	});
-		// 	KASClient.UI.addElement(fieldTitleDiv, fieldDiv);
-		// 	KASClient.UI.addElement(passwordfieldInput, fieldDiv);
-		// 	KASClient.UI.addElement(fieldTitleDiv2, fieldDiv2);
-		// 	KASClient.UI.addElement(confirmpasswordfieldInput, fieldDiv2);
-
-		// 	//invalidateFooter();
-		// 	//Add items to page 1
-		// 	KASClient.UI.addElement(fieldDiv, pageTwoDiv);
-		// 	KASClient.UI.addElement(fieldDiv2, pageTwoDiv);
-
-
-		// }
 
 		function refreshAlbumView(fieldInput, imageDiv) {
 			KASClient.UI.clearElement(imageDiv);
@@ -1212,11 +1139,17 @@
 					"border": "1px solid rgba(227, 230, 233, 0.5)"
 				});
 			}
+			
 			prevButton.addEventListener("click", function () {
 				_currentPage -= 1;
-				// if(_currentPage == 2){
-				// 	""
-				// }
+				if(_currentPage == 1){
+					nationalIdValue = "";
+				}
+				if(_currentPage == 2){
+					passwordValuelogin = "";
+					payrollValue = "";
+					//member_payroll_number = "";
+				}
 
 				updatePage();
 				document.body.scrollTop = 0;
@@ -1438,8 +1371,16 @@
 					
 					document.body.scrollTop = 0;
 					
-				} else {
-					submitFormResponse();
+				} else{
+					//logout();
+					//alert(_currentPage);
+					if(_currentPage == 3){
+						member_password = "";
+						nationalIdValue = "";
+						member_payroll_number = "";
+						KASClient.App.dismissCurrentScreen();
+					}
+					//submitFormResponse();
 				}
 			});
 
