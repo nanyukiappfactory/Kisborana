@@ -35,14 +35,49 @@ class Members extends MX_Controller
 
         // load upload library
         $this->load->helper('download');
+        $this->load->library('pagination');
     }
 
     // A function that displays all members
     public function index()
     {
+        $total_members = $this->member_model->get_total_members();
+        $limit_per_page = 5;
+        $segment = 5;
+
+        $config['base_url'] = site_url().'members/all-members';
+        $config['total_rows'] = $total_members;
+        $config['uri_segment'] = $segment;
+        $config['per_page'] = $limit_per_page;
+        $config['num_links'] = 3;
+
+        $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
+        $config['full_tag_close'] = '</ul></nav></div>';
+        $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close'] = '</span></li>';
+        $config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['next_tag_close'] = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['prev_tag_close'] = '</span></li>';
+        $config['first_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['first_tag_close'] = '</span></li>';
+        $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
+        $config['last_tag_close'] = '</span></li>';
+
+
+        $this->pagination->initialize($config);
+        $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
+        // build paging links
+        $links = $this->pagination->create_links();
+
         $employer_details = $this->member_model->get_employer_details();
-        $v_data = array ("all_members"=>$this->member_model->get_members(),
-                            "employer_details"=>$employer_details);
+
+        $v_data = array ("all_members"=>$this->member_model->get_members($limit_per_page, $start_index),
+                        "employer_details"=>$employer_details,
+                        "links"=>$links,
+                        "page"=>$start_index);
 
         $data = array("title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/members/all_members", $v_data, true),

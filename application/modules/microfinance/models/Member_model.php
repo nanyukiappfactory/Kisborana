@@ -71,13 +71,11 @@ class Member_model extends CI_Model
        
      
     }
-    public function get_members()
+    public function get_members($limit_per_page, $start_index)
     {
-        // $this->db->select('employer_name');
-        // $this->db->from('employer');
-        // $this->db->join('member', 'member.employer_id = employer.employer_id');
-        //$query = $this->db->get();
+        
         $this->db->where("deleted", 0);
+        $this->db->limit($limit_per_page, $start_index);
         $query = $this->db->get('member');
         return $query;
     }
@@ -287,5 +285,9 @@ class Member_model extends CI_Model
         }
     }
 
+    public function get_total_members()
+    {
+        return $this->db->count_all('member');
+    }
 }
 

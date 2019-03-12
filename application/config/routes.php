@@ -102,7 +102,8 @@ $route['search-loan-types'] = 'microfinance/loan_types/execute_search';
  * Member Routes
 ****/
 
-$route['members'] = 'microfinance/members/index';
+$route['members/all-members'] = 'microfinance/members/index';
+$route['loan-types/all-members/(:num)'] = 'microfinance/memebers/index/$1';
 $route['members/new_member'] = 'microfinance/members/new_member';
 $route['members/bulk_registration'] = 'microfinance/members/bulk_registration';
 $route['members/edit/(:num)'] = 'microfinance/members/display_edit_form/$1';
