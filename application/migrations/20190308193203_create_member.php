@@ -81,12 +81,27 @@ class Migration_Create_member extends CI_Migration {
                             'constraint' => '32',
                             'null' => true,
                         ),
-                        'member_loan_balance' => array(
+                        'member_share_balance' => array(
                             'type' => 'INT',
                             'constraint' => '100',
                             'null' => true,
                         ),
-                        'member_share_balance' => array(
+                        'advance_loan' => array(
+                            'type' => 'INT',
+                            'constraint' => '100',
+                            'null' => true,
+                        ),
+                        'development_loan' => array(
+                            'type' => 'INT',
+                            'constraint' => '100',
+                            'null' => true,
+                        ),
+                        'emergency_loan' => array(
+                            'type' => 'INT',
+                            'constraint' => '100',
+                            'null' => true,
+                        ),
+                        'school_loan' => array(
                             'type' => 'INT',
                             'constraint' => '100',
                             'null' => true,

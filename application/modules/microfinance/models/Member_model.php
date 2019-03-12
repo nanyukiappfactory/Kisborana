@@ -216,8 +216,11 @@ class Member_model extends CI_Model
                     $insert_csv['member location'] = $csv_line[9];
                     $insert_csv['member number'] = $csv_line[10];
                     $insert_csv['member payroll number'] = $csv_line[11];
-                    $insert_csv['member loan balance'] = $csv_line[12];
-                    $insert_csv['member share balance'] = $csv_line[13];
+                    $insert_csv['member share balance'] = $csv_line[12];
+                    $insert_csv['advance loan'] = $csv_line[13];
+                    $insert_csv['development loan'] = $csv_line[14];
+                    $insert_csv['emergency loan'] = $csv_line[15];
+                    $insert_csv['school loan'] = $csv_line[16];
                 }
                 $i++;
                 $data = array(
@@ -233,8 +236,11 @@ class Member_model extends CI_Model
                     'member_location' => $insert_csv['member location'],
                     'member_number' => $insert_csv['member number'],
                     'member_payroll_number' => $insert_csv['member payroll number'],
-                    'member_loan_balance' => $insert_csv['member loan balance'],
                     'member_share_balance' => $insert_csv['member share balance'],
+                    'advance_loan' => $insert_csv['advance loan'],
+                    'development_loan' => $insert_csv['development loan'],
+                    'emergency_loan' => $insert_csv['emergency loan'],
+                    'school_loan' => $insert_csv['school loan'],
                 );
                 $data['member'] = $this->db->insert('member', $data);
             }
@@ -248,7 +254,7 @@ class Member_model extends CI_Model
 
     public function check_member_existence($member_phone_number, $nationalid)
     {    
-        $this->db->select('member_first_name,member_last_name,member_loan_balance,member_share_balance,member_phone_number,member_password,member_payroll_number');    
+        $this->db->select('member_first_name,member_last_name,advance_loan,development_loan,emergency_loan,school_loan,member_share_balance,member_phone_number,member_password,member_payroll_number');    
         $this->db->where('member_national_id', $nationalid);
         $member_details = $this->db->get("member");
         return $member_details;
