@@ -34,7 +34,7 @@
       
     },
     {
-      "title": "Payroll Numbers",
+      "title": "Payroll Number",
       "type": "Numeric",
       "isOptional": true
       
