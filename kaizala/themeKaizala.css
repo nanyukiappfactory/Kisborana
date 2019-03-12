@@ -42,6 +42,10 @@ input:focus {
   box-shadow: 0pt 2pt 4pt 1pt rgba(0, 0, 0, 0.1);
   z-index: 1;
 }
+.login_header{
+/* align-content: center; */
+text-align: center;
+}
 
 .footer {
   position: fixed;
