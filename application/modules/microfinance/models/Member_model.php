@@ -280,7 +280,7 @@ class Member_model extends CI_Model
 
     function save_member_password($nationalid, $password){
         $data = array(
-            'member_password'=> $password
+            'member_password'=> md5($password)
         );
         $this->db->where('member_national_id', $nationalid);
         if($this->db->update("member",$data)){
