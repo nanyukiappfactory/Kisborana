@@ -703,7 +703,7 @@
 			fieldTitleDiv2.className = "question-title";
 			fieldTitleDiv2.innerText = _strings["Confirm Password"];
 			var confirmpasswordfieldInput = KASClient.UI.getElement("input");
-			confirmpasswordfieldInput.type = "text";
+			confirmpasswordfieldInput.type = "password";
 			confirmpasswordfieldInput.className = "comment-input";
 			confirmpasswordfieldInput.id = "ConfirmPassword";
 
@@ -1379,6 +1379,7 @@
 						nationalIdValue = "";
 						member_payroll_number = "";
 						KASClient.App.dismissCurrentScreen();
+						showError("Successfully logged out");
 					}
 					//submitFormResponse();
 				}
