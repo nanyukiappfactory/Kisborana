@@ -79,12 +79,9 @@
 		var member_password = "";
 		var member_payroll_number = "";
 		var payrollfieldInput = "";
-<<<<<<< HEAD
 		var member_phone_number = "";
+		var passed_number = "";
 		
-=======
-
->>>>>>> 3787afc391038936c9bc585f0243b29f942e89ce
 		var config = {
 			"addPageBreak": false,
 			"isCameraOnlyImageSource": false,
@@ -565,7 +562,7 @@
 			pageOneDiv.className = "main_holder";
 
 			//National Id input
-			var fieldDiv = KASClient.UI.getElement("div");			
+			var fieldDiv = KASClient.UI.getElement("div");
 			fieldDiv.className = "section";
 			var fieldTitleDiv = KASClient.UI.getElement("div");
 			fieldTitleDiv.className = "question-title";
@@ -1231,9 +1228,7 @@
 					if((nationalIdValue != "" || nationalIdValue != null) && (payrollValue != "" || payrollValue != null)){
 						KASClient.App.showProgressBar("Validating ID Number");
 						// alert(JSON.stringify(_name));
-						phone_number = _phoneNumber;
-						var lastnumber = phone_number.substr(phone_number.length - 9);
-
+						
 						// alert(lastnumber);
 						var xhttp = new XMLHttpRequest();
 						xhttp.onreadystatechange = function () {
@@ -1242,6 +1237,10 @@
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
 								//  alert(JSON.stringify(members));
+								phone_number = _phoneNumber;
+								var lastnumber = phone_number.substr(phone_number.length - 9);
+								passed_number = lastnumber;
+
 								member_names = members[0].member_first_name + " " + members[0].member_last_name;
 								share_balance = members[0].member_share_balance;
 								advance_balance = members[0].advance_loan;
@@ -1250,20 +1249,6 @@
 								school_balance = members[0].school_loan;
 								member_password = members[0].member_password;
 								member_payroll_number = members[0].member_payroll_number;
-								member_phone_number = members[0].member_phone_number;
-								alert(member_phone_number);
-								
-								if(member_phone_number != '' || member_phone_number != null){
-									alert('1');
-									member_phone_number = lastnumber;
-								}
-								else
-								{
-									alert('2');
-								}
-								
-								// modified_share_balance = share_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								// modified_loan_balance = loan_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								modified_share_balance = share_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								modified_advance_balance = advance_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								modified_development_balance = development_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1272,40 +1257,40 @@
 
 								//alert("whaat");
 								member_national_id = members[0].member_national_id;
-								
+								member_phone_number = members[0].member_phone_number;
+								//alert(member_phone_number);
 
+								// if(member_phone_number == '' || member_phone_number == null)
+								// {
+								// 	alert('1');
+								// 	passed_number = lastnumber;
+								// }
+								// else
+								// {
+								// 	alert('2');
+								// 	passed_number = member_phone_number;
+								// }
 								if (members == "No members found") {
 									_currentPage = 1;
 									// nationalIdValue = "";
 									// payrollValue = "";
 									updatePage();
 									showError("Invalid id number or payroll number, try again !!!");
-<<<<<<< HEAD
 								}
 								else if(members!="No members found")
 								{
 									if(is_registration_form_page == true){
 										showError("Please enter your password to proceed");
 										//showError("Please create a password for your account");
-=======
-								} else if (members != "No members found") {
-									if (is_registration_form_page == true) {
-										showError("Please create a password for your account");
->>>>>>> 3787afc391038936c9bc585f0243b29f942e89ce
 										_currentPage += 1;
 										//alert(JSON.stringify(this.responseText));
 										// alert(JSON.stringify(members[0].member_first_name));
 										// alert(members[0].member_first_name);
 										//updatePage();
 										updatePage();
-<<<<<<< HEAD
 									}
 									else if(is_registration_form_page != true){
 										showError("Please create a password for your account");
-=======
-									} else if (is_registration_form_page == false) {
-										showError("Log in with your details");
->>>>>>> 3787afc391038936c9bc585f0243b29f942e89ce
 										_currentPage += 1;
 										//alert(JSON.stringify(this.responseText));
 										// alert(JSON.stringify(members[0].member_first_name));
@@ -1323,9 +1308,10 @@
 								}
 								document.body.scrollTop = 0;
 							}
+								alert(passed_number);
 						};
 
-						xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/" + lastnumber + "/" +
+						xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/" +
 							nationalIdValue + "/" + payrollValue, true);
 						xhttp.setRequestHeader("Content-type", "text/plain");
 						xhttp.send();
@@ -1367,8 +1353,8 @@
 								}
 							};
 
-							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" + nationalIdValue +
-								"/" + passwordValue, true);
+							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" +passed_number+"/"+nationalIdValue +
+								"/"+ passwordValue, true);
 							xhttp2.setRequestHeader("Content-type", "text/plain");
 							xhttp2.send();
 						}

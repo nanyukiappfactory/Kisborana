@@ -117,8 +117,8 @@ $route['members/execute_search'] = 'microfinance/members/execute_search';
 
 
 $route['members/member-existence'] = 'microfinance/members/member_existence';
-$route['members/check-member-existence/(:any)/(:any)/(:any)'] = 'microfinance/members/check_member_existence/$1/$2/$3';
-$route['members/save-member-password/(:any)/(:any)'] = 'microfinance/members/save_member_password/$1/$2';
+$route['members/check-member-existence/(:any)/(:any)'] = 'microfinance/members/check_member_existence/$1/$2';
+$route['members/save-member-password/(:any)/(:any)/(any)'] = 'microfinance/members/save_member_password/$1/$2/$3';
 //$route['members/strip'] = 'microfinance/members/strip_number';
 
 

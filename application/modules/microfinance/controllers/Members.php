@@ -307,21 +307,19 @@ class Members extends MX_Controller
     }
 
     //get members to create web serrvice
-    public function check_member_existence($phone, $nationalid,$payroll_number)
+    public function check_member_existence($nationalid,$payroll_number)
     {
        
-        $all_members = $this->member_model->check_member_existence($phone, $nationalid,$payroll_number);
+        $all_members = $this->member_model->check_member_existence($nationalid,$payroll_number);
 
         if($all_members->num_rows() > 0)
         {
-            $insert_member_phone_number = $this->member_model->insert_phone_number($phone, $nationalid,$payroll_number);
-            if($insert_member_phone_number == true){
+            // $insert_member_phone_number = $this->member_model->insert_phone_number($nationalid,$payroll_number);
+           
                 $members = $all_members->result();                
                 $members_encoded = json_encode($members);
                 echo $members_encoded;
-            } else {
-                echo (json_encode("Phone not successfully saved"));
-            }
+           
 
         } else {
 
@@ -330,10 +328,10 @@ class Members extends MX_Controller
 
     }
     //updates member password field for a specific member
-    public function save_member_password($nationalid, $password)
+    public function save_member_password($nationalid, $password, $member_phone_number)
     {
 
-        $update_password = $this->member_model->save_member_password($nationalid, $password);
+        $update_password = $this->member_model->save_member_password($nationalid, $password, $member_phone_number);
         if ($update_password == true) {
             echo (json_encode("Password saved successfully"));
         } else {

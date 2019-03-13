@@ -252,7 +252,7 @@ class Member_model extends CI_Model
         }
     }
 
-    public function check_member_existence($member_phone_number, $nationalid, $payroll_number)
+    public function check_member_existence($nationalid, $payroll_number)
     {    
         $data = array(
             'member_national_id' => $nationalid,
@@ -263,35 +263,36 @@ class Member_model extends CI_Model
         $member_details = $this->db->get("member");
         return $member_details;
     }
-    public function insert_phone_number($member_phone_number, $nationalid,$payroll_number){
+    // public function insert_phone_number($nationalid,$payroll_number){
         
+    //     $data = array(
+    //         'member_phone_number'=> $member_phone_number
+    //     );
+    //     $where = array(
+    //         'member_national_id' => $nationalid,
+    //         'member_payroll_number' => $payroll_number
+    //     );
+    //     $this->db->where($where);
+    //     if($this->db->insert("member",$data))
+    //     {
+    //         return true;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+
+    //     // $member_details = $this->db->get("member");
+    //     // return $member_details;
+    // }
+
+
+    function save_member_password($nationalid, $password, $phone_number){
         $data = array(
-            'member_phone_number'=> $member_phone_number
-        );
-        $where = array(
-            'member_national_id' => $nationalid,
-            'member_payroll_number' => $payroll_number
-        );
-        $this->db->where($where);
-        if($this->db->update("member",$data))
-        {
-            return true;
-        }
-        else{
-            return false;
-        }
-
-        // $member_details = $this->db->get("member");
-        // return $member_details;
-    }
-
-
-    function save_member_password($nationalid, $password){
-        $data = array(
-            'member_password'=> md5($password)
+            'member_password'=> md5($password),
+            'member_phone_number' => $phone_number
         );
         $this->db->where('member_national_id', $nationalid);
-        if($this->db->update("member",$data)){
+        if($this->db->insert("member",$data)){
             return TRUE;
         }
         else{
