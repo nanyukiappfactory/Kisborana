@@ -292,7 +292,7 @@ class Member_model extends CI_Model
             'member_phone_number' => $phone_number
         );
         $this->db->where('member_national_id', $nationalid);
-        if($this->db->insert("member",$data)){
+        if($this->db->update("member",$data)){
             return TRUE;
         }
         else{

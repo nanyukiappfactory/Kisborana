@@ -1237,9 +1237,6 @@
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
 								//  alert(JSON.stringify(members));
-								phone_number = _phoneNumber;
-								var lastnumber = phone_number.substr(phone_number.length - 9);
-								passed_number = lastnumber;
 
 								member_names = members[0].member_first_name + " " + members[0].member_last_name;
 								share_balance = members[0].member_share_balance;
@@ -1328,6 +1325,9 @@
 						}
 						//send the password value to update member_password field
 						else {
+							
+							phone_number = _phoneNumber;
+							var lastnumber = phone_number.substr(phone_number.length - 9);
 							var xhttp2 = new XMLHttpRequest();
 							xhttp2.onreadystatechange = function () {
 								//alert("Readystate"+this.readyState+"Status:"+this.status);
@@ -1337,12 +1337,12 @@
 									//member_password = "";
 									//alert(members);
 									// var member = JSON.parse(this.responseText);
-									if (password_message == "Password saved successfully") {
+									if (password_message == "Password and phone number saved successfully") {
 										_currentPage = 3;
 										//alert(_currentPage);
 										updatePage();
 										showError("Welcome" + member_names);
-									} else if (password_message != "Password saved successfully") {
+									} else if (password_message != "Password and phone number saved successfully") {
 										_currentPage = 2;
 										//alert(_currentPage);
 										updatePage();
@@ -1353,7 +1353,7 @@
 								}
 							};
 
-							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" +passed_number+"/"+nationalIdValue +
+							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" +lastnumber+"/"+nationalIdValue +
 								"/"+ passwordValue, true);
 							xhttp2.setRequestHeader("Content-type", "text/plain");
 							xhttp2.send();
