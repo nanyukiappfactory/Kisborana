@@ -425,7 +425,7 @@
 		}
 
 		function loadPage(questions) {
-			alert("loadpage func");
+			//alert("loadpage func");
 			let totalQuestions = questions.length;
 			//Get and clear HTML from page 1
 			var pageOneDiv = document.getElementById("page1");
@@ -1208,6 +1208,7 @@
 								// modified_loan_balance = loan_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								//alert("whaat");
 								member_national_id = members[0].member_national_id;
+								alert();
 
 								if(members =="No members found"){
 									_currentPage = 1;
@@ -1258,14 +1259,14 @@
 									// var member = JSON.parse(this.responseText);
 									if(password_message == "Password saved successfully"){
 										_currentPage = 3;
-										alert(_currentPage);
+										//alert(_currentPage);
 										updatePage();
 										showError("Welcome" + member_names);
 									}
 									else if(password_message != "Password saved successfully")
 									{
 										_currentPage = 2;
-										alert(_currentPage);
+										//alert(_currentPage);
 										updatePage();
 										showError("Error: Password not saved");
 										
@@ -1282,7 +1283,11 @@
 					}
 					if(is_registration_form_page == false){
 						//alert("password in login page");
-						if((passwordValuelogin == member_password)){
+						var encripted_password = md5(passwordValuelogin);
+
+						alert (encripted_password);
+						alert (member_password);
+						if((encripted_password == member_password)){
 							_currentPage = 3;
 							updatePage();
 							showError("Successfully logged in");
