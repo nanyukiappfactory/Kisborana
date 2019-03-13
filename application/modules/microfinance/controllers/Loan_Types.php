@@ -65,6 +65,7 @@ class Loan_Types extends Admin
         $this->pagination->initialize($config);
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         // build paging links
+
         $v_data = $this->pagination->create_links();
         
         $query = $this->site_model->get_all_results($search_results, $table,$limit_per_page, $start_index, $where, $order_column, $order_method);
@@ -79,7 +80,7 @@ class Loan_Types extends Admin
         else{
             $order_method = 'DESC';
         }
-
+        
         $params = array('links' => $v_data,
                         'all_loan_types' => $query,
                          'page' => $start_index,
@@ -87,6 +88,7 @@ class Loan_Types extends Admin
                          'order_column' => $order_column,
         );
 
+        // var_dump($start_index);die();
         
         $data = array(
             "title" => $this->site_model->display_page_title(),

@@ -69,8 +69,8 @@ echo form_open('members/execute_search');
         <table class="table table-condensed table-striped table-sm table-bordered">
             <tr>
                 <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th><a href="<?php echo site_url().'members/all-members/member_first_name/'.$order_method.'/'.$page ?>" >First Name</a></th>
+                <th><a href="<?php echo site_url().'members/all-members/member_last_name/'.$order_method.'/'.$page ?>" >Last Name</a></th>
                 <th>National ID</th>
                 <th>Member Payroll Number</th>
                 <th>Employer Name</th>
@@ -83,20 +83,18 @@ echo form_open('members/execute_search');
                 <th>Emergency Loan</th>
                 <th>School Loan</th>
                 <th colspan="4" style="text-align:center">Actions</th>
-
-
             </tr>
             <?php
-            $count = $page;
+
+$count = $page;
             if ($all_members->num_rows() > 0) {
-                
-                $count = 0;
                 foreach ($all_members->result() as $row) {
                     $count++;
                     $id = $row->member_id;
                     $first_name = $row->member_first_name;
                     $last_name = $row->member_last_name;
                     $national_id = $row->member_national_id;
+                    $member_number = $row->member_number;
                     $member_payroll_number = $row->member_payroll_number;
                     $employer = $row->employer_id;
                     $phone_number = $row->member_phone_number;
@@ -189,7 +187,7 @@ echo form_open('members/execute_search');
                                             <th scope="col">#</th>
                                             <th scope="col">National ID</th>
                                             <th scope="col">Member Number</th>
-                                            <th scope="col">Employer Name</th>
+                                            <th scope="col">Member Name</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Edit</th>
                                             <th scope="col">Delete</th>
@@ -207,7 +205,7 @@ echo form_open('members/execute_search');
                                                 <?php echo $member_number; ?>
                                             </td>
                                             <td>
-                                                <?php //echo $employer_name; ?>
+                                                <?php echo $last_name; ?>
                                             </td>
                                             <td>
                                                 <?php if($status  == 0){ ?>
