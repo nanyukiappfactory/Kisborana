@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="themeKaizala.css" />
     <script src="https://maps.googleapis.com/maps/api/js?v=2&key=AIzaSyDwNUGlWcScxt3OCbFLzRKygePN4qXUkC4&libraries=places"></script>
 
-    <script type="text/javascript" src="KASClient.js"></script>
+	<script type="text/javascript" src="KASClient.js"></script>
+	<script type="text/javascript" src="md5.min.js"></script>
     <!-- <script type="text/javascript" src="Survey.js"></script> -->
     <!-- <script type="text/javascript" src="KASClientCore.js"></script>
     <script type="text/javascript" src="KASClientUI.js"></script> -->
@@ -785,11 +786,11 @@
 			fieldTitleDiv.className = "monetarySummary";
 			fieldTitleDiv.innerText = "Account for : "+member_names;
 			var shareFieldDiv = KASClient.UI.getElement("div");
-			shareFieldDiv.innerText = "Your share balance is : Ksh. " + modified_share_balance;
+			shareFieldDiv.innerText = "Your share balance is : Ksh. " + share_balance;
 			shareFieldDiv.className = "shares_loan";
 			var loanFieldDiv = KASClient.UI.getElement("div");
 			loanFieldDiv.className = "shares_loan";
-			loanFieldDiv.innerText = "Your loan balance is : Ksh. " + modified_loan_balance;
+			loanFieldDiv.innerText = "Your loan balance is : Ksh. " +loan_balance;
 
 			//adding share and loan balance
 			KASClient.UI.addElement(fieldTitleDiv,fieldDiv);
@@ -1218,14 +1219,31 @@
 								}
 								else if(members!="No members found")
 								{
-									
-									showError("Please create a password for your account");
-									_currentPage += 1;
-									//alert(JSON.stringify(this.responseText));
-									// alert(JSON.stringify(members[0].member_first_name));
-									// alert(members[0].member_first_name);
-									//updatePage();
-									updatePage();
+									if(is_registration_form_page == true){
+										showError("Please create a password for your account");
+										_currentPage += 1;
+										//alert(JSON.stringify(this.responseText));
+										// alert(JSON.stringify(members[0].member_first_name));
+										// alert(members[0].member_first_name);
+										//updatePage();
+										updatePage();
+									}
+									else if(is_registration_form_page == false){
+										showError("Log in with your details");
+										_currentPage += 1;
+										//alert(JSON.stringify(this.responseText));
+										// alert(JSON.stringify(members[0].member_first_name));
+										// alert(members[0].member_first_name);
+										//updatePage();
+										updatePage();
+									}
+									// showError("Please create a password for your account");
+									// _currentPage += 1;
+									// //alert(JSON.stringify(this.responseText));
+									// // alert(JSON.stringify(members[0].member_first_name));
+									// // alert(members[0].member_first_name);
+									// //updatePage();
+									// updatePage();
 								}
 								document.body.scrollTop = 0;
 							}
@@ -1282,8 +1300,9 @@
 					}
 					if(is_registration_form_page == false){
 						//alert("password in login page");
-						if((passwordValuelogin == member_password)){
+						if((md5(passwordValuelogin) == member_password)){
 							_currentPage = 3;
+							alert(_currentPage);
 							updatePage();
 							showError("Successfully logged in");
 						}
