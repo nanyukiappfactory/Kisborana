@@ -161,7 +161,14 @@ font-family: 'Times New Roman', Times, serif;
   margin-bottom: 5px;
   font-family: 'Times New Roman', Times, serif;
 }
-
+.logout_button { 
+  
+  padding: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+}
 .comment-input {
   padding-top: 0pt;
   font-family: 'Times New Roman', Times, serif;
