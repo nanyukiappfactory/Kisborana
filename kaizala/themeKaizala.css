@@ -45,6 +45,7 @@ input:focus {
 .login_header{
 /* align-content: center; */
 text-align: center;
+font-family: 'Times New Roman', Times, serif;
 }
 
 .footer {
@@ -163,6 +164,7 @@ text-align: center;
 
 .comment-input {
   padding-top: 0pt;
+  font-family: 'Times New Roman', Times, serif;
   padding-bottom: 15pt;
   padding-left: 15pt;
   padding-right: 15pt;
@@ -178,6 +180,7 @@ text-align: center;
 
 .comment-input::-webkit-input-placeholder {
   color: #98a3af;
+  font-family: 'Times New Roman', Times, serif;
 }
 .first-comment-input::-webkit-input-placeholder {
   color: #98a3af;
