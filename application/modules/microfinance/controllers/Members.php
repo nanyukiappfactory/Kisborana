@@ -222,6 +222,7 @@ class Members extends MX_Controller
         //1. get data for the member with the passed member_id from the model
 
         $single_member_data = $this->member_model->get_single_member($member_id);
+        
         if ($single_member_data->num_rows() > 0) {
             $row = $single_member_data->row();
             $member_id = $row->member_id;
@@ -240,7 +241,8 @@ class Members extends MX_Controller
             $bank_name = $row->bank_name;
             $phone_number = $row->member_phone_number;
             $account_number = $row->member_account_number;
-        }
+        } 
+        // var_dump($bank_id);die();
         $v_data = array(
             "member_id " => $member_id,
             "first_name" => $first_name,
@@ -260,7 +262,6 @@ class Members extends MX_Controller
             "bank_name" => $bank_name,
 
         );
-        // var_dump($v_data);die();
         //2. Load view with the data from step 1
         $data = array(
             "title" => $this->site_model->display_page_title(),

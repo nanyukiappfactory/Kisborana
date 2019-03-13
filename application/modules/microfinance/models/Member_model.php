@@ -139,13 +139,13 @@ class Member_model extends CI_Model
 
     //'SELECT * FROM member JOIN bank ON member.bank_id=bank.bank_id WHERE member.member_id='.$member_id
     public function get_single_member($member_id)
-    {
+    {       
         // 'SELECT * FROM member JOIN bank ON member.bank_id = BANK.BANK_ID where member.member_id='. $member_id;
-        $this->db->select('member.*, bank_name, employer_name');
-        $this->db->from('member');
-        $this->db->join('bank', 'member.bank_id = bank.bank_id');
-        $this->db->join('employer', 'member.employer_id = employer.employer_id');
-        $this->db->where('member.member_id = ' . $member_id);
+        $this->db->select('mb.*, bk.bank_name, ep.employer_name');
+        $this->db->from('member as mb');
+        $this->db->join('bank as bk', 'mb.bank_id = bk.bank_id', 'LEFT');
+        $this->db->join('employer as ep', 'mb.employer_id = ep.employer_id', 'LEFT');
+        $this->db->where('mb.member_id', $member_id);
         $query = $this->db->get();
         return $query;
     }

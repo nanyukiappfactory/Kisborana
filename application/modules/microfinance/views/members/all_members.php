@@ -94,6 +94,7 @@ $count = $page;
                     $first_name = $row->member_first_name;
                     $last_name = $row->member_last_name;
                     $national_id = $row->member_national_id;
+                    $member_number = $row->member_number;
                     $member_payroll_number = $row->member_payroll_number;
                     $employer = $row->employer_id;
                     $phone_number = $row->member_phone_number;
@@ -186,7 +187,7 @@ $count = $page;
                                             <th scope="col">#</th>
                                             <th scope="col">National ID</th>
                                             <th scope="col">Member Number</th>
-                                            <th scope="col">Employer Name</th>
+                                            <th scope="col">Member Name</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Edit</th>
                                             <th scope="col">Delete</th>
@@ -204,7 +205,7 @@ $count = $page;
                                                 <?php echo $member_number; ?>
                                             </td>
                                             <td>
-                                                <?php //echo $employer_name; ?>
+                                                <?php echo $last_name; ?>
                                             </td>
                                             <td>
                                                 <?php if($status  == 0){ ?>
