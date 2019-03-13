@@ -333,7 +333,7 @@ class Members extends MX_Controller
 
         $update_password = $this->member_model->save_member_password($nationalid, $password, $member_phone_number);
         if ($update_password == true) {
-            echo (json_encode("Password saved successfully"));
+            echo (json_encode("Password and phone number saved successfully"));
         } else {
             echo (json_encode("Error: Password not saved"));
         }
