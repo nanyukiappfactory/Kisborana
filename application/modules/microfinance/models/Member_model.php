@@ -291,7 +291,7 @@ class Member_model extends CI_Model
             'member_password'=> md5($password),
             'member_phone_number' => $phone_number
         );
-        var_dump($data);die();
+        
         $this->db->where('member_national_id', $nationalid);
         if($this->db->update("member",$data)){
             return TRUE;

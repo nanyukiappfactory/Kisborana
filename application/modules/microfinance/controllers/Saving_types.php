@@ -171,6 +171,12 @@ class Saving_types extends Admin
           
           $this->load->view("site/layouts/layout", $data);
       }
+
+      //function for importing saving types in bulk
+      public function bulk_registration()
+      {
+          $v_data["add_saving_types"] = "";
+      }
     
 }
 ?>
