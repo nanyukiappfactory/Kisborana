@@ -41,11 +41,12 @@ input:focus {
   align-items: center;
   box-shadow: 0pt 2pt 4pt 1pt rgba(0, 0, 0, 0.1);
   z-index: 1;
+  
 }
 .login_header{
 /* align-content: center; */
 text-align: center;
-font-family: 'Times New Roman', Times, serif;
+
 }
 
 .footer {
@@ -159,7 +160,7 @@ font-family: 'Times New Roman', Times, serif;
   padding: 15px;
   margin-top: 5px;
   margin-bottom: 5px;
-  font-family: 'Times New Roman', Times, serif;
+  
 }
 .logout_button { 
   
@@ -167,12 +168,12 @@ font-family: 'Times New Roman', Times, serif;
   margin-top: 5px;
   margin-bottom: 5px;
   text-align: center;  
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 15px;
+  
+  
 }
 .comment-input {
   padding-top: 0pt;
-  font-family: 'Times New Roman', Times, serif;
+  
   padding-bottom: 15pt;
   padding-left: 15pt;
   padding-right: 15pt;
@@ -188,7 +189,7 @@ font-family: 'Times New Roman', Times, serif;
 
 .comment-input::-webkit-input-placeholder {
   color: #98a3af;
-  font-family: 'Times New Roman', Times, serif;
+  
 }
 .first-comment-input::-webkit-input-placeholder {
   color: #98a3af;
@@ -237,14 +238,32 @@ input[type="radio"]:checked {
   font-size: 13.5pt;
   font-weight: normal;
   color: rgb(50, 72, 95);
-  font-family: 'Times New Roman', Times, serif;  
+    
+}
+.question-title-last {
+  padding: 5pt;
+  padding-left: 15pt;
+  padding-top: 0pt;
+  font-size: 13.5pt;
+  font-weight: normal;
+  color: rgb(50, 72, 95);
+    
+}
+.question-title-last1 {
+  padding: 5pt;
+  padding-left: 15pt;
+  padding-bottom: 0pt;
+  font-size: 13.5pt;
+  font-weight: bold; 
+  color: rgb(50, 72, 95);
+    
 }
 .first-question-title{
   padding: 15pt;
   font-size: 13.5pt;
   font-weight: normal;
   color: rgb(50, 72, 95);
-  font-family: 'Times New Roman', Times, serif;
+  
   margin-top: 60px;
   margin: 10px;
 }
@@ -272,7 +291,7 @@ input[type="radio"]:checked {
   font-size: 13.5pt;
   font-weight: bold;
   color: rgb(50, 72, 95);
-  font-family: 'Times New Roman', Times, serif;
+  
   text-align: center;
   background-color:  #08e287;
   opacity: 30%;

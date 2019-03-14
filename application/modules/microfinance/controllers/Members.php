@@ -322,8 +322,9 @@ class Members extends MX_Controller
            
 
         } else {
-
-            echo (json_encode("No members found"));
+            $error = 'No members found';
+            $message = json_encode($error);
+            echo $message;
         }
 
     }
