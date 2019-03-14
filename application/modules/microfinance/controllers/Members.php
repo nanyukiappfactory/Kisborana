@@ -279,6 +279,7 @@ class Members extends MX_Controller
         );
         $this->load->view("site/layouts/layout", $data);
     }
+    
 
     public function upload_csv()
     {
@@ -339,7 +340,15 @@ class Members extends MX_Controller
             echo (json_encode("Error: Password not saved"));
         }
     }
-
+    public function retrieve_phone($phone_number)
+    {
+        $retrieved =$this->member_model->retrieve_phone($phone_number);
+        if ($retrieved->num_rows() > 0) {
+            echo (json_encode("Phone exists"));
+        } else {
+            echo (json_encode("Phone doesnt exist"));
+        }
+    }
     //trial ========
     //get members to create web serrvice
     public function member_existence()

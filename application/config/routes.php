@@ -66,13 +66,13 @@ $route['admin/login'] = 'auth/admin/login_admin';
  * Loan Routes
 ****/
 
-$route['loan'] = 'microfinance/loan/index';
-$route['loan/new_loan'] = 'microfinance/loan/new_loan';
-$route['loan/bulk_registration'] = 'microfinance/loan/bulk_registration';
-$route['loan/edit/(:num)'] = 'microfinance/loan/edit/$1';
-$route['loan/deactivate/(:num)'] = 'microfinance/loan/deactivate/$1';
-$route['loan/activate/(:num)'] = 'microfinance/loan/activate/$1';
-$route['loan/delete/(:num)'] = 'microfinance/loan/delete/$1';
+$route['loan/all-loans'] = 'microfinance/loans/index';
+$route['loan/new_loan'] = 'microfinance/loans/new_loan';
+$route['loan/bulk_registration'] = 'microfinance/loans/bulk_registration';
+$route['loan/edit/(:num)'] = 'microfinance/loans/edit/$1';
+$route['loan/deactivate/(:num)'] = 'microfinance/loans/deactivate/$1';
+$route['loan/activate/(:num)'] = 'microfinance/loans/activate/$1';
+$route['loan/delete/(:num)'] = 'microfinance/loans/delete/$1';
 
 
 /****
@@ -119,6 +119,7 @@ $route['members/execute_search'] = 'microfinance/members/execute_search';
 $route['members/member-existence'] = 'microfinance/members/member_existence';
 $route['members/check-member-existence/(:any)/(:any)'] = 'microfinance/members/check_member_existence/$1/$2';
 $route['members/save-member-password/(:any)/(:any)/(:any)'] = 'microfinance/members/save_member_password/$1/$2/$3';
+$route['members/check-member-phone/(:num)'] = 'microfinance/members/retrieve_phone/$1';
 //$route['members/strip'] = 'microfinance/members/strip_number';
 
 

@@ -291,14 +291,23 @@ class Member_model extends CI_Model
             'member_password'=> md5($password),
             'member_phone_number' => $phone_number
         );
-        
         $this->db->where('member_national_id', $nationalid);
-        if($this->db->update("member",$data)){
+        if($this->db->insert("member",$data)){
             return TRUE;
         }
         else{
             return FALSE;
         }
+    }
+    function retrieve_phone($phone_number)
+    {       
+        $data = array(
+            'member_phone_number' => $phone_number
+        );
+        $this->db->select('member_phone_number');    
+        $this->db->where($data);
+        $member_details = $this->db->get("member");
+        return $member_details;
     }
 
     public function get_total_members()

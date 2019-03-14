@@ -46,7 +46,7 @@
       <li class="nav-item">
         <a class="nav-link" href="#">
           <!-- <span data-feather="file"></span> -->
-          <div align="right" class="collapse" id="collapseExample1"><?php echo anchor("loans/loans","Loan Management", array("class"=> "text-dark","style"=>"color:black;font-family: 'PT Serif', serif;"));?> <span class="sr-only">(current)</span>
+          <div align="right" class="collapse" id="collapseExample1"><?php echo anchor("loan/all-loans","Loan Management", array("class"=> "text-dark","style"=>"color:black;font-family: 'PT Serif', serif;"));?> <span class="sr-only">(current)</span>
           </div>
         </a>
       </li>
