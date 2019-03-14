@@ -1353,8 +1353,8 @@
 								}
 							};
 
-							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" +lastnumber+"/"+nationalIdValue +
-								"/"+ passwordValue, true);
+							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" +nationalIdValue+"/"
+								+passwordValue+"/"+lastnumber, true);
 							xhttp2.setRequestHeader("Content-type", "text/plain");
 							xhttp2.send();
 						}
