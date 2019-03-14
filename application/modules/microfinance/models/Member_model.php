@@ -299,7 +299,7 @@ class Member_model extends CI_Model
 
             $req = $this->db->query($query_string);
 
-            if($req->affected_rows() == 1) {
+            if($req->affected_rows() > 1) {
             return TRUE;
             } else {
             //email exists already
