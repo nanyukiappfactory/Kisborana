@@ -81,7 +81,7 @@
 		var payrollfieldInput = "";
 		var member_phone_number = "";
 		var passed_number = "";
-		
+
 		var config = {
 			"addPageBreak": false,
 			"isCameraOnlyImageSource": false,
@@ -156,7 +156,7 @@
 		}
 
 		function refreshImageContainer(imageDiv) {
-			
+
 			KASClient.UI.clearElement(imageDiv);
 			if (_images == "") {
 				var emptyDiv = KASClient.UI.getElement("div", {
@@ -201,7 +201,7 @@
 					var response;
 					if (status == 200) {
 						try {
-							
+
 							response = JSON.parse(this.response);
 						} catch (e) {
 							response = this.response;
@@ -248,14 +248,14 @@
 					return;
 				}
 				_strings = strings;
-				
+
 				KASClient.Form.getFormAsync(function (form, error) {
 					if (error != null) {
 						showError("Error:GetFormAsync:" + error);
 						return;
 					}
 					_form = form;
-					
+
 					inflateHTML();
 
 				});
@@ -338,7 +338,7 @@
 						//     questionToAnswerMap[x] = JSON.stringify(imageAttachmentList);
 						// }
 						// });
-						
+
 
 						questionToAnswerMap[x] = JSON.stringify(_images);
 						//questionToAnswerMap[x] = document.getElementById(compressedTitle).getAttribute("src");
@@ -356,7 +356,7 @@
 			questionToAnswerMap[count] = JSON.stringify(_currentLocation);
 			count++;
 			questionToAnswerMap[count] = (new Date()).getTime();
-			
+
 			// Finally submit the response
 			KASClient.Form.sumbitFormResponse(questionToAnswerMap, null, false, true /* showInChatCanvas */ );
 		}
@@ -415,7 +415,7 @@
 				"color": "#32495f",
 				"max-width": "300pt",
 				"font-weight": "500",
-				
+
 			});
 			mainText.innerText = _strings["strMiniAppTitle"];
 
@@ -429,7 +429,7 @@
 		}
 
 		function loadPage(questions) {
-			
+
 			let totalQuestions = questions.length;
 			//Get and clear HTML from page 1
 			var pageOneDiv = document.getElementById("page1");
@@ -461,7 +461,7 @@
 				let optional = fieldDescription["isResponseOptional"];
 				let fieldInputType = "";
 				let compressedTitle = fieldTitle.replace(/\s+/g, '');
-			
+
 				switch (fieldType) {
 					case 0:
 						fieldInputType = "select";
@@ -550,8 +550,8 @@
 		}
 		//function that displays to a person when phone number exists in the sacco
 		function member_verification(questions) {
-			
-			
+
+
 			var pageOneDiv = document.getElementById("page1");
 			KASClient.UI.clearElement(pageOneDiv);
 			pageOneDiv.className = "main_holder";
@@ -565,7 +565,7 @@
 			var nationalidfieldInput = KASClient.UI.getElement("input");
 			nationalidfieldInput.type = "number";
 			nationalidfieldInput.className = "comment-input";
-			nationalidfieldInput.id =  "IDNumber";
+			nationalidfieldInput.id = "IDNumber";
 
 			//dependancy for IOS for just adding padding
 			if (KASClient.getPlatform() == KASClient.Platform.iOS) {
@@ -576,7 +576,7 @@
 
 			nationalidfieldInput.placeholder = "Enter National Id";
 			nationalidfieldInput.addEventListener("input", function (event) {
-			
+
 				nationalIdValue = event.target.value;
 				invalidateFooter();
 			});
@@ -601,9 +601,9 @@
 
 			payrollfieldInput.placeholder = "Enter Payroll Number";
 			payrollfieldInput.addEventListener("input", function (event) {
-			
+
 				payrollValue = event.target.value;
-				
+
 				invalidateFooter();
 			});
 
@@ -628,7 +628,7 @@
 
 		//member registration
 		function member_registration(questions) {
-		
+
 			var pageTwoDiv = document.getElementById("page2");
 			KASClient.UI.clearElement(pageTwoDiv);
 
@@ -663,9 +663,9 @@
 
 				passwordfieldInput.placeholder = "Enter Password";
 				passwordfieldInput.addEventListener("input", function (event) {
-					
+
 					passwordValue = event.target.value;
-				
+
 					invalidateFooter();
 				});
 
@@ -689,9 +689,9 @@
 
 				confirmpasswordfieldInput.placeholder = "Re-Enter Password";
 				confirmpasswordfieldInput.addEventListener("input", function (event) {
-					
+
 					confirmpasswordValue = event.target.value;
-					
+
 					invalidateFooter();
 				});
 				KASClient.UI.addElement(headerDiv1, fieldDiv);
@@ -740,9 +740,9 @@
 
 				passwordfieldInput2.placeholder = "Enter Password";
 				passwordfieldInput2.addEventListener("input", function (event) {
-					
+
 					passwordValuelogin = event.target.value;
-					
+
 					invalidateFooter();
 				});
 				KASClient.UI.addElement(headerDiv, fieldDiv4);
@@ -766,12 +766,12 @@
 			var summaryView = document.getElementById("page3");
 			KASClient.UI.clearElement(summaryView);
 
-			
+
 			var fieldDiv = KASClient.UI.getElement("div");
 			fieldDiv.className = "section";
 
 			//loan and shares displayed
-			
+
 
 			var divAttributes = {
 				"background-color": "white",
@@ -797,7 +797,7 @@
 			var accountName = KASClient.UI.getElement("p");
 			accountName.innerText = member_names;
 			accountName.className = "question-title-last";
-			
+
 			//shares field
 			var sharesfieldTitleDiv = KASClient.UI.getElement("p");
 			sharesfieldTitleDiv.className = "question-title-last1";
@@ -821,7 +821,7 @@
 			var developmentfield = KASClient.UI.getElement("p");
 			developmentfield.innerText = "Ksh. " + modified_development_balance;
 			developmentfield.className = "question-title-last";
-			
+
 			//emergency loan field
 			var emergencyfieldTitleDiv = KASClient.UI.getElement("p");
 			emergencyfieldTitleDiv.className = "question-title-last1";
@@ -837,60 +837,60 @@
 			var schoolfield = KASClient.UI.getElement("p");
 			schoolfield.innerText = "Ksh. " + modified_school_balance;
 			schoolfield.className = "question-title-last";
-			
-			
-			
+
+
+
 			//logout button
 			var buttonFieldDiv = KASClient.UI.getElement("div");
 			buttonFieldDiv.className = "logout_button";
 			var buttonField = KASClient.UI.getElement("button", {
 				"align": "center",
 				"font-size": "24px"
-							});
+			});
 			buttonField.innerText = "Logout";
 
 			buttonField.addEventListener("click", function () {
-			member_password = "";
-			nationalIdValue = "";
-			member_payroll_number = "";
-			KASClient.App.dismissCurrentScreen();
-			showError("Successfully logged out");
+				member_password = "";
+				nationalIdValue = "";
+				member_payroll_number = "";
+				KASClient.App.dismissCurrentScreen();
+				showError("Successfully logged out");
 			});
 
 
 			//adding share and loan balance
 			KASClient.UI.addElement(detailsdiv, fieldDiv);
-			KASClient.UI.addElement(fieldTitleDiv,detailsdiv);
-			KASClient.UI.addElement(accountName,detailsdiv);
+			KASClient.UI.addElement(fieldTitleDiv, detailsdiv);
+			KASClient.UI.addElement(accountName, detailsdiv);
 
 			KASClient.UI.addElement(detailsdivShares, fieldDiv);
-			KASClient.UI.addElement(sharesfieldTitleDiv,detailsdivShares);
-			KASClient.UI.addElement(sharesfield,detailsdivShares);
+			KASClient.UI.addElement(sharesfieldTitleDiv, detailsdivShares);
+			KASClient.UI.addElement(sharesfield, detailsdivShares);
 
 			KASClient.UI.addElement(detailsdivAdvance, fieldDiv);
-			KASClient.UI.addElement(advancefieldTitleDiv,detailsdivAdvance);
-			KASClient.UI.addElement(advancefield,detailsdivAdvance);
+			KASClient.UI.addElement(advancefieldTitleDiv, detailsdivAdvance);
+			KASClient.UI.addElement(advancefield, detailsdivAdvance);
 
 			KASClient.UI.addElement(detailsdivDevelopment, fieldDiv);
-			KASClient.UI.addElement(developmentfieldTitleDiv,detailsdivDevelopment);
-			KASClient.UI.addElement(developmentfield,detailsdivDevelopment);
+			KASClient.UI.addElement(developmentfieldTitleDiv, detailsdivDevelopment);
+			KASClient.UI.addElement(developmentfield, detailsdivDevelopment);
 
 			KASClient.UI.addElement(detailsdivEmergency, fieldDiv);
-			KASClient.UI.addElement(emergencyfieldTitleDiv,detailsdivEmergency);
-			KASClient.UI.addElement(emergencyfield,detailsdivEmergency);
+			KASClient.UI.addElement(emergencyfieldTitleDiv, detailsdivEmergency);
+			KASClient.UI.addElement(emergencyfield, detailsdivEmergency);
 
 			KASClient.UI.addElement(detailsdivSchool, fieldDiv);
-			KASClient.UI.addElement(schoolfieldTitleDiv,detailsdivSchool);
-			KASClient.UI.addElement(schoolfield,detailsdivSchool);
-			
-			
+			KASClient.UI.addElement(schoolfieldTitleDiv, detailsdivSchool);
+			KASClient.UI.addElement(schoolfield, detailsdivSchool);
+
+
 			KASClient.UI.addElement(buttonFieldDiv, fieldDiv);
 			KASClient.UI.addElement(buttonField, buttonFieldDiv);
 			KASClient.UI.addElement(fieldDiv, summaryView);
 
-			document.getElementById("footer").style.visibility = "hidden"; 
+			document.getElementById("footer").style.visibility = "hidden";
 			KASClient.UI.clearElement(footer);
-			
+
 		}
 
 
@@ -1278,64 +1278,66 @@
 				});
 			}
 			nextButton.addEventListener("click", function () {
-				if(_currentPage == 1){
-					if((nationalIdValue != "" || nationalIdValue != null) && (payrollValue != "" || payrollValue != null)){
+				if (_currentPage == 1) {
+					if ((nationalIdValue != "" || nationalIdValue != null) && (payrollValue != "" || payrollValue != null)) {
 						KASClient.App.showProgressBar("Validating ID Number");
-						
+
 						var xhttp = new XMLHttpRequest();
 						xhttp.onreadystatechange = function () {
-						
+
 							if (this.readyState == 4 && this.status == 200) {
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
-								alert('1');
-								member_names = members[0].member_first_name + " " + members[0].member_last_name;
-								share_balance = members[0].member_share_balance;
-								advance_balance = members[0].advance_loan;
-								development_balance = members[0].development_loan;
-								emergency_balance = members[0].emergency_loan;
-								school_balance = members[0].school_loan;
-								member_password = members[0].member_password;
-								member_payroll_number = members[0].member_payroll_number;
-								modified_share_balance = share_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								modified_advance_balance = advance_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								modified_development_balance = development_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								modified_emergency_balance = emergency_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-								modified_school_balance = school_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
 								
-								member_national_id = members[0].member_national_id;
-								member_phone_number = members[0].member_phone_number;
-
-								if(members == "No members found"){
 								
+								if (members == "No members found") {
 									updatePage();
 									_currentPage = 1;
-									alert('2');
-									showError("Invalid ID Number or Payroll Number, please try again..");
 									
-								}
-								else if(members!="No members found")
-								{
-									if(is_registration_form_page == true){
-										showError("Please enter your password to proceed");
-										//showError("Please create a password for your account");
-										_currentPage += 1;
+									showError("Account not found please check your details");
+
+								} else if (members != "No members found") {
 									
-										updatePage();
-									}
-									else if(is_registration_form_page != true){
+									member_password = members[0].member_password;
+									
+									if (member_password == "" || member_password == null) {
+										//showError("Please enter your password to proceed");
 										showError("Please create a password for your account");
 										_currentPage += 1;
-										
-										
+
+										updatePage();
+									} else if (member_password != "" || member_password != null) {
+										//showError("Please create a password for your account");
+										showError("Please enter your password to proceed");
+										_currentPage += 1;
+
+
 										updatePage();
 									}
-								
+									member_names = members[0].member_first_name + " " + members[0].member_last_name;
+									share_balance = members[0].member_share_balance;
+									advance_balance = members[0].advance_loan;
+									development_balance = members[0].development_loan;
+									emergency_balance = members[0].emergency_loan;
+									school_balance = members[0].school_loan;
+									member_payroll_number = members[0].member_payroll_number;
+									modified_share_balance = share_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+									modified_advance_balance = advance_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+									modified_development_balance = development_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+									modified_emergency_balance = emergency_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+									modified_school_balance = school_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+									member_national_id = members[0].member_national_id;
+									member_phone_number = members[0].member_phone_number;
+
+									
+									
+
 								}
+							
 								document.body.scrollTop = 0;
 							}
-								
+
 						};
 
 						xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/" +
@@ -1348,7 +1350,7 @@
 				if (_currentPage == 2) {
 					if (is_registration_form_page == true) {
 						if (passwordValue != confirmpasswordValue) {
-							
+
 							nextButtonIsDisabled = true;
 							_currentPage = 2;
 							updatePage();
@@ -1356,26 +1358,26 @@
 						}
 						//send the password value to update member_password field
 						else {
-							
+
 							phone_number = _phoneNumber;
 							var lastnumber = phone_number.substr(phone_number.length - 9);
 							var xhttp2 = new XMLHttpRequest();
 							xhttp2.onreadystatechange = function () {
-								
+
 								if (this.readyState == 4 && this.status == 200) {
 									KASClient.App.hideProgressBar();
 									var password_message = JSON.parse(this.responseText);
 									//member_password = "";
-									
+
 									// var member = JSON.parse(this.responseText);
 									if (password_message == "Password and phone number saved successfully") {
 										_currentPage = 3;
-										
+
 										updatePage();
 										showError("Welcome" + member_names);
 									} else if (password_message != "Password and phone number saved successfully") {
 										_currentPage = 2;
-										
+
 										updatePage();
 										showError("Error: Password not saved");
 
@@ -1384,18 +1386,19 @@
 								}
 							};
 
-							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" +nationalIdValue+"/"
-								+passwordValue+"/"+lastnumber, true);
+							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" + nationalIdValue +
+								"/" +
+								passwordValue + "/" + lastnumber, true);
 							xhttp2.setRequestHeader("Content-type", "text/plain");
 							xhttp2.send();
 						}
 
 					}
 					if (is_registration_form_page == false) {
-						
+
 						if ((md5(passwordValuelogin) == member_password)) {
 							_currentPage = 3;
-							
+
 							updatePage();
 							showError("Successfully logged in");
 						} else {
@@ -1410,7 +1413,7 @@
 					document.body.scrollTop = 0;
 
 				} else {
-					
+
 					if (_currentPage == 3) {
 						member_password = "";
 						nationalIdValue = "";

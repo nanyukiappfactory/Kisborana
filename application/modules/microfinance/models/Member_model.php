@@ -291,14 +291,29 @@ class Member_model extends CI_Model
             'member_password'=> md5($password),
             'member_phone_number' => $phone_number
         );
-        
-        $this->db->where('member_national_id', $nationalid);
-        if($this->db->update("member",$data)){
+
+        //============== trial=======
+            $this->db->where('member_national_id', $nationalid);
+            $query_string = $this->db->insert_string('member', $data);
+            $query_string = str_replace('INSERT INTO', 'INSERT IGNORE INTO', $query_string);
+
+            $req = $this->db->query($query_string);
+
+            if($req->affected_rows() == 1) {
             return TRUE;
-        }
-        else{
+            } else {
+            //email exists already
             return FALSE;
-        }
+            }
+        //============== end ========
+        
+        // $this->db->where('member_national_id', $nationalid);
+        // if($this->db->update("member",$data)){
+        //     return TRUE;
+        // }
+        // else{
+        //     return FALSE;
+        // }
     }
 
     public function get_total_members()
