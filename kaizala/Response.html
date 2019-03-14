@@ -156,7 +156,7 @@
 		}
 
 		function refreshImageContainer(imageDiv) {
-			//alert(2);
+			
 			KASClient.UI.clearElement(imageDiv);
 			if (_images == "") {
 				var emptyDiv = KASClient.UI.getElement("div", {
@@ -201,7 +201,7 @@
 					var response;
 					if (status == 200) {
 						try {
-							// alert(this.response);
+							
 							response = JSON.parse(this.response);
 						} catch (e) {
 							response = this.response;
@@ -248,18 +248,14 @@
 					return;
 				}
 				_strings = strings;
-				// alert(_strings);
+				
 				KASClient.Form.getFormAsync(function (form, error) {
 					if (error != null) {
 						showError("Error:GetFormAsync:" + error);
 						return;
 					}
 					_form = form;
-					//member_verification( _form["questions"]);
-
-					//get_member_details();
-					//loadPage(_form["questions"]);
-					//alert(JSON.stringify(_form["questions"]));
+					
 					inflateHTML();
 
 				});
@@ -328,9 +324,9 @@
 						let date = new Date(myDate);
 						questionToAnswerMap[x] = date.getTime();
 					} else if (fieldType == 8) {
-						//alert(5);
+						//
 						// gridView = new KASClient.UI.KASImageGridAlbumView("", (imageAttachmentList == null || imageAttachmentList == "") ? [] : imageAttachmentList, false, null, function (imageAttachmentList){
-						//     alert(6);
+						//     
 						// if(imageAttachmentList == null || imageAttachmentList.length == 0){
 						//     questionToAnswerMap[x] =  "";
 						// }
@@ -338,11 +334,11 @@
 						//     for(var i = 0; i<= imageAttachmentList.length; i++){
 						//         imageAttachmentList[i].generateThumbnailServerUrl = true;
 						//     }
-						//     alert(JSON.stringify(imageAttachmentList));
+						//   
 						//     questionToAnswerMap[x] = JSON.stringify(imageAttachmentList);
 						// }
 						// });
-						//alert(JSON.stringify(_images));
+						
 
 						questionToAnswerMap[x] = JSON.stringify(_images);
 						//questionToAnswerMap[x] = document.getElementById(compressedTitle).getAttribute("src");
@@ -360,7 +356,7 @@
 			questionToAnswerMap[count] = JSON.stringify(_currentLocation);
 			count++;
 			questionToAnswerMap[count] = (new Date()).getTime();
-			//alert(JSON.stringify(questionToAnswerMap));
+			
 			// Finally submit the response
 			KASClient.Form.sumbitFormResponse(questionToAnswerMap, null, false, true /* showInChatCanvas */ );
 		}
@@ -433,7 +429,7 @@
 		}
 
 		function loadPage(questions) {
-			//alert("loadpage func");
+			
 			let totalQuestions = questions.length;
 			//Get and clear HTML from page 1
 			var pageOneDiv = document.getElementById("page1");
@@ -465,8 +461,7 @@
 				let optional = fieldDescription["isResponseOptional"];
 				let fieldInputType = "";
 				let compressedTitle = fieldTitle.replace(/\s+/g, '');
-				//alert(compressedTitle);
-
+			
 				switch (fieldType) {
 					case 0:
 						fieldInputType = "select";
@@ -555,8 +550,8 @@
 		}
 		//function that displays to a person when phone number exists in the sacco
 		function member_verification(questions) {
-			//alert("anything woiii");
-			//let totalQuestions = questions.length;
+			
+			
 			var pageOneDiv = document.getElementById("page1");
 			KASClient.UI.clearElement(pageOneDiv);
 			pageOneDiv.className = "main_holder";
@@ -581,7 +576,7 @@
 
 			nationalidfieldInput.placeholder = "Enter National Id";
 			nationalidfieldInput.addEventListener("input", function (event) {
-				//alert("footerview");
+			
 				nationalIdValue = event.target.value;
 				invalidateFooter();
 			});
@@ -606,9 +601,9 @@
 
 			payrollfieldInput.placeholder = "Enter Payroll Number";
 			payrollfieldInput.addEventListener("input", function (event) {
-				//alert("footerview");
+			
 				payrollValue = event.target.value;
-				//alert(payrollValue);
+				
 				invalidateFooter();
 			});
 
@@ -633,7 +628,7 @@
 
 		//member registration
 		function member_registration(questions) {
-			//alert("page2");
+		
 			var pageTwoDiv = document.getElementById("page2");
 			KASClient.UI.clearElement(pageTwoDiv);
 
@@ -668,9 +663,9 @@
 
 				passwordfieldInput.placeholder = "Enter Password";
 				passwordfieldInput.addEventListener("input", function (event) {
-					//alert("footerview");
+					
 					passwordValue = event.target.value;
-					//alert(passwordValue);
+				
 					invalidateFooter();
 				});
 
@@ -694,9 +689,9 @@
 
 				confirmpasswordfieldInput.placeholder = "Re-Enter Password";
 				confirmpasswordfieldInput.addEventListener("input", function (event) {
-					//alert("footerview");
+					
 					confirmpasswordValue = event.target.value;
-					//alert(confirmpasswordValue);
+					
 					invalidateFooter();
 				});
 				KASClient.UI.addElement(headerDiv1, fieldDiv);
@@ -745,9 +740,9 @@
 
 				passwordfieldInput2.placeholder = "Enter Password";
 				passwordfieldInput2.addEventListener("input", function (event) {
-					//alert("footerview");
+					
 					passwordValuelogin = event.target.value;
-					//alert(passwordValuelogin);
+					
 					invalidateFooter();
 				});
 				KASClient.UI.addElement(headerDiv, fieldDiv4);
@@ -836,7 +831,7 @@
 
 			document.getElementById("footer").style.visibility = "hidden"; 
 			KASClient.UI.clearElement(footer);
-			//alert("loan");
+			
 		}
 
 
@@ -1227,17 +1222,14 @@
 				if(_currentPage == 1){
 					if((nationalIdValue != "" || nationalIdValue != null) && (payrollValue != "" || payrollValue != null)){
 						KASClient.App.showProgressBar("Validating ID Number");
-						// alert(JSON.stringify(_name));
 						
-						// alert(lastnumber);
 						var xhttp = new XMLHttpRequest();
 						xhttp.onreadystatechange = function () {
-							//alert("Readystate"+this.readyState+"Status:"+this.status);
+						
 							if (this.readyState == 4 && this.status == 200) {
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
-								//  alert(JSON.stringify(members));
-
+							
 								member_names = members[0].member_first_name + " " + members[0].member_last_name;
 								share_balance = members[0].member_share_balance;
 								advance_balance = members[0].advance_loan;
@@ -1252,21 +1244,10 @@
 								modified_emergency_balance = emergency_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 								modified_school_balance = school_balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-								//alert("whaat");
+								
 								member_national_id = members[0].member_national_id;
 								member_phone_number = members[0].member_phone_number;
-								//alert(member_phone_number);
-
-								// if(member_phone_number == '' || member_phone_number == null)
-								// {
-								// 	alert('1');
-								// 	passed_number = lastnumber;
-								// }
-								// else
-								// {
-								// 	alert('2');
-								// 	passed_number = member_phone_number;
-								// }
+							
 								if (members == "No members found") {
 									_currentPage = 1;
 									// nationalIdValue = "";
@@ -1280,32 +1261,21 @@
 										showError("Please enter your password to proceed");
 										//showError("Please create a password for your account");
 										_currentPage += 1;
-										//alert(JSON.stringify(this.responseText));
-										// alert(JSON.stringify(members[0].member_first_name));
-										// alert(members[0].member_first_name);
-										//updatePage();
+									
 										updatePage();
 									}
 									else if(is_registration_form_page != true){
 										showError("Please create a password for your account");
 										_currentPage += 1;
-										//alert(JSON.stringify(this.responseText));
-										// alert(JSON.stringify(members[0].member_first_name));
-										// alert(members[0].member_first_name);
-										//updatePage();
+										
+										
 										updatePage();
 									}
-									// showError("Please create a password for your account");
-									// _currentPage += 1;
-									// //alert(JSON.stringify(this.responseText));
-									// // alert(JSON.stringify(members[0].member_first_name));
-									// // alert(members[0].member_first_name);
-									// //updatePage();
-									// updatePage();
+								
 								}
 								document.body.scrollTop = 0;
 							}
-								alert(passed_number);
+								
 						};
 
 						xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/" +
@@ -1330,21 +1300,21 @@
 							var lastnumber = phone_number.substr(phone_number.length - 9);
 							var xhttp2 = new XMLHttpRequest();
 							xhttp2.onreadystatechange = function () {
-								//alert("Readystate"+this.readyState+"Status:"+this.status);
+								
 								if (this.readyState == 4 && this.status == 200) {
 									KASClient.App.hideProgressBar();
 									var password_message = JSON.parse(this.responseText);
 									//member_password = "";
-									//alert(members);
+									
 									// var member = JSON.parse(this.responseText);
 									if (password_message == "Password and phone number saved successfully") {
 										_currentPage = 3;
-										//alert(_currentPage);
+										
 										updatePage();
 										showError("Welcome" + member_names);
 									} else if (password_message != "Password and phone number saved successfully") {
 										_currentPage = 2;
-										//alert(_currentPage);
+										
 										updatePage();
 										showError("Error: Password not saved");
 
@@ -1361,10 +1331,10 @@
 
 					}
 					if (is_registration_form_page == false) {
-						//alert("password in login page");
+						
 						if ((md5(passwordValuelogin) == member_password)) {
 							_currentPage = 3;
-							alert(_currentPage);
+							
 							updatePage();
 							showError("Successfully logged in");
 						} else {
@@ -1379,8 +1349,7 @@
 					document.body.scrollTop = 0;
 
 				} else {
-					//logout();
-					//alert(_currentPage);
+					
 					if (_currentPage == 3) {
 						member_password = "";
 						nationalIdValue = "";
