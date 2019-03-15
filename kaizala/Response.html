@@ -1294,6 +1294,7 @@
 							if (this.readyState == 4 && this.status == 200) {
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
+								
 
 
 								if (members == "No members found") {
@@ -1303,7 +1304,11 @@
 									showError("Account not found please check your details");
 
 								} else if (members != "No members found") {
+									
+									member_phone_number = members[0].member_phone_number;
+									member_password = members[0].member_password;
 
+									
 									member_password = members[0].member_password;
 
 									if (member_password == "" || member_password == null) {
