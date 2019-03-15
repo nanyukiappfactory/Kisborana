@@ -1299,11 +1299,11 @@
 
 
 								if (members == "No members found") {
+									showError("Account not found please check your details");
+									document.getElementById('nationalidfieldInput').value = nationalIdValue;
+									document.getElementById('payrollfieldInput').value = payrollValue;
 									updatePage();
 									_currentPage = 1;
-
-									showError("Account not found please check your details");
-
 								} else if (members != "No members found") {
 
 									member_password = members[0].member_password;
