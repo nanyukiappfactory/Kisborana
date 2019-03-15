@@ -848,9 +848,11 @@
 				"font-size": "24px",
 				"margin": "15pt",
 				"width": "90%",
-				"color":"white",
-				"padding" : "15px",
-				"background-color" : "#00a1ff"
+				"color": "white",
+				"padding": "15px",
+				"background-color": "#00a1ff",
+				"box-shadow": "none",
+				"border-color": "#00a1ff"
 
 			});
 			buttonField.innerText = "Logout";
@@ -1307,17 +1309,39 @@
 									member_password = members[0].member_password;
 
 									if (member_password == "" || member_password == null) {
-										//showError("Please enter your password to proceed");
-										showError("Please create a password for your account");
-										_currentPage += 1;
+										alert('0');
+										var xhttp3 = new XMLHttpRequest();
+										xhttp3.onreadystatechange = function () {
+											alert('1');
+											if (this.readyState == 4 && this.status == 200) {
 
-										updatePage();
+												KASClient.App.hideProgressBar();
+												var phone_message = JSON.parse(this.responseText);
+												if (phone_message == "Phone exists") {
+													alert('2');
+													nextButtonIsDisabled = true;
+													_currentPage = 1;
+													updatePage();
+													showError("Your phone number is already registered with another account");
+												}
+												else {
+												alert('3');
+												showError("Please create a password for your account");
+												_currentPage += 1;
+
+												updatePage();
+											}
+											} 
+										};
+										phone_number = _phoneNumber;
+										var lastnumber = phone_number.substr(phone_number.length - 9);
+										xhttp3.open("POST", "https://kisborana.azurewebsites.net/members/check-member-phone/" + lastnumber, true);
+										xhttp3.setRequestHeader("Content-type", "text/plain");
+										xhttp3.send();
 									} else if (member_password != "" || member_password != null) {
 										//showError("Please create a password for your account");
 										showError("Please enter your password to proceed");
 										_currentPage += 1;
-
-
 										updatePage();
 									}
 									member_names = members[0].member_first_name + " " + members[0].member_last_name;
@@ -1335,10 +1359,6 @@
 
 									member_national_id = members[0].member_national_id;
 									member_phone_number = members[0].member_phone_number;
-
-
-
-
 								}
 
 								document.body.scrollTop = 0;
@@ -1357,7 +1377,6 @@
 					if (is_registration_form_page == true) {
 
 						if (passwordValue != confirmpasswordValue) {
-							alert('5');
 							nextButtonIsDisabled = true;
 							_currentPage = 2;
 							updatePage();
@@ -1366,65 +1385,42 @@
 
 						//send the password value to update member_password field
 						else {
-							var xhttp3 = new XMLHttpRequest();
-							xhttp3.onreadystatechange = function () {
-
-								if (this.readyState == 4 && this.status == 200) {
-
-									KASClient.App.hideProgressBar();
-									var phone_message = JSON.parse(this.responseText);
-									if (phone_message == "Phone exists") {
-										nextButtonIsDisabled = true;
-										_currentPage = 2;
-										updatePage();
-										showError("phone number exists, try again");
-									} else {
-
-										phone_number = _phoneNumber;
-										var lastnumber = phone_number.substr(phone_number.length - 9);
-										var xhttp2 = new XMLHttpRequest();
-										xhttp2.onreadystatechange = function () {
-
-											if (this.readyState == 4 && this.status == 200) {
-												KASClient.App.hideProgressBar();
-												var password_message = JSON.parse(this.responseText);
-												//member_password = "";
-
-												// var member = JSON.parse(this.responseText);
-												if (password_message == "Password and phone number saved successfully") {
-													_currentPage = 3;
-
-													updatePage();
-													showError("Welcome " + member_names);
-												} else if (password_message != "Password and phone number saved successfully") {
-													_currentPage = 2;
-
-													updatePage();
-													showError("Error: Password not saved");
-
-												}
-												// document.body.scrollTop = 0;
-											}
-										};
-
-										xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" + nationalIdValue +
-											"/" +
-											passwordValue + "/" + lastnumber, true);
-										xhttp2.setRequestHeader("Content-type", "text/plain");
-										xhttp2.send();
-									}
-								}
-							};
 							phone_number = _phoneNumber;
 							var lastnumber = phone_number.substr(phone_number.length - 9);
-							xhttp3.open("POST", "https://kisborana.azurewebsites.net/members/check-member-phone/" + lastnumber, true);
-							xhttp3.setRequestHeader("Content-type", "text/plain");
-							xhttp3.send();
+							var xhttp2 = new XMLHttpRequest();
+							xhttp2.onreadystatechange = function () {
 
+								if (this.readyState == 4 && this.status == 200) {
+									KASClient.App.hideProgressBar();
+									var password_message = JSON.parse(this.responseText);
+									//member_password = "";
+
+									// var member = JSON.parse(this.responseText);
+									if (password_message == "Password and phone number saved successfully") {
+										_currentPage = 3;
+
+										updatePage();
+										showError("Welcome " + member_names);
+									} else if (password_message != "Password and phone number saved successfully") {
+										_currentPage = 2;
+
+										updatePage();
+										showError("Error: Password not saved");
+
+									}
+									// document.body.scrollTop = 0;
+								}
+							};
+
+							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" + nationalIdValue +
+								"/" +
+								passwordValue + "/" + lastnumber, true);
+							xhttp2.setRequestHeader("Content-type", "text/plain");
+							xhttp2.send();
 						}
 
-					}
-					if (is_registration_form_page == false) {
+
+					} else if (is_registration_form_page == false) {
 
 						if ((md5(passwordValuelogin) == member_password)) {
 							_currentPage = 3;
@@ -1439,8 +1435,6 @@
 					}
 
 
-
-					document.body.scrollTop = 0;
 
 				} else {
 
