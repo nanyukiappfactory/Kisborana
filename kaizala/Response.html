@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="md5.min.js"></script>
 	<!-- <script type="text/javascript" src="Survey.js"></script> -->
 	<!-- <script type="text/javascript" src="KASClientCore.js"></script>
-    <script type="text/javascript" src="KASClientUI.js"></script> -->
+<script type="text/javascript" src="KASClientUI.js"></script> -->
 
 </head>
 
@@ -22,9 +22,9 @@
 		<div id="page1"></div>
 		<div id="page2" style="width: 100%; padding-top: 8px">
 			<!-- <div class="section" id="detailsViewDiv" style="padding-top : 8px">
-			</div>
-			<div class="section" id="locationViewDiv" style="border-bottom: none">
-			</div> -->
+		</div>
+		<div class="section" id="locationViewDiv" style="border-bottom: none">
+		</div> -->
 		</div>
 		<div id="page3" style="width: 100%; padding-top: 8px">
 		</div>
@@ -803,7 +803,7 @@
 			sharesfieldTitleDiv.className = "question-title-last1";
 			sharesfieldTitleDiv.innerText = "Share Balance";
 			var sharesfield = KASClient.UI.getElement("p");
-			sharesfield.innerText = "Ksh. " + modified_share_balance;
+			sharesfield.innerText = "Kes. " + modified_share_balance;
 			sharesfield.className = "question-title-last";
 
 			//avance loan field
@@ -811,7 +811,7 @@
 			advancefieldTitleDiv.className = "question-title-last1";
 			advancefieldTitleDiv.innerText = "Advance Loan Balance";
 			var advancefield = KASClient.UI.getElement("p");
-			advancefield.innerText = "Ksh. " + modified_advance_balance;
+			advancefield.innerText = "Kes. " + modified_advance_balance;
 			advancefield.className = "question-title-last";
 
 			//development loan field
@@ -819,7 +819,7 @@
 			developmentfieldTitleDiv.className = "question-title-last1";
 			developmentfieldTitleDiv.innerText = "Development Loan Balance";
 			var developmentfield = KASClient.UI.getElement("p");
-			developmentfield.innerText = "Ksh. " + modified_development_balance;
+			developmentfield.innerText = "Kes. " + modified_development_balance;
 			developmentfield.className = "question-title-last";
 
 			//emergency loan field
@@ -827,7 +827,7 @@
 			emergencyfieldTitleDiv.className = "question-title-last1";
 			emergencyfieldTitleDiv.innerText = "Emergency Loan Balance";
 			var emergencyfield = KASClient.UI.getElement("p");
-			emergencyfield.innerText = "Ksh. " + modified_emergency_balance;
+			emergencyfield.innerText = "Kes. " + modified_emergency_balance;
 			emergencyfield.className = "question-title-last";
 
 			//school loan field
@@ -835,7 +835,7 @@
 			schoolfieldTitleDiv.className = "question-title-last1";
 			schoolfieldTitleDiv.innerText = "School Loan Balance";
 			var schoolfield = KASClient.UI.getElement("p");
-			schoolfield.innerText = "Ksh. " + modified_school_balance;
+			schoolfield.innerText = "Kes. " + modified_school_balance;
 			schoolfield.className = "question-title-last";
 
 
@@ -846,7 +846,12 @@
 			var buttonField = KASClient.UI.getElement("button", {
 				"align": "center",
 				"font-size": "24px",
-				"margin" : "15pt"
+				"margin": "15pt",
+				"width": "90%",
+				"color":"white",
+				"padding" : "15px",
+				"background-color" : "#00a1ff"
+
 			});
 			buttonField.innerText = "Logout";
 
@@ -1289,18 +1294,18 @@
 							if (this.readyState == 4 && this.status == 200) {
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
-								
-								
+
+
 								if (members == "No members found") {
 									updatePage();
 									_currentPage = 1;
-									
+
 									showError("Account not found please check your details");
 
 								} else if (members != "No members found") {
-									
+
 									member_password = members[0].member_password;
-									
+
 									if (member_password == "" || member_password == null) {
 										//showError("Please enter your password to proceed");
 										showError("Please create a password for your account");
@@ -1331,11 +1336,11 @@
 									member_national_id = members[0].member_national_id;
 									member_phone_number = members[0].member_phone_number;
 
-									
-									
+
+
 
 								}
-							
+
 								document.body.scrollTop = 0;
 							}
 
@@ -1350,48 +1355,72 @@
 
 				if (_currentPage == 2) {
 					if (is_registration_form_page == true) {
-						if (passwordValue != confirmpasswordValue) {
 
+						if (passwordValue != confirmpasswordValue) {
+							alert('5');
 							nextButtonIsDisabled = true;
 							_currentPage = 2;
 							updatePage();
 							showError("Password Mismatch, try again");
 						}
+
 						//send the password value to update member_password field
 						else {
-
-							phone_number = _phoneNumber;
-							var lastnumber = phone_number.substr(phone_number.length - 9);
-							var xhttp2 = new XMLHttpRequest();
-							xhttp2.onreadystatechange = function () {
+							var xhttp3 = new XMLHttpRequest();
+							xhttp3.onreadystatechange = function () {
 
 								if (this.readyState == 4 && this.status == 200) {
+
 									KASClient.App.hideProgressBar();
-									var password_message = JSON.parse(this.responseText);
-									//member_password = "";
-
-									// var member = JSON.parse(this.responseText);
-									if (password_message == "Password and phone number saved successfully") {
-										_currentPage = 3;
-
-										updatePage();
-										showError("Welcome" + member_names);
-									} else if (password_message != "Password and phone number saved successfully") {
+									var phone_message = JSON.parse(this.responseText);
+									if (phone_message == "Phone exists") {
+										nextButtonIsDisabled = true;
 										_currentPage = 2;
-
 										updatePage();
-										showError("Error: Password not saved");
+										showError("phone number exists, try again");
+									} else {
 
+										phone_number = _phoneNumber;
+										var lastnumber = phone_number.substr(phone_number.length - 9);
+										var xhttp2 = new XMLHttpRequest();
+										xhttp2.onreadystatechange = function () {
+
+											if (this.readyState == 4 && this.status == 200) {
+												KASClient.App.hideProgressBar();
+												var password_message = JSON.parse(this.responseText);
+												//member_password = "";
+
+												// var member = JSON.parse(this.responseText);
+												if (password_message == "Password and phone number saved successfully") {
+													_currentPage = 3;
+
+													updatePage();
+													showError("Welcome " + member_names);
+												} else if (password_message != "Password and phone number saved successfully") {
+													_currentPage = 2;
+
+													updatePage();
+													showError("Error: Password not saved");
+
+												}
+												// document.body.scrollTop = 0;
+											}
+										};
+
+										xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" + nationalIdValue +
+											"/" +
+											passwordValue + "/" + lastnumber, true);
+										xhttp2.setRequestHeader("Content-type", "text/plain");
+										xhttp2.send();
 									}
-									// document.body.scrollTop = 0;
 								}
 							};
+							phone_number = _phoneNumber;
+							var lastnumber = phone_number.substr(phone_number.length - 9);
+							xhttp3.open("POST", "https://kisborana.azurewebsites.net/members/check-member-phone/" + lastnumber, true);
+							xhttp3.setRequestHeader("Content-type", "text/plain");
+							xhttp3.send();
 
-							xhttp2.open("POST", "https://kisborana.azurewebsites.net/members/save-member-password/" + nationalIdValue +
-								"/" +
-								passwordValue + "/" + lastnumber, true);
-							xhttp2.setRequestHeader("Content-type", "text/plain");
-							xhttp2.send();
 						}
 
 					}
