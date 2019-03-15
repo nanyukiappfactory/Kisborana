@@ -1301,11 +1301,11 @@
 
 
 								if (members == "No members found") {
-									updatePage();
-									_currentPage = 1;									
-
 									showError("Account not found please check your details");
-
+									document.getElementById('nationalidfieldInput').value = nationalIdValue;
+									document.getElementById('payrollfieldInput').value = payrollValue;
+									updatePage();
+									_currentPage = 1;
 								} else if (members != "No members found") {
 									
 									member_phone_number = members[0].member_phone_number;
