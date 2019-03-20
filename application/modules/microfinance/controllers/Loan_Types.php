@@ -9,39 +9,31 @@ class Loan_Types extends Admin
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("loan_types_model");
-        $this->load->model("site_model");
 
+        $this->load->model(array("loan_types_model","site_model"));
+        
+        // load required libraries
+        $this->load->library(array('pagination','upload'));
 
-        // load pagination library
-        $this->load->library('pagination');
-
-        // load form (multipart) and URL helper
+        // load required helpers
         $this->load->helper(array('url', 'form', 'html', 'download'));
 
-        // load upload library
-        $this->load->library('upload');
     }
     public function index( $order_column = 'loan_type_name', $order_method = 'ASC' )
     {
-        
         // Pagination
         $table = "loan_type";
-        $where = "deleted = 0"; 
-        // $search_results = '';
-        
+        $where = "deleted = 0";    
       
         $search_results = $this->session->userdata("search_session");
-
 
         if(!empty($search_results) && $search_results != null){
             $where =  $search_results;
 
-        }
-   
+        } 
 
         $total_records = $this->site_model->get_count_loan_types($table);
-        $limit_per_page = 5;
+        $limit_per_page = 20;
         $segment = 5;
              
         $config['base_url'] = site_url().'loan-types/all-loan-types/'.$order_column.'/'.$order_method;
@@ -67,20 +59,20 @@ class Loan_Types extends Admin
 
         $this->pagination->initialize($config);
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
-        // build paging links
 
+        // build paging links
         $v_data = $this->pagination->create_links();
         
         $query = $this->site_model->get_all_results($search_results, $table,$limit_per_page, $start_index, $where, $order_column, $order_method);
-        // var_dump($order_method);die();
-        //lets order
-       
+        
+        //Ordering       
         if($order_method == 'DESC')
         {
           
             $order_method = 'ASC';
         }
-        else{
+        else
+        {
             $order_method = 'DESC';
         }
         
@@ -90,8 +82,6 @@ class Loan_Types extends Admin
                          'order_method' => $order_method,
                          'order_column' => $order_column,
         );
-
-        // var_dump($start_index);die();
         
         $data = array(
             "title" => $this->site_model->display_page_title(),
@@ -101,9 +91,6 @@ class Loan_Types extends Admin
         
     
     }
-
-   
-
     //search function
     public function execute_search()
     {
@@ -117,20 +104,15 @@ class Loan_Types extends Admin
         {
             $this->session->unset_userdata("search_session");
         }
-       
-        redirect("loan-types/all-loan-types");
-
-       
+        redirect("loan-types/all-loan-types");       
     }
+    // close search session
     public function close_search_session()
     {
         $this->session->unset_userdata("search_session");
         redirect("loan-types/all-loan-types");
-    }
-
-    
-
-// adding a new loan_type
+    } 
+    // adding a new loan_type
     public function new_loan_type()
     {
         //form validation
@@ -146,39 +128,38 @@ class Loan_Types extends Admin
         $this->form_validation->set_rules("custom_number_of_guarantors", "Custom number of guarantors", "numeric");
         $this->form_validation->set_rules("interest_rate", "Interest rate", "numeric|required");
 
-        if ($this->form_validation->run()) 
-        {
-            
-            $loan_type_id = $this->loan_types_model->add_loan_type();
-            if ($loan_type_id > 0) {
+        if($this->form_validation->run()) 
+        {            
+            $loan_type_created = $this->loan_types_model->add_loan_type();
+            if($loan_type_created > 0) 
+            {
                 $this->session->set_flashdata("success_message", "New Loan Type has been Added");
                 redirect("loan-types/all-loan-types");
-            } else {
+            } else 
+            {
                 $this->session->set_flashdata("error_message", "Unable to Add Loan Type");
             }
         }
         else
         {
             $this->session->set_flashdata("error_message", validation_errors());
+        }
             $v_data["add_loan_type"] = "loan_types/loan_types_model";
             $data = array("title" => $this->site_model->display_page_title(),
-                "content" => $this->load->view("microfinance/loan_types/add_loan_type", $v_data, true),
-    
+                "content" => $this->load->view("microfinance/loan_types/add_loan_type", $v_data, true),    
             );
-            $this->load->view("site/layouts/layout", $data);
-        }
-        
-
+            $this->load->view("site/layouts/layout", $data);    
     }
 
     //deleting a loan type
     public function delete($loan_type_id)
     {
         $my_loan_type = $this->loan_types_model->get_delete_loan_type($loan_type_id);
-        if ($my_loan_type > 0) {
+        if($my_loan_type > 0) {
             $this->session->set_flashdata("success_message", "Loan Type Deleted Successfully");
             redirect("loan-types/all-loan-types");
-        } else {
+        } else 
+        {
             $this->session->set_flashdata("error_message", "Unable to Delete Loan Type");
             redirect("loan-types/all-loan-types");
         }
@@ -198,7 +179,7 @@ class Loan_Types extends Admin
     }
 
     //impoting records from a csv file
-    public function bulk_registration()
+    public function bulk_upload_view()
     {
         $v_data["add_loan_type"] = "microfinance/loan_types/loan_types_model";
         $data = array("title" => $this->site_model->display_page_title(),

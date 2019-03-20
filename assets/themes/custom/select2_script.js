@@ -32285,6 +32285,92 @@ function CopyToClipboard(value, showNotification, notificationText) {
 	}
 }
 
+function maximumLoan()
+{
+  var maxValue = parseInt(document.getElementById('maximum_loan_amount').value);
+  var minValue = parseInt(document.getElementById('minimum_loan_amount').value);
+  if(minValue >= maxValue)
+  {
+    alert('Minimum Loan Amount should not Be greater than Maximum Loan Amount');
+    document.getElementById('submit').style.visibility = 'hidden';
+  }
+  else{
+    document.getElementById('submit').style.visibility = 'visible';
+  }
+
+}
+
+function minimumLoan()
+{
+  var maxValue = parseInt(document.getElementById('maximum_loan_amount').value);
+  var minValue = parseInt(document.getElementById('minimum_loan_amount').value);
+  if(minValue >= maxValue)
+  {
+    alert('Minimum Loan Amount should not Be greater than Maximum Loan Amount');
+    document.getElementById('submit').style.visibility = 'hidden';
+  }
+  else{
+    document.getElementById('submit').style.visibility = 'visible';
+  }
+}
+
+function maximumInstall(){
+  var maxValue = parseInt(document.getElementById('maximum_number_of_installments').value);
+  var minValue = parseInt(document.getElementById('minimum_number_of_installments').value);
+  if(minValue >= maxValue)
+  {
+    alert('Minimum number of Installments should not Be greater than Maximum number of installments');
+    document.getElementById('submit').style.visibility = 'hidden';
+  }
+  else{
+    document.getElementById('submit').style.visibility = 'visible';
+  } 
+}
+
+function minimumInstall(){
+  var maxValue = parseInt(document.getElementById('maximum_number_of_installments').value);
+  var minValue = parseInt(document.getElementById('minimum_number_of_installments').value);
+  if(minValue >= maxValue)
+  {
+    alert('Minimum number of Installments should not Be greater than Maximum number of installments');
+    document.getElementById('submit').style.visibility = 'hidden';
+  }
+  else{
+    document.getElementById('submit').style.visibility = 'visible';
+  }
+}
+
+function maximumGuarnt(){
+  var maxValue = parseInt(document.getElementById('maximum_number_of_guarantors').value);
+  var minValue = parseInt(document.getElementById('minimum_number_of_guarantors').value);
+  if( maxValue <= 4) {
+  if(minValue >= maxValue)
+  {
+    alert('Minimum number of Guarantors should not Be greater than Maximum number of Guarantors');
+    document.getElementById('submit').style.visibility = 'hidden';
+  }
+  else{
+    document.getElementById('submit').style.visibility = 'visible';
+  } 
+}
+else{
+  alert('Maximum Guarantors should not be greater than 4');
+  document.getElementById('submit').style.visibility = 'hidden';
+  } 
+}
+
+function minimumGuarnt(){
+  var maxValue = parseInt(document.getElementById('maximum_number_of_guarantors').value);
+  var minValue = parseInt(document.getElementById('minimum_number_of_guarantors').value);
+  if(minValue >= maxValue)
+  {
+    alert('Minimum number of Guarantors should not Be greater than Maximum number of Guarantors');
+    document.getElementById('submit').style.visibility = 'hidden';
+  }
+  else{
+    document.getElementById('submit').style.visibility = 'visible';
+  } 
+}
 
 
 function changeFunc() {

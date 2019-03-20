@@ -55,7 +55,7 @@ class Members extends MX_Controller
         }
 
         $total_members = $this->site_model->get_count_loan_types($table);
-        $limit_per_page = 5;
+        $limit_per_page = 20;
         $segment = 5;
 
         $config['base_url'] = site_url().'members/all-members/'.$order_column.'/'.$order_method;
