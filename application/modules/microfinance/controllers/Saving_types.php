@@ -62,8 +62,7 @@ class Saving_types extends Admin
             if ($saving_type_id > 0) {
                 $this->session->set_flashdata("success_message", "New saving type has been added");
             } else {
-                $this->session->set_flashdata
-                    ("error_message", "unable to add saving type");
+                $this->session->set_flashdata("error_message", "unable to add saving type");
             }
             redirect("microfinance/saving_types");
         

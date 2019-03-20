@@ -851,8 +851,9 @@
 				"color": "white",
 				"padding": "15px",
 				"background-color": "#00a1ff",
-				"box-shadow": "none",
-				"border-color": "#00a1ff"
+				"box-shadow": "0px 0px 0px 0px",
+				"border-color": "#00a1ff",
+				"border": "0px",
 
 			});
 			buttonField.innerText = "Logout";
@@ -1309,23 +1310,22 @@
 									member_password = members[0].member_password;
 
 									if (member_password == "" || member_password == null) {
-										alert('0');
+										
 										var xhttp3 = new XMLHttpRequest();
 										xhttp3.onreadystatechange = function () {
-											alert('1');
+											
 											if (this.readyState == 4 && this.status == 200) {
 
 												KASClient.App.hideProgressBar();
 												var phone_message = JSON.parse(this.responseText);
 												if (phone_message == "Phone exists") {
-													alert('2');
+													
 													nextButtonIsDisabled = true;
 													_currentPage = 1;
 													updatePage();
 													showError("Your phone number is already registered with another account");
 												}
 												else {
-												alert('3');
 												showError("Please create a password for your account");
 												_currentPage += 1;
 
