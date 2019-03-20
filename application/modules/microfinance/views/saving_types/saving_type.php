@@ -18,7 +18,7 @@
 
          
      
-    <div class="form-group " style ="margin-bottom: 10px;">
+    <div class="form-group" style ="margin-bottom: 10px;">
        <label for="saving_type_name" >Saving Type Name</label>
        <input type="text" name="saving_type_name" class="form-control">
 

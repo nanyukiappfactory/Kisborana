@@ -33,6 +33,7 @@
         
         <?php echo form_open($this->uri->uri_string()) ?>
             
+
             <table style="width: 100%; margin-top: 10px;">
             <tr>
                 <td>
@@ -164,12 +165,12 @@
 
                             <td>
 
-                                <?php echo anchor("saving_types/saving_types/update_saving_type/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info'"); ?>
+                                <?php echo anchor("saving_types/saving_types/update_saving_type/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
 
                             </td>
 
                             <td>
-                                <?php echo anchor("saving_types/saving_types/delete_saving_type" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger")); ?>
+                                <?php echo anchor("saving_types/saving_types/delete_saving_type" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
 
                             </td>
 
