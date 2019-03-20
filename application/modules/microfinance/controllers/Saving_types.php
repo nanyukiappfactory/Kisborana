@@ -10,6 +10,7 @@ class Saving_types extends Admin
         parent::__construct();
         $this->load->model("microfinance/saving_types_model");        
        $this->load->model("site/site_model"); 
+       $this->load->library("pagination");
 
        
     }
@@ -20,6 +21,34 @@ class Saving_types extends Admin
         $var = $this->session->userdata('logged_in_user');
         $login_status = $var['login_status'];
         if ($login_status == 'TRUE'){
+
+            //pagination 
+            $config = array();
+            $config["base_url"] = base_url()."saving-types/all-saving-types/";
+            $config["total_rows"] = $this->saving_types_model->record_count();
+            $config["per_page"] = 5;
+            $config["uri_segment"] =3;
+
+            $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
+            $config['full_tag_close'] = '</ul></nav></div>';
+            $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';
+            $config['num_tag_close'] = '</span></li>';
+            $config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
+            $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+            $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
+            $config['next_tag_close'] = '<span aria-hidden="true"></span></span></li>';
+            $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
+            $config['prev_tag_close'] = '</span></li>';
+            $config['first_tag_open'] = '<li class="page-item"><span class="page-link">';
+            $config['first_tag_close'] = '</span></li>';
+            $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
+            $config['last_tag_close'] = '</span></li>';
+
+            $this->pagination->initialize($config);
+
+            $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $v_data = $this->saving_types_model->get_saving_type($config["per_page"], $page);
+            $link_data = $this->pagination->create_links();
         //search
         $this->form_validation->set_rules("search", "Search", "required");
         if ($this->form_validation->run()) {
@@ -36,10 +65,16 @@ class Saving_types extends Admin
     
        else {
 
-        $v_data["all_saving_type"] = $this->saving_types_model->get_saving_type();
+        $all_data = array (
+            "all_saving_type" =>$v_data,
+            "links"=>$link_data,
+            "page"=> $page
+
+        );
+        //$v_data["all_saving_type"] = $this->saving_types_model->get_saving_type($config["per_page"], $page);
 
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/saving_types/all_saving_type", $v_data, true),
+            "content" => $this->load->view("microfinance/saving_types/all_saving_type", $all_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
         }
@@ -61,14 +96,14 @@ class Saving_types extends Admin
             } else {
                 $this->session->set_flashdata("error_message", "unable to add saving type");
             }
-            redirect("microfinance/saving_types");
+            redirect("saving-types/all-saving-types");
         
 
         $data["form_error"] = validation_errors();
         }
         $v_data ["add_saving_type"]= "microfinance/saving_types_model";
         $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/saving_types/saving_type", $v_data, true),
+            "content" => $this->load->view("microfinance/saving_types/add_saving_type", $v_data, true),
 
         );
         $this->load->view("site/layouts/layout", $data);
@@ -76,7 +111,7 @@ class Saving_types extends Admin
 
     
     //editing saving type
-    public function update_saving_type($saving_type_id)
+    public function edit_saving_type($saving_type_id)
     {
         $this->form_validation->set_rules("saving_type_name", "Saving Type Name", "required");
 
@@ -84,7 +119,7 @@ class Saving_types extends Admin
         {
             $saving_type_id = $this->saving_types_model->edit_saving_type($saving_type_id);
 
-            redirect("saving_types");
+            redirect("saving-types/all-saving-types");
         }
         else
         {
@@ -126,49 +161,49 @@ class Saving_types extends Admin
     //deleting a row
     public function delete_saving_type($saving_type_id)
     {
-        $undeleted = $this->saving_types_model->remove_saving_type($saving_type_id);
+        $undeleted = $this->saving_types_model->delete_saving_type($saving_type_id);
 
-        $v_data["all_saving_type"] = $undeleted;
-        $data = array(
-            "title"=>$this->site_model->display_page_title(),
-            "content"=>$this->load->view("microfinance/saving_types/all_saving_type", $v_data, true),
-        );
-        
-        $this->load->view("site/layouts/layout", $data);
+        if ($undeleted > 0) {
+            $this->session->set_flashdata("success_message", "Saving Type Deleted Successfully");
+            redirect("saving-types/all-saving-types");
+        } else {
+            $this->session->set_flashdata("error_message", "Unable to Delete Saving Type");
+            redirect("saving-types/all-saving-types");
+        }
     }
 
       //deactivate
       public function deactivate_saving_type($saving_type_id)
       {
           //1. load model and pass saving_type_id so as to update the saving_type_status column of that particular saving_type
-          $undeactivated = $this->saving_types_model->limit_saving_type($saving_type_id);
+          $undeactivated = $this->saving_types_model->deactivate_saving_type($saving_type_id);
           //2. Return all saving_type where the value saving_type_status column is 1; meaning, they are deactivated
           
-          $v_data["all_saving_type"] = $undeactivated;
-          //3. load the all friends view with data from step 2
-          $data = array(
-              "title"=>$this->site_model->display_page_title(),
-              "content"=>$this->load->view("microfinance/saving_types/all_saving_type", $v_data, true),
-          );
-          
-          $this->load->view("site/layouts/layout", $data);
+         if($undeactivated)
+         {
+            $this->session->set_flashdata("success_message", "Saving Type Dactivated Successfully");
+            redirect("saving-types/all-saving-types");
+        } else {
+            $this->session->set_flashdata("error_message", "Unable to Deactivate Saving Type");
+            redirect("saving-types/all-saving-types");
+        }
       }
   
       //activate
       public function activate_saving_type($saving_type_id)
       {
           //1. load model and pass saving_type_id so as to update the saving_type_status column of that particular saving_type
-          $unactivated = $this->saving_types_model->active_saving_type($saving_type_id);
+          $unactivated = $this->saving_types_model->activate_saving_type($saving_type_id);
           //2. Return all saving_types where the value saving_type_status column is 1; meaning, they are active
           
-          $v_data["all_saving_type"] = $unactivated;
-          //3. load the all friends view with data from step 2
-          $data = array(
-              "title"=>$this->site_model->display_page_title(),
-              "content"=>$this->load->view("microfinance/saving_types/all_saving_type", $v_data, true),
-          );
-          
-          $this->load->view("site/layouts/layout", $data);
+          if($unactivated)
+         {
+            $this->session->set_flashdata("success_message", "Saving Type Activated Successfully");
+            redirect("saving-types/all-saving-types");
+        } else {
+            $this->session->set_flashdata("error_message", "Unable to Activate Saving Type");
+            redirect("saving-types/all-saving-types");
+        }
       }
 
       //function for importing saving types in bulk

@@ -78,7 +78,7 @@ class Members extends MX_Controller
         $config['first_tag_close'] = '</span></li>';
         $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
         $config['last_tag_close'] = '</span></li>';
-
+ 
         $this->pagination->initialize($config);
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         // build paging links

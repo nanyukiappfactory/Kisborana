@@ -21,7 +21,7 @@ if (!empty($validation_errors)) {
 ?>
         <!-- dynamically generating a form in brackets where to submit data to-->
     <!-- <?php //echo form_open($this->uri->uri_string());?> -->
-    <?php echo form_open_multipart('microfinance/saving_types/update_saving_type/'.$saving_type_id, array('onsubmit' => "return confirm('Do you want to update this record')")); ?>
+    <?php echo form_open_multipart('microfinance/saving_types/edit_saving_type/'.$saving_type_id, array('onsubmit' => "return confirm('Do you want to update this record')")); ?>
 
    <div class="form-group">
        <label for ="saving_type_name">Saving Type Name</label>

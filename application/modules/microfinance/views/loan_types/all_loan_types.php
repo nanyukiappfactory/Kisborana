@@ -8,12 +8,11 @@ $error = $this->session->flashdata("error_message");
 
 if (!empty($success)) {?>
             <div class="alert alert-success" role="alert">
-                <?php
+            <?php
 echo $success; ?>
             </div>
             <?php
 }
-
 if (!empty($error)) {?>
             <div class="alert alert-dark" role="alert">
                 <?php
@@ -42,7 +41,7 @@ echo form_open('loan_types/execute_search');
 echo form_input(array('name' => 'search', 'placeholder' => 'search', 'aria-label' => 'Search', 'class' => 'form-control col-md-3'));
 ?>
                         <div class="input-group-append">
-                            <?php
+                        <?php
 echo form_submit('search_submit', 'Search', array('class' => 'btn-secondary btn-sm'));
 
 ?>
@@ -67,7 +66,7 @@ echo form_submit('search_submit', 'Search', array('class' => 'btn-secondary btn-
             <table class="table table-sm table-condensed table-striped table-sm table-bordered">
                 <tr>
                     <th>#</th>
-                    <th><a href="<?php echo site_url().'loan-types/all-loan-types/loan_type_name/'.$order_method.'/'.$page ?>" >Loan Name</a></th>
+                    <th><a href="<?php echo site_url() . 'loan-types/all-loan-types/loan_type_name/' . $order_method . '/' . $page ?>" >Loan Name</a></th>
                     <th>Status</th>
                     <th>Max Amount</th>
                     <th>Min Amount</th>
@@ -112,12 +111,12 @@ if ($all_loan_types->num_rows() > 0) {
                     <td>
 
                         <?php
-					if ($check == 0) {
-								echo "<button class='badge badge-danger far fa-thumbs-down'> Inactive</button>";
-							} else {
-								echo "<button class='badge badge-success far fa-thumbs-up'> Active</button>";
-							}
-							?>
+if ($check == 0) {
+            echo "<button class='badge badge-danger far fa-thumbs-down'> Inactive</button>";
+        } else {
+            echo "<button class='badge badge-success far fa-thumbs-up'> Active</button>";
+        }
+        ?>
                     </td>
                     <td>
                         <?php echo $max_loan; ?>
@@ -189,12 +188,12 @@ if ($all_loan_types->num_rows() > 0) {
 
                                                 <td>
                                                     <?php
-												if ($check == 0) {
-															echo "<button class='badge badge-danger far fa-thumbs-down'>Inactive</button>";
-														} else {
-															echo "<button class='badge badge-primary far fa-thumbs-down'>Active</button>";
-														}
-														?>
+if ($check == 0) {
+            echo "<button class='badge badge-danger far fa-thumbs-down'>Inactive</button>";
+        } else {
+            echo "<button class='badge badge-primary far fa-thumbs-down'>Active</button>";
+        }
+        ?>
                                                 </td>
 
                                                 <td>
@@ -209,11 +208,11 @@ if ($all_loan_types->num_rows() > 0) {
 
                                                 <td>
                                                     <?php
-												if ($check == '1') {
-															echo anchor("loan_types/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
-														} else {
-															echo anchor("loan_types/activate/" . $id, "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
-														}?>
+if ($check == '1') {
+            echo anchor("loan_types/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
+        } else {
+            echo anchor("loan_types/activate/" . $id, "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
+        }?>
                                                 </td>
                                         </table>
                                         <!-- end of modal body -->
@@ -231,7 +230,7 @@ if ($all_loan_types->num_rows() > 0) {
                     </td>
 
                     <td>
-                        <?php echo anchor("loan-types/edit-loan-types/$id" , '<i class="fas fa-edit"></i>', array('onclick' => "return confirm('Are you sure you want to edit?')", 'class' => "btn btn-info btn-sm")); ?>
+                        <?php echo anchor("loan-types/edit-loan-types/$id", '<i class="fas fa-edit"></i>', array('onclick' => "return confirm('Are you sure you want to edit?')", 'class' => "btn btn-info btn-sm")); ?>
                     </td>
                     <td>
                         <?php
