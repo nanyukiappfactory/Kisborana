@@ -125,11 +125,23 @@ $route['members/check-member-phone/(:num)'] = 'microfinance/members/retrieve_pho
 
 
 //saving_types routes
-$route['saving_types'] = 'microfinance/saving_types/index';
+$route['saving-types/add-saving-type'] = 'microfinance/saving_types/new_saving_type';
+$route['saving-types/all-saving-types'] = 'microfinance/saving_types/index';
+$route['saving-types/all-saving-types/(:any)/(:any)/(:num)'] = 'microfinance/saving_types/index/$1/$2/$3';
+$route['saving-types/all-saving-types/(:any)/(:any)'] = 'microfinance/saving_types/index/$1/$2';
+$route['saving-types/all-saving-types/(:num)'] = 'microfinance/saving_types/index/$1';
+//$route['loan-types/all-loan-types/(:any)'] = 'microfinance/loan_types/index/';
+//$route['loan-types/all-loan-types'] = 'microfinance/loan_types/index';
+$route['loan-types/(:any)/(:any)/(:num)'] = 'microfinance/loan_types/index/$1/$2/$3';
+$route['saving-types/edit-saving-types/(:num)'] = 'microfinance/saving_types/edit_saving_type/$1';
+$route['saving_types/delete-saving-type/(:num)'] = 'microfinance/saving_types/delete_saving_type/$1';
+$route['saving-types/deactivate-saving-type/(:num)'] = 'microfinance/saving_types/deactivate_saving_type/$1';
+$route['saving-types/activate-saving-type/(:num)'] = 'microfinance/saving_types/activate_saving_type/$1';
+
 $route['loan_types/new_loan_type'] = 'microfinance/loan_types/new_loan_type';
 $route['loan_types/bulk_registration'] = 'microfinance/loan_types/bulk_registration';
 $route['loan_types/edit/(:num)'] = 'microfinance/loan_types/edit/$1';
-$route['loan_types/deactivate/(:num)'] = 'microfinance/loan_types/deactivate/$1';
+
 $route['loan_types/activate/(:num)'] = 'microfinance/loan_types/activate/$1';
-$route['loan_types/delete/(:num)'] = 'microfinance/loan_types/delete/$1';
+
 $route['loan_types/execute_search'] = 'microfinance/loan_types/execute_search';

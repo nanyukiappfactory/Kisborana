@@ -59,7 +59,7 @@
 
             
             <div>   
-            <?php echo anchor("microfinance/saving_types/new_saving_type", "Add Saving Type", array("class"=>"btn btn-primary btn-sm")); ?>
+            <?php echo anchor("saving-types/add-saving-type", "Add Saving Type", array("class"=>"btn btn-primary btn-sm")); ?>
             
             <?php echo anchor("microfinance/imports", "Import Saving Types", array("class"=>"btn btn-success btn-sm")); ?>  
             </div>
@@ -84,10 +84,11 @@
             </tr>
 
             <?php
-            if ($all_saving_type->num_rows() > 0) {
-                $count = 0;
+           
+            if ($all_saving_type) {
+                $count = $page;
 
-                foreach ($all_saving_type->result() as $row) {
+                foreach ($all_saving_type as $row) {
                     $count++;
                     $id = $row->saving_type_id;
                     $name = $row->saving_type_name;
@@ -165,21 +166,21 @@
 
                             <td>
 
-                                <?php echo anchor("saving_types/saving_types/update_saving_type/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
+                                <?php echo anchor("saving-types/edit-saving-types/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
 
                             </td>
 
                             <td>
-                                <?php echo anchor("saving_types/saving_types/delete_saving_type" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
+                                <?php echo anchor("saving_types/delete-saving-type/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
 
                             </td>
 
                             <td>
                                 <?php
                                 if ($check == 0) {
-                                    echo anchor("saving_types/saving_types/activate_saving_type/" . $id, "<i class='far fa-thumbs-up'></i>", array("onclick" => "return confirm('Are you sure you want to activate?')", "class" => "btn btn-success btn-sm"));
+                                    echo anchor("saving-types/activate-saving-type/" . $id, "<i class='far fa-thumbs-up'></i>", array("onclick" => "return confirm('Are you sure you want to activate?')", "class" => "btn btn-success btn-sm"));
                                 } else {
-                                    echo anchor("saving_types/saving_types/deactivate_saving_type/" . $id, "<i class='far fa-thumbs-down'></i>", array("onclick" => "return confirm('Are you sure you want to deactivate?')", "class" => "btn btn-danger btn-sm"));
+                                    echo anchor("saving-types/deactivate-saving-type/" . $id, "<i class='far fa-thumbs-down'></i>", array("onclick" => "return confirm('Are you sure you want to deactivate?')", "class" => "btn btn-danger btn-sm"));
                                 }
                                 ?>
                             </td>
@@ -198,19 +199,19 @@
                  <!-- end of modal body -->
 
                  
-                    <?php echo anchor("microfinance/saving_types/update_saving_type/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
+                    <?php echo anchor("saving-types/edit-saving-types/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
                 
 
                  
-                    <?php echo anchor("microfinance/saving_types/delete_saving_type/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
+                    <?php echo anchor("saving_types/delete-saving-type/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
                
                  
                  
                     <?php
                     if ($check == 0) {
-                        echo anchor("saving_types/saving_types/activate_saving_type/" . $id, "<i class='far fa-thumbs-up'></i>", array("onclick" => "return confirm('Are you sure you want to activate?')", "class" => "btn btn-success btn-sm"));
+                        echo anchor("saving-types/activate-saving-type/" . $id, "<i class='far fa-thumbs-up'></i>", array("onclick" => "return confirm('Are you sure you want to activate?')", "class" => "btn btn-success btn-sm"));
                     } else {
-                        echo anchor("saving_types/saving_types/deactivate_saving_type/" . $id, "<i class='far fa-thumbs-down'></i>", array("onclick" => "return confirm('Are you sure you want to deactivate?')", "class" => "btn btn-danger btn-sm"));
+                        echo anchor("saving-types/deactivate-saving-type/" . $id, "<i class='far fa-thumbs-down'></i>", array("onclick" => "return confirm('Are you sure you want to deactivate?')", "class" => "btn btn-danger btn-sm"));
                     }
                     ?>
                  </td>
@@ -225,17 +226,9 @@
 
         </table>
 
-       <!-- pagination -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
-        <!-- end of pagination -->
+        <p><?php echo $links; ?></p>
+
+      
 
 
     </div>
