@@ -14,7 +14,7 @@ class Loan_types_model extends CI_Model
             "maximum_number_of_guarantors" => $this->input->post("maximum_number_of_guarantors"),
             "minimum_number_of_guarantors" => $this->input->post("minimum_number_of_guarantors"),
             "custom_number_of_guarantors" => $this->input->post("custom_number_of_guarantors"),
-            "interest_rate" => $this->input->post("interest_rate"),
+            "interest_rate" => $this->input->post("interest_rate"), 
         );
 
         if ($this->db->insert("loan_type", $data)) {
@@ -94,7 +94,7 @@ class Loan_types_model extends CI_Model
 
         // Execute the query.
         $query = $this->db->get();
-        var_dump($query->result());die();
+        // var_dump($query->result());die();
 
         // Return the results.
         return $query;

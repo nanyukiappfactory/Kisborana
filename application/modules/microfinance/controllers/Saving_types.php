@@ -52,11 +52,14 @@ class Saving_types extends Admin
             $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
             $v_data = $this->saving_types_model->get_saving_type($config["per_page"], $page);
             $link_data = $this->pagination->create_links();
+            
         //search
         $this->form_validation->set_rules("search", "Search", "required");
         if ($this->form_validation->run()) {
             $saving_type_id["searched_saving_type"] = $this->saving_types_model->search_saving_type();
-            //var_dump($friend_id); die();
+            //var_dump($saving_type_id); die();
+
+            
            
            $data = array("title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/saving_types/search_results",$saving_type_id, true),
