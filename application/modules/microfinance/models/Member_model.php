@@ -188,8 +188,8 @@ class Member_model extends CI_Model
         $this->upload->initialize($config);
         $filetype = $config['allowed_types'];
 
-        if ($filetype !== 'csv|CSV') {
-            $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'member.cv' File");
+        if ($filetype != 'csv' || $filetype != 'CSV') {
+            $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'member.csv' File");
             redirect('microfinance/members/bulk_registration');
         } else {
             $this->upload->do_upload('userfile');

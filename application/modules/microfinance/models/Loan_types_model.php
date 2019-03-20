@@ -104,16 +104,20 @@ class Loan_types_model extends CI_Model
     {
         $file_csv = $this->input->post('userfile');
         $config['upload_path'] = './assets/uploads/';
-        $config['allowed_types'] = 'csv|CSV';
+        $config['allowed_types'] = 'csv';
         $config['file_name'] = $_FILES["userfile"]['name'];
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
-        $filename = $config['file_name'];
+        $filetype = $config['allowed_types'];
 
-        if ($filename !== 'loan_type.csv') {
-            $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'loan_type_bulk.cv' ");
-            redirect('loan_types/bulk_registration');
+        // var_dump($filetype);
+
+        if ($filetype != 'CSV' || $filetype != 'csv') {
+            // var_dump('2');die(); 
+            $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'loan_type.csv' File");
+            redirect('loan-types/import-loan-types');
         } else {
+            // var_dump('3');die(); 
             $this->upload->do_upload('userfile');
             $data = $this->upload->data();
             $count = 0;

@@ -1,0 +1,6 @@
+loan type name,maximum loan amount,minimum loan amount,custom loan amount,maximum number of installments,minimum number of installments,custom number of installments,maximum number of guarantors,minimum number of guarantors,custom number of guarantors,interest rate,loan type status
+biashara,1,1,1,2,3,4,5,12,3,4,1
+development,1,1,1,2,3,4,5,2,3,4,1
+unga,1,1,1,2,3,4,5,1,3,4,1
+mawingu,1,1,1,2,3,4,5,3,3,4,1
+philip,23,23,32,32,43,12,21,32,32,12,12
