@@ -1,3 +1,79 @@
+<?php 
+$member_data = '';
+$count = $page;
+            if ($all_members->num_rows() > 0) {
+                foreach ($all_members->result() as $row) {
+                    $count++;
+                    $id = $row->member_id;
+                    $first_name = $row->member_first_name;
+                    $last_name = $row->member_last_name;
+                    $national_id = $row->member_national_id;
+                    $member_number = $row->member_number;
+                    $member_payroll_number = $row->member_payroll_number;
+                    $employer = $row->employer_id;
+                    $phone_number = $row->member_phone_number;
+                    $status = $row->member_status;
+                    $created_on = $row->created_on;
+                    $share_balance = $row->member_share_balance;
+                    $advance_loan = $row->advance_loan;
+                    $development_loan = $row->development_loan;
+                    $emergency_loan = $row->emergency_loan;
+                    $school_loan = $row->school_loan;
+
+                    $data = array (
+                        "id"=>$id,
+                        "national_id"=>$national_id,
+                        "member_number"=>$member_number,
+                        "count"=>$count,
+                        "last_name"=>$last_name,
+                        "first_name"=>$first_name,
+                        "status"=>$status
+                    );
+
+                    $view_modal = $this->load->view("microfinance/members/view_members", $data, true);
+                    
+                    if($status  == 1){ 
+                        $status_span = "<span class='badge badge-success far fa-thumbs-up'>Active</span>";
+                        
+                        $status_button = anchor("members/deactivate/$id", "<i class='far fa-thumbs-down'></i>", array("class" => 'btn btn-danger btn-sm',"onclick" => 'return confirm("Do you want to deactive")'));
+                    }
+                    else {
+                        $status_span = "<span class='badge badge-danger far fa-thumbs-down'>Inactive</span>";
+                        
+                        $status_button = anchor("members/activate/$id", "<i class='far fa-thumbs-up'></i>", array("class" => 'btn btn-success btn-sm',"onclick" => 'return confirm("Do you want to active")'));
+                    }
+                    $edit_url = "member/edit".$id;
+                    $edit_icon = "<i class='fas fa-edit'></i>";
+                    $delete_url = "members/delete_member/".$id;
+                    $delete_icon = "<i class='fas fa-trash-alt'></i>";
+
+                    $member_data .=
+                    '<tr><td>'.$count.'</td>
+                    <td>'.$first_name.'</td>
+                    <td>'.$last_name.'</td>
+                    <td>'.$national_id.'</td>
+                    <td>'.$member_payroll_number.'</td>
+                    <td>'.$phone_number.'</td>
+                    <td>'.$created_on.'</td>
+                    <td>'.$share_balance.'</td>
+                    <td>'.$advance_loan.'</td>
+                    <td>'.$development_loan.'</td>
+                    <td>'.$emergency_loan.'</td>
+                    <td>'.$school_loan.'</td>
+                    <td>
+                    <a href="#individualMember'.$id.'" class="btn btn-success btn-sm"
+                        data-toggle="modal" data-target="#individualMember'.$id.'"><i
+                            class="far fa-eye"></i></a>'.$view_modal.
+                            '</td>
+                            <td>'.anchor($edit_url, $edit_icon, array('onclick' => "return confirm('Are you sure you want to edit?')", 'class' => "btn btn-info btn-sm")).'</td>
+                            <td>'.$status_button.'</td>
+                            <td>'.anchor($delete_url, $delete_icon, array('onclick' => "return confirm('Do you want to delete this record')", 'class' => "btn btn-danger btn-sm")).'</td>
+                    </tr>';
+                    
+                }
+            }
+                        
+?>
 <div class="card">
     <div class="card-body">
 
@@ -73,7 +149,6 @@ echo form_open('members/execute_search');
                 <th><a href="<?php echo site_url().'members/all-members/member_last_name/'.$order_method.'/'.$page ?>" >Last Name</a></th>
                 <th>National ID</th>
                 <th>Member Payroll Number</th>
-                <th>Employer Name</th>
                 <th>Phone Number</th>
                 <th>Status</th>
                 <th>Registration Date</th>
@@ -84,194 +159,7 @@ echo form_open('members/execute_search');
                 <th>School Loan</th>
                 <th colspan="4" style="text-align:center">Actions</th>
             </tr>
-            <?php
-
-$count = $page;
-            if ($all_members->num_rows() > 0) {
-                foreach ($all_members->result() as $row) {
-                    $count++;
-                    $id = $row->member_id;
-                    $first_name = $row->member_first_name;
-                    $last_name = $row->member_last_name;
-                    $national_id = $row->member_national_id;
-                    $member_number = $row->member_number;
-                    $member_payroll_number = $row->member_payroll_number;
-                    $employer = $row->employer_id;
-                    $phone_number = $row->member_phone_number;
-                    $status = $row->member_status;
-                    $created_on = $row->created_on;
-                    $share_balance = $row->member_share_balance;
-                    $advance_loan = $row->advance_loan;
-                    $development_loan = $row->development_loan;
-                    $emergency_loan = $row->emergency_loan;
-                    $school_loan = $row->school_loan;
-            ?>
-
-
-            <tr>
-                <td>
-                    <?php echo $count; ?>
-                </td>
-                <td>
-                    <?php echo $first_name; ?>
-                </td>
-                <td>
-                    <?php echo $last_name; ?>
-                </td>
-                <td>
-                    <?php echo $national_id; ?>
-                </td>
-                <td>
-                    <?php echo $member_payroll_number; ?>
-                </td>
-                <td>
-                    <?php //foreach($employer_details->result() as $row){
-                        //$employer_name = $row->employer_name;
-                        //$employer_id = $row->employer_id;
-
-                        //if ($employer == $employer_id){
-                            //echo $employer_name;
-                       //} 
-                    //} ?>
-                </td>
-                <td>
-                    <?php echo $phone_number; ?>
-                </td>
-                <td>
-                    <?php if($status  == 1){ ?>
-                    <span class="badge badge-success far fa-thumbs-up">Active</span>
-                    <?php }
-                else {?>
-                    <span class="badge badge-danger far fa-thumbs-down">Inactive</span>
-                    <?php }?>
-                </td>
-                <td>
-                    <?php echo $created_on; ?>
-                </td>
-                <td>
-                    <?php echo $share_balance; ?>
-                </td>
-                <td>
-                    <?php echo $advance_loan; ?>
-                </td>
-                <td>
-                    <?php echo $development_loan; ?>
-                </td>
-                <td>
-                    <?php echo $emergency_loan; ?>
-                </td>
-                <td>
-                    <?php echo $school_loan; ?>
-                </td>
-
-                <td>
-
-                    <a href="#individualMember<?php echo $id;?>" class="btn btn-success btn-sm" data-toggle="modal"
-                        data-target="#individualMember<?php echo $id;?>"><i class="far fa-eye"></i></a>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="individualMember<?php echo $id;?>" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content modal-lg">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">
-                                        <?php echo $first_name." ".$last_name; ?></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <table class="table table-condensed table-striped table-sm table-bordered">
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">National ID</th>
-                                            <th scope="col">Member Number</th>
-                                            <th scope="col">Member Name</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Edit</th>
-                                            <th scope="col">Delete</th>
-                                            <th scope="col">Change Status</th>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <?php echo $count;?>
-                                            </td>
-                                            <td>
-                                                <?php echo $national_id; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $member_number; ?>
-                                            </td>
-                                            <td>
-                                                <?php echo $last_name; ?>
-                                            </td>
-                                            <td>
-                                                <?php if($status  == 0){ ?>
-                                                <span class="badge badge-danger far fa-thumbs-down"> Inactive</span>
-                                                <?php }
-                                            else {?>
-                                                <span class="badge badge-success far fa-thumbs-up"> Active</span>
-                                                <?php }?>
-                                            </td>
-
-                                            <td>
-                                                <?php echo anchor("members/edit/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
-                                            </td>
-
-                                            <td>
-                                                <?php echo anchor("members/delete_member/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
-                                            </td>
-
-                                            <td>
-                                                <?php if( $status  == 1){
-                                            echo anchor("members/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", "class ='btn btn-danger btn-sm'");
-                                            }
-                                            else{
-                                                echo anchor("members/activate/" . $id, "<i class='far fa-thumbs-up'></i>", "class ='btn btn-primary btn-sm'");
-                                            }?>
-                                            </td>
-
-
-
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End of modal body -->
-
-                    <td>
-                    <?php echo anchor("members/edit/" . $id, "<i class='fas fa-edit'></i>", "class ='btn btn-info btn-sm'"); ?>
-                    </td>
-                    <td>
-                    <?php echo anchor("members/delete/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
-                    </td>
-
-                    <td>
-                    <?php if( $status  == 1){
-                        echo anchor("members/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", "class ='btn btn-danger btn-sm'");
-                    }
-                    else{
-                        echo anchor("members/activate/" . $id, "<i class='far fa-thumbs-up'></i>", "class ='btn btn-primary btn-sm'");
-                    }?>
-                </td>
-
-
-            </tr>
-
-
-            <?php
-                }
-               }
-
-                ?>
+            <?php echo $member_data;                ?>
         </table>
     </div>
     <?php echo $links; ?>

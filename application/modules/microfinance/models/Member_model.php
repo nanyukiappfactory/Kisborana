@@ -188,10 +188,6 @@ class Member_model extends CI_Model
         $this->upload->initialize($config);
         $filetype = $config['allowed_types'];
 
-        if ($filetype != 'csv' || $filetype != 'CSV') {
-            $this->session->set_flashdata("error_message", "Wrong file, Kindly Upload 'member.csv' File");
-            redirect('microfinance/members/bulk_registration');
-        } else {
             $this->upload->do_upload('userfile');
             $data = $this->upload->data();
 
@@ -249,7 +245,7 @@ class Member_model extends CI_Model
             redirect("microfinance/members");
             $data['success'] = "success";
             return $data;
-        }
+        
     }
 
     public function check_member_existence($nationalid, $payroll_number)

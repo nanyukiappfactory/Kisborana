@@ -35,21 +35,18 @@
                     "check"=>$check
                 );
                 $view_modal = $this->load->view("microfinance/loan_types/view_loan_types", $data, true);
+                
                 if ($check == 0) {
-                    $status_activation = "<button class='badge badge-danger far fa-thumbs-down'> Inactive</button>";                   
+                    $status_activation = "<span class='badge badge-danger far fa-thumbs-down'> Inactive</button>";
+                    
+                    $change_state =  anchor("activate-loan-types/$id", "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));                   
                 } 
                 else 
                 {
-                    $status_activation = "<button class='badge badge-success far fa-thumbs-up'> Active</button>";
-                }
-                if ($check == '1') 
-                {
+                    $status_activation = "<span class='badge badge-success far fa-thumbs-up'> Active</button>";
                     $change_state = anchor("deactivate-loan-types/$id", "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
-                } 
-                else 
-                {
-                    $change_state =  anchor("activate-loan-types/$id", "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
                 }
+
                 $edit_url = "loan-types/edit-loan-types/".$id;
                 $edit_icon = '<i class="fas fa-edit"></i>';
                 $delete_url = "delete-loan-types/".$id;
@@ -159,9 +156,7 @@
                     <th colspan="4" style="text-align:center">Actions</th>
                 </tr>
                 
-                <?php echo $tr_loan_types; ?>
-                
-                    
+                <?php echo $tr_loan_types; ?>                                
             </table>
         </div>
             <?php 
