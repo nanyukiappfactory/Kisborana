@@ -67,7 +67,7 @@ $route['admin/login'] = 'auth/admin/login_admin';
 ****/
 
 $route['loan/all-loans'] = 'microfinance/loans/index';
-$route['loan/new_loan'] = 'microfinance/loans/new_loan';
+$route['loan/add-loan'] = 'microfinance/loans/new_loan';
 $route['loan/bulk_registration'] = 'microfinance/loans/bulk_registration';
 $route['loan/edit/(:num)'] = 'microfinance/loans/edit/$1';
 $route['loan/deactivate/(:num)'] = 'microfinance/loans/deactivate/$1';
@@ -90,7 +90,7 @@ $route['loan-types/all-loan-types/(:num)'] = 'microfinance/loan_types/index/$1';
 //$route['loan-types/all-loan-types/(:any)'] = 'microfinance/loan_types/index/';
 //$route['loan-types/all-loan-types'] = 'microfinance/loan_types/index';
 $route['loan-types/(:any)/(:any)/(:num)'] = 'microfinance/loan_types/index/$1/$2/$3';
-$route['loan-types/edit-loan-types/(:num)'] = 'microfinance/loan_types/edit/$1';
+$route['loan-types/edit-loan-types/(:num)'] = 'microfinance/loan_types/edit_loan_type/$1';
 $route['loan-types/close-search'] = 'microfinance/loan_types/close_search_session';
 
 

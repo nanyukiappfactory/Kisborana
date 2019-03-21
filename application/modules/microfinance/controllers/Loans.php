@@ -80,36 +80,6 @@ class Loans extends Admin
 
     }
 
-    public function welcome($loan_id)
-    {
-
-        $my_loan = $this->loans_model->get_single_loan($loan_id);
-
-        if ($my_loan->num_rows() > 0) {
-            $row = $my_loan->row();
-            $loan = $row->loan_name;
-            $age = $row->loan_age;
-            $gender = $row->loan_gender;
-            $hobby = $row->loan_hobby;
-            $data = array(
-                "loan_name" => $loan,
-                "loan_age" => $age,
-                "loan_gender" => $gender,
-                "loan_hobby" => $hobby,
-
-            );
-
-            $view = array("title" => $this->site_model->display_page_title(),
-                "content" => $this->load->view("welcome_here", $data, true));
-            $this->load->view("site/layouts/layout", $view);
-        } else {
-
-            $this->session->set_flash_data("error_message", "could not find you loan");
-            redirect('loans');
-        }
-
-    }
-
    //add loan
     public function new_loan()
     {

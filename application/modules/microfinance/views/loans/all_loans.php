@@ -53,7 +53,7 @@ echo form_submit('search_submit', 'Search', array('class' => 'btn-secondary btn-
 </table>
 <br></br>
 <div style="padding-bottom: 8px;">
-<?php echo anchor("loans/new_loan", "Add Loan", array("class" => "btn btn-primary btn-sm")); ?>
+<?php echo anchor("loan/add-loan", "Add Loan", array("class" => "btn btn-primary btn-sm")); ?>
 
 <?php echo anchor("loans/bulk_registration/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
 </div>	
