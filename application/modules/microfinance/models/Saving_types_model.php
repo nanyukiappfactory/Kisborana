@@ -119,33 +119,23 @@ class Saving_types_model extends CI_Model
 }
 
 //function for searching 
-// public function search_saving_type()
-// {   
-    
-//     $keyword = $this->input->post("search");
-//     $this->db->like("saving_type_name",$keyword);
-//     $this->db->where("deleted",0);
-//     $query=$this->db->get('saving_type');
-//     if ($query->num_rows() > 0) {
-//         $this->session->set_flashdata("success", "Search results found");
-        
-//     } else {
-//         $this->session->set_flashdata("error", "Saving type not found");
-//     } 
-//     return $query;
-
-// }
-
-//function for searching
 public function search_saving_type()
-{
-    $this->db->select('*');
-    $this->db->from('saving_type');
+{   
+    
+    $keyword = $this->input->post("search");
     $this->db->like("saving_type_name",$keyword);
-
-    $query = $this->db->get();
+    $this->db->where("deleted",0);
+    $query=$this->db->get('saving_type');
+    if ($query->num_rows() > 0) {
+        $this->session->set_flashdata("success", "Search results found");
+        
+    } else {
+        $this->session->set_flashdata("error", "Saving type not found");
+    } 
     return $query;
+
 }
+
 
 //counting all the records in saving_type table
 public function record_count()

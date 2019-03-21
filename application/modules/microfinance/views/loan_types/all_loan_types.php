@@ -1,4 +1,92 @@
+<?php 
+    $tr_loan_types = "";
+    
+     $count = $page;
+        if($all_loan_types->num_rows() > 0) {
+            foreach($all_loan_types->result() as $row) {
+                $count++;
+                $id = $row->loan_type_id;
+                $name = $row->loan_type_name;
+                $max_loan = $row->maximum_loan_amount;
+                $min_loan = $row->minimum_loan_amount;
+                $custom_loan = $row->custom_loan_amount;
+                $max_instal = $row->maximum_number_of_installments;
+                $min_instal = $row->minimum_number_of_installments;
+                $custom_instal = $row->custom_number_of_installments;
+                $max_guar = $row->maximum_number_of_guarantors;
+                $min_guar = $row->minimum_number_of_guarantors;
+                $custom_guar = $row->custom_number_of_guarantors;
+                $interest = $row->interest_rate;
+                $check = $row->loan_type_status;
+                $data = array (
+                    "id"=>$id,
+                    "name"=>$name,
+                    "max_loan"=>$max_loan,
+                    "count"=>$count,
+                    "min_loan"=>$min_loan,
+                    "custom_loan"=>$custom_loan,
+                    "max_instal"=>$max_instal,
+                    "min_instal"=>$min_instal,
+                    "custom_instal"=>$custom_instal,
+                    "max_guar"=>$max_guar,
+                    "min_guar"=>$min_guar,
+                    "custom_guar"=>$custom_guar,
+                    "interest"=>$interest,
+                    "check"=>$check
+                );
+                $view_modal = $this->load->view("microfinance/loan_types/view_loan_types", $data, true);
+                if ($check == 0) {
+                    $status_activation = "<button class='badge badge-danger far fa-thumbs-down'> Inactive</button>";                   
+                } 
+                else 
+                {
+                    $status_activation = "<button class='badge badge-success far fa-thumbs-up'> Active</button>";
+                }
+                if ($check == '1') 
+                {
+                    $change_state = anchor("deactivate-loan-types/$id", "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
+                } 
+                else 
+                {
+                    $change_state =  anchor("activate-loan-types/$id", "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
+                }
+                $edit_url = "loan-types/edit-loan-types/".$id;
+                $edit_icon = '<i class="fas fa-edit"></i>';
+                $delete_url = "delete-loan-types/".$id;
+                $delete_icon = "<i class='fas fa-trash-alt'></i>";
+                $tr_loan_types .=
+                '<tr><td>'.$count.'</td>
+                    <td>'.$name.'</td>
+                    <td>'.$status_activation. '</td>
+                    <td>'.$max_loan.'</td>
+                    <td>'.$min_loan.'</td>
+                    <td>'.$custom_loan.'</td>
+                    <td>'.$max_instal.'</td>
+                    <td>'.$min_instal.'</td>
+                    <td>'.$custom_instal.'</td>
+                    <td>'.$max_guar.'</td>
+                    <td>'.$min_guar.'</td>
+                    <td>'.$custom_guar.'</td>
+                    <td>'.$interest.'</td>
+                    <td>
+                        <a href="#individualSaving_type'.$id.'" class="btn btn-success btn-sm"
+                            data-toggle="modal" data-target="#individualSaving_type'.$id.'"><i
+                                class="far fa-eye"></i></a>'.$view_modal.                      
+                       
+                    '</td>
+                    <td>'.anchor($edit_url, $edit_icon, array('onclick' => "return confirm('Are you sure you want to edit?')", 'class' => "btn btn-info btn-sm")).'</td>
+                    <td>'.$change_state.'</td>
+                    <td>'.anchor($delete_url, $delete_icon, array('onclick' => "return confirm('Do you want to delete this record')", 'class' => "btn btn-danger btn-sm"), img('assets/images/lock.png')).'</td>
 
+            
+            </tr>';
+
+            }
+        }
+        
+
+
+?>
 <div class="card">
     <div class="card-body">
         <div class="container">
@@ -70,175 +158,10 @@
                     <th>Interest Rate</th>
                     <th colspan="4" style="text-align:center">Actions</th>
                 </tr>
-                    <?php
-                        $count = $page;
-                    if($all_loan_types->num_rows() > 0) {
-                        foreach($all_loan_types->result() as $row) {
-                            $count++;
-                            $id = $row->loan_type_id;
-                            $name = $row->loan_type_name;
-                            $max_loan = $row->maximum_loan_amount;
-                            $min_loan = $row->minimum_loan_amount;
-                            $custom_loan = $row->custom_loan_amount;
-                            $max_instal = $row->maximum_number_of_installments;
-                            $min_instal = $row->minimum_number_of_installments;
-                            $custom_instal = $row->custom_number_of_installments;
-                            $max_guar = $row->maximum_number_of_guarantors;
-                            $min_guar = $row->minimum_number_of_guarantors;
-                            $custom_guar = $row->custom_number_of_guarantors;
-                            $interest = $row->interest_rate;
-                            $check = $row->loan_type_status;
-                    ?>
-                <tr>
-                    <td>
-                        <?php echo $count; ?>
-                    </td>
-                    <td>
-                        <?php echo $name; ?>
-                    </td>
-                    <td>
-                        <?php
-                            if ($check == 0) {
-                                echo "<button class='badge badge-danger far fa-thumbs-down'> Inactive</button>";
-                            } 
-                            else 
-                            {
-                                echo "<button class='badge badge-success far fa-thumbs-up'> Active</button>";
-                            }
-                        ?>
-                    </td>
-                    <td>
-                        <?php echo $max_loan; ?>
-                    </td>
-                    <td>
-                        <?php echo $min_loan; ?>
-                    </td>
-                    <td>
-                        <?php echo $custom_loan; ?>
-                    </td>
-                    <td>
-                        <?php echo $max_instal; ?>
-                    </td>
-                    <td>
-                        <?php echo $min_instal; ?>
-                    </td>
-                    <td>
-                        <?php echo $custom_instal; ?>
-                    </td>
-                    <td>
-                        <?php echo $max_guar; ?>
-                    </td>
-                    <td>
-                        <?php echo $min_guar; ?>
-                    </td>
-                    <td>
-                        <?php echo $custom_guar; ?>
-                    </td>
-                    <td>
-                        <?php echo $interest; ?>
-                    </td>
-                    <td>
-                        <a href="#individualSaving_type<?php echo $id; ?>" class="btn btn-success btn-sm"
-                            data-toggle="modal" data-target="#individualSaving_type<?php echo $id; ?>"><i
-                                class="far fa-eye"></i></a>
-                        <!-- Modal -->
-                        <div class="modal fade" id="individualSaving_type<?php echo $id; ?>" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel"><?php echo $name; ?>'s Details
-                                        </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- modal body -->
-                                        <table class="table table-sm">
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Loan Type Name</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Edit</th>
-                                                <th scope="col">Delete</th>
-                                                <th scope="col">Change Status</th>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <?php echo $count; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $name; ?>
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                        if ($check == 0) 
-                                                        {
-                                                            echo "<button class='badge badge-danger far fa-thumbs-down'>Inactive</button>";
-                                                        } 
-                                                        else 
-                                                        {
-                                                            echo "<button class='badge badge-primary far fa-thumbs-down'>Active</button>";
-                                                        }
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo anchor("loan_types/edit/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo anchor("loan_types/delete/" . $id, "<i class='fas fa-trash-alt'></i>", array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger btn-sm")); ?>
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                        if ($check == '1') 
-                                                        {
-                                                            echo anchor("loan_types/deactivate/" . $id, "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
-                                                        } 
-                                                        else 
-                                                        {
-                                                            echo anchor("loan_types/activate/" . $id, "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
-                                                        }
-                                                        ?>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <!-- end of modal body -->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary"
-                                            data-dismiss="modal">Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <?php echo anchor("loan-types/edit-loan-types/$id", '<i class="fas fa-edit"></i>', array('onclick' => "return confirm('Are you sure you want to edit?')", 'class' => "btn btn-info btn-sm")); ?>
-                    </td>
-                    <td>
-                        <?php
-                            if ($check == '1') 
-                            {
-                                echo anchor("deactivate-loan-types/$id", "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
-                            } 
-                            else 
-                            {
-                                echo anchor("activate-loan-types/$id", "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));
-                            }
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                            echo anchor("delete-loan-types/$id", "<i class='fas fa-trash-alt'></i>", array('onclick' => "return confirm('Do you want to delete this record')", 'class' => "btn btn-danger btn-sm"), img('assets/images/lock.png')); 
-                        ?>
-                    </td>
-                </tr>
-                    <?php 
-                        }
-                        }
-                    ?>
+                
+                <?php echo $tr_loan_types; ?>
+                
+                    
             </table>
         </div>
             <?php 

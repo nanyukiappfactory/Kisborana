@@ -25,6 +25,15 @@ class Saving_types extends Admin
         $login_status = $var['login_status'];
         if ($login_status == 'TRUE'){
 
+            $table = "loan_type";
+            $where = "deleted = 0"; 
+            
+            $search_results = $this->session->userdata("search_session");
+
+            if (!empty($search_results) && $search_results !=null)
+            {
+                $where = $search_results;
+            }
             //pagination 
             $config = array();
             $config["base_url"] = base_url()."saving-types/all-saving-types/";
@@ -69,7 +78,7 @@ class Saving_types extends Admin
        }
 
     
-       else {
+      else {
 
         $all_data = array (
             "all_saving_type" =>$v_data,
@@ -83,9 +92,9 @@ class Saving_types extends Admin
             "content" => $this->load->view("microfinance/saving_types/all_saving_type", $all_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
-        }
+       }
     }else{
-        redirect("admin/login_admin");
+        redirect("admin/login_admin"); 
     }
     }
 
@@ -217,6 +226,7 @@ class Saving_types extends Admin
       {
           $v_data["add_saving_types"] = "";
       }
-    
+ 
+     
 }
 ?>

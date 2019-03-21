@@ -22,7 +22,7 @@ class Loan_types_model extends CI_Model
         } else {
             return false;
         }
-    }
+    } 
 
     public function get_single_loan_type($loan_type_id)
     {
