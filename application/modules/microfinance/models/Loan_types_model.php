@@ -142,7 +142,7 @@ class Loan_types_model extends CI_Model
                     $insert_csv['interest rate'] = $csv_line[10];
                     $insert_csv['loan type status'] = $csv_line[11];
                 }
-                $i++;
+                $i++; 
                 $data = array(
                     'loan_type_name' => $insert_csv['loan type name'],
                     'maximum_loan_amount' => $insert_csv['maximum loan amount'],
