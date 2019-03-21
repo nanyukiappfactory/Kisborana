@@ -33,7 +33,7 @@ class Loan_Types extends Admin
         } 
 
         $total_records = $this->site_model->get_count_loan_types($table);
-        $limit_per_page = 20;
+        $limit_per_page = 5;
         $segment = 5;
              
         $config['base_url'] = site_url().'loan-types/all-loan-types/'.$order_column.'/'.$order_method;
