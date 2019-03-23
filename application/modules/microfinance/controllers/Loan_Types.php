@@ -22,7 +22,6 @@
             $search_results = $this->session->userdata("search_session");
             if(!empty($search_results) && $search_results != null) 
             {
-                //var_dump($search_results);die();
                 $where = $search_results;
             }
             $total_records = $this->site_model->get_count_results($table);
@@ -70,7 +69,7 @@
             }
             else
             {
-                $this->session->set_flashdata("error_message", "Unable to get requested loan types");
+                $this->session->set_flashdata("error_message", "0 Loan types retrieved");
 
             }
             $params = array('links' => $v_data,
