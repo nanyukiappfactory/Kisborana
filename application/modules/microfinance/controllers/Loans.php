@@ -166,6 +166,38 @@ class Loans extends Admin
 
     public function edit($loan_id)
     {
+        
+    }
+
+    public function edit_loan($loan_id)
+    {
+        //form validation
+        $this->form_validation->set_rules("loan_name", "Loan Type Name", "required");
+        $this->form_validation->set_rules("maximum_loan_amount", "Maximum loan amount", "numeric");
+        $this->form_validation->set_rules("minimum_loan_amount", "Minimum loan amount", "numeric");
+        $this->form_validation->set_rules("custom_loan_amount", "Custom loan amount", "numeric");
+        $this->form_validation->set_rules("maximum_number_of_installments", "Maximum number of installments", "numeric");
+        $this->form_validation->set_rules("minimum_number_of_installments", "Minimum number of installments", "numeric");
+        $this->form_validation->set_rules("custom_number_of_installments", "Custom number of installments", "numeric");
+        $this->form_validation->set_rules("maximum_number_of_guarantors", "Maximum number of guarantors", "numeric");
+        $this->form_validation->set_rules("minimum_number_of_guarantors", "Minimum number of guarantors", "required|numeric");
+        $this->form_validation->set_rules("custom_number_of_guarantors", "Custom number of guarantors", "numeric");
+        $this->form_validation->set_rules("interest_rate", "Interest rate", "numeric|required");
+
+        if ($this->form_validation->run()) {
+            $loan_edited = $this->loans_model->get_update_loan($loan_id);
+            // var_dump($loan_edited);die();
+            if ($loan_edited > 0) {
+                $this->session->set_flashdata("success_message", "Your loan" . $loan_id . "has been edited");
+                redirect("loans");
+            } else {
+                $this->session->set_flashdata("error_message", "unable to edit loan");
+            }
+        } else {
+            $this->session->set_flashdata("error_message", validation_errors());
+
+        }
+        //1. get data for the loan with the passed loan_id from the model
         $my_loan = $this->loans_model->get_single_loan($loan_id);
 
         if ($my_loan->num_rows() > 0) {
@@ -183,6 +215,7 @@ class Loans extends Admin
 			$custom_guar = $row->custom_number_of_guarantors;
 			$interest = $row->interest_rate;
 			$check = $row->loan_status;
+        }
             $data = array(
                 "loan_name" => $name,               
                 "maximum_loan_amount" => $max_loan,                
@@ -202,34 +235,6 @@ class Loans extends Admin
                 "content" => $this->load->view("edit_loan", $data, true));
             $this->load->view("site/layouts/layout", $view);
 
-        }
-    }
-
-    public function edit_loan($loan_id)
-    {
-        //form validation
-        $this->form_validation->set_rules("loan_name", "Loan Type Name", "required");
-        $this->form_validation->set_rules("maximum_loan_amount", "Maximum loan amount", "numeric");
-        $this->form_validation->set_rules("minimum_loan_amount", "Minimum loan amount", "numeric");
-        $this->form_validation->set_rules("custom_loan_amount", "Custom loan amount", "numeric");
-        $this->form_validation->set_rules("maximum_number_of_installments", "Maximum number of installments", "numeric");
-        $this->form_validation->set_rules("minimum_number_of_installments", "Minimum number of installments", "numeric");
-        $this->form_validation->set_rules("custom_number_of_installments", "Custom number of installments", "numeric");
-        $this->form_validation->set_rules("maximum_number_of_guarantors", "Maximum number of guarantors", "numeric");
-        $this->form_validation->set_rules("minimum_number_of_guarantors", "Minimum number of guarantors", "required|numeric");
-        $this->form_validation->set_rules("custom_number_of_guarantors", "Custom number of guarantors", "numeric");
-        $this->form_validation->set_rules("interest_rate", "Interest rate", "numeric|required");
-
-        if ($this->form_validation->run()) {
-            $pal_id = $this->loans_model->get_update_loan($loan_id);
-            // var_dump($pal_id);die();
-            if ($pal_id > 0) {
-                $this->session->set_flashdata("success_message", "Your loan" . $loan_id . "has been edited");
-                redirect("loans");
-            } else {
-                $this->session->set_flashdata("error_message", "unable to edit loan");
-            }
-        }
     }
 
      //getting single loan_type_details

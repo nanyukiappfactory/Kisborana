@@ -46,6 +46,7 @@ class Members extends MX_Controller
     {
         $table = 'member';
         $where = 'deleted = 0';
+        $search_parameters= 'member_first_name';
 
         $search_results = $this->session->userdata("search_session");
 
@@ -54,7 +55,7 @@ class Members extends MX_Controller
 
         }
 
-        $total_members = $this->site_model->get_count_loan_types($table);
+        $total_members = $this->site_model->get_count_results($table);
         $limit_per_page = 20;
         $segment = 5;
 
@@ -87,7 +88,7 @@ class Members extends MX_Controller
 
         //$employer_details = $this->member_model->get_employer_details();
 
-        $query = $this->site_model->get_all_members($search_results, $table, $limit_per_page, $start_index, $where, $order_column, $order_method);
+        $query = $this->site_model->get_all_results($search_results, $table, $limit_per_page, $start_index, $where, $order_column, $order_method, $search_parameters);
 
 
         if($order_method == 'DESC')

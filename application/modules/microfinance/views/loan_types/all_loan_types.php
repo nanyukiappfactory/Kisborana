@@ -2,20 +2,24 @@
     $tr_loan_types = "";    
     $count = $page;
 	$loan_type_message = '';
-	$alert_message = '';	
+    $alert_message = '';
+    $select_div = "";	
 	$success = $this->session->flashdata("success_message");
-    $error = $this->session->flashdata("error_message");
-    
-	if(!empty($success)) {
+    $error = $this->session->flashdata("error_message");    
+    if(!empty($success)) 
+    {
 		$alert_message='<div class="alert alert-success" role="alert">'.$success.'</div>';	
 	}
-	if(!empty($error)) {
+    if(!empty($error)) 
+    {
 		$alert_message='<div class="alert alert-dark" role="alert">'.$error.'</div>';
 	}
     $loan_type_message .= '<div class="container">'.$alert_message.'</div>';
-    
-    if($all_loan_types->num_rows() > 0) {
-        foreach($all_loan_types->result() as $row) {
+    $select_div .= '<select class="form-control custom-select2" name="search" single ">';
+    if($all_loan_types->num_rows() > 0)
+    {
+        foreach($all_loan_types->result() as $row) 
+        {
             $count++;
             $id = $row->loan_type_id;
             $name = $row->loan_type_name;
@@ -46,27 +50,27 @@
                 "interest"=>$interest,
                 "check"=>$check
             );
-            $view_modal = $this->load->view("microfinance/loan_types/view_loan_types", $data, true);
-            
-            if($check == 0) {
+            $view_modal = $this->load->view("microfinance/loan_types/view_loan_types", $data, true); 
+            if($check == 0) 
+            {
                 $status_activation = "<span class='badge badge-danger far fa-thumbs-down'> Inactive</button>";
                 
-                $change_state =  anchor("activate-loan-types/$id", "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));                   
+                $change_state =  anchor("loan-types/activate-loan-types/$id", "<i class='far fa-thumbs-up'></i>", array('onclick' => "return confirm('Do you want to activate this record')", 'class' => "btn btn-success btn-sm"));                   
             } 
             else 
             {
                 $status_activation = "<span class='badge badge-success far fa-thumbs-up'> Active</button>";
-                $change_state = anchor("deactivate-loan-types/$id", "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
+                $change_state = anchor("loan-types/deactivate-loan-types/$id", "<i class='far fa-thumbs-down'></i>", array('onclick' => "return confirm('Do you want to deactivate this record')", 'class' => "btn btn-danger btn-sm"));
             }
-
             $edit_url = "loan-types/edit-loan-types/".$id;
             $edit_icon ='<i class="fas fa-edit"></i>';
-            $delete_url ="delete-loan-types/".$id;
+            $delete_url ="loan-types/delete-loan-types/".$id;
             $delete_icon ="<i class='fas fa-trash-alt'></i>";
             $tr_loan_types .=
-            '<tr><td>'.$count.'</td>
+            '<tr>
+                <td>'.$count.'</td>
                 <td>'.$name.'</td>
-                <td>'.$status_activation. '</td>
+                <td>'.$status_activation.'</td>
                 <td>'.$max_loan.'</td>
                 <td>'.$min_loan.'</td>
                 <td>'.$custom_loan.'</td>
@@ -82,33 +86,35 @@
                 <td>'.$change_state.'</td>
                 <td>'.anchor($delete_url, $delete_icon, array('onclick' => "return confirm('Do you want to delete this record')", 'class' => "btn btn-danger btn-sm"), img('assets/images/lock.png')).'</td>            
             </tr>';
-            }
-        }      
+            $select_div .= '<option value = "'.$name. '">'.$name.'</option>';
+        } 
+    $select_div .= '</select>';
+    }      
 ?>
 <div class="card">
     <div class="card-body">
         <?php echo $loan_type_message;?>      
-            <table style="width: 100%; margin-top: 10px;">
-                <tr>
-                    <td>
-                        <div style="display: flex; justify-content: flex-start;">
-                            <h1 style="font-family: 'PT Serif', serif; font-size: 30pt;">Loan Types </h1>
-                        </div>
-                    </td>
-                    <td>
-                        <div style="display: flex; justify-content: flex-end;">
-                            <form action="<?php echo site_url('loan_types/execute_search');?>" method = "post">
-                                <input type="text" name = "search" />
-                                <input type="submit" value = "Search" class="btn btn-secondary btn-sm"/>
-                            </form>
-                        </div>
-                        <div style="display: flex; justify-content: flex-end;">                                                     
-                            <?php echo anchor("loan-types/close-search", "Exit Search"); ?>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <br></br>
+        <table style="width: 100%; margin-top: 10px;">
+            <tr>
+                <td>
+                    <div style="display: flex; justify-content: flex-start;">
+                        <h1 style="font-family: 'PT Serif', serif; font-size: 30pt;">Loan Types </h1>
+                    </div>
+                </td>
+                <td>
+                    <div style="display: flex; justify-content: flex-end;">
+                        <form action="<?php echo site_url('loan-types/search-loan-types');?>" method = "post">
+                            <?php echo $select_div; ?>
+                            <input type="submit" value = "Search" class="btn btn-secondary btn-sm"/>
+                        </form>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end;">                                                     
+                        <?php echo anchor("loan-types/close-search-loan-types", "Exit Search"); ?>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
         <div style="padding-bottom: 8px;">
             <?php echo anchor("loan-types/add-loan-types", "Add loan type", array("class" => "btn btn-primary btn-sm")); ?>
             <?php echo anchor("loan-types/import-loan-types", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
@@ -131,12 +137,9 @@
                     <th>Interest Rate</th>
                     <th colspan="4" style="text-align:center">Actions</th>
                 </tr>
-                
                 <?php echo $tr_loan_types; ?>                                
             </table>
         </div>
-            <?php 
-                echo $links; 
-            ?>
+        <?php echo $links; ?>
     </div>
 </div>

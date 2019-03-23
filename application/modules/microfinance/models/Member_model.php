@@ -186,7 +186,7 @@ class Member_model extends CI_Model
 
         $this->upload->do_upload('userfile');
         $data = $this->upload->data();
-        var_dump($data["client_name"]);die();
+        //var_dump($data["client_name"]);die();
 
         $count = 0;
         $fp = fopen($_FILES['userfile']['tmp_name'], 'r') or die("can't open file");

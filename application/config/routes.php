@@ -79,25 +79,18 @@ $route['loan/delete/(:num)'] = 'microfinance/loans/delete/$1';
  * Loan Types Routes
 ****/
 
-
-
-$route['loan-types/add-loan-types'] = 'microfinance/loan_types/new_loan_type';
+$route['loan-types/add-loan-types'] = 'microfinance/loan_types/add_loan_type';
 $route['loan-types/import-loan-types'] = 'microfinance/loan_types/bulk_upload_view';
 $route['loan-types/all-loan-types'] = 'microfinance/loan_types/index';
 $route['loan-types/all-loan-types/(:any)/(:any)/(:num)'] = 'microfinance/loan_types/index/$1/$2/$3';
 $route['loan-types/all-loan-types/(:any)/(:any)'] = 'microfinance/loan_types/index/$1/$2';
 $route['loan-types/all-loan-types/(:num)'] = 'microfinance/loan_types/index/$1';
-//$route['loan-types/all-loan-types/(:any)'] = 'microfinance/loan_types/index/';
-//$route['loan-types/all-loan-types'] = 'microfinance/loan_types/index';
-$route['loan-types/(:any)/(:any)/(:num)'] = 'microfinance/loan_types/index/$1/$2/$3';
 $route['loan-types/edit-loan-types/(:num)'] = 'microfinance/loan_types/edit_loan_type/$1';
-$route['loan-types/close-search'] = 'microfinance/loan_types/close_search_session';
-
-
-$route['deactivate-loan-types/(:num)'] = 'microfinance/loan_types/deactivate/$1';
-$route['activate-loan-types/(:num)'] = 'microfinance/loan_types/activate/$1';
-$route['delete-loan-types/(:num)'] = 'microfinance/loan_types/delete/$1';
-$route['search-loan-types'] = 'microfinance/loan_types/execute_search';
+$route['loan-types/activate-loan-types/(:num)'] = 'microfinance/loan_types/activate_loan_type/$1';
+$route['loan-types/deactivate-loan-types/(:num)'] = 'microfinance/loan_types/deactivate_loan_type/$1';
+$route['loan-types/delete-loan-types/(:num)'] = 'microfinance/loan_types/delete_loan_type/$1';
+$route['loan-types/search-loan-types'] = 'microfinance/loan_types/search_loan_type';
+$route['loan-types/close-search-loan-types'] = 'microfinance/loan_types/close_search_loan_type_session';
 
 /****
  * Member Routes
