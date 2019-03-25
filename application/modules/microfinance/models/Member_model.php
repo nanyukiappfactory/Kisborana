@@ -5,17 +5,7 @@ if (!defined('BASEPATH')) {
 
 class Member_model extends CI_Model
 {
-    public function get_bank_details()
-    {
-        $query = $this->db->get('bank');
-        return $query;
-    }
-    public function get_employer_details()
-    {
-        $query = $this->db->get('employer');
-        return $query;
-    }
-    public function save_members()
+    public function add_member()
     {
         $phone_number = $this->input->post("phone_number");
         $member_password = $this->input->post("member_password");
@@ -67,35 +57,17 @@ class Member_model extends CI_Model
         }
 
     }
-    public function deactivate($member_id)
+    public function get_bank_details()
     {
-        $this->db->where("member_id", $member_id);
-        $this->db->set("member_status", 0);
-        $query = $this->db->update("member");
-        return $query;
-
-    }
-    public function activate($member_id)
-    {
-        $this->db->where("member_id", $member_id);
-        $this->db->set("member_status", 1);
-        $query = $this->db->update("member");
-        return $query;
-
-    }
-    public function delete($member_id)
-    {
-        $this->db->where("member_id", $member_id);
-        $data = array(
-            "deleted" => 1,
-            "deleted_by" => 1,
-            "deleted_on" => date('Y-m-d H:i:s'),
-        );
-        $this->db->set($data);
-        $query = $this->db->update("member");
+        $query = $this->db->get('bank');
         return $query;
     }
-    public function update_member($member_id)
+    public function get_employer_details()
+    {
+        $query = $this->db->get('employer');
+        return $query;
+    }
+    public function edit_member($member_id)
     {
         $data = array(
             "bank_id" => $this->input->post("bank_name"),
@@ -119,6 +91,35 @@ class Member_model extends CI_Model
         $this->db->update("member");
         return $this->db->get("member");
     }
+    public function activate_member($member_id)
+    {
+        $this->db->where("member_id", $member_id);
+        $this->db->set("member_status", 1);
+        $query = $this->db->update("member");
+        return $query;
+
+    }
+    public function deactivate_member($member_id)
+    {
+        $this->db->where("member_id", $member_id);
+        $this->db->set("member_status", 0);
+        $query = $this->db->update("member");
+        return $query;
+
+    }
+    public function delete_member($member_id)
+    {
+        $this->db->where("member_id", $member_id);
+        $data = array(
+            "deleted" => 1,
+            "deleted_by" => 1,
+            "deleted_on" => date('Y-m-d H:i:s'),
+        );
+        $this->db->set($data);
+        $query = $this->db->update("member");
+        return $query;
+    }
+    
     public function get_single_member($member_id)
     {
         $this->db->select('*');

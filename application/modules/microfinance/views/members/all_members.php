@@ -49,18 +49,17 @@
             { 
                 $status_span = "<span class='badge badge-success far fa-thumbs-up'>Active</span>";
                 
-                $status_button = anchor("members/deactivate/$id", "<i class='far fa-thumbs-down'></i>", array("class" => 'btn btn-danger btn-sm',"onclick" => 'return confirm("Do you want to deactive")'));
+                $status_button = anchor("members/deactivate-member/$id", "<i class='far fa-thumbs-down'></i>", array("class" => 'btn btn-danger btn-sm',"onclick" => 'return confirm("Do you want to deactive")'));
             }
             else 
             {
                 $status_span = "<span class='badge badge-danger far fa-thumbs-down'>Inactive</span>";
                 
-                $status_button = anchor("members/activate/$id", "<i class='far fa-thumbs-up'></i>", array("class" => 'btn btn-success btn-sm',"onclick" => 'return confirm("Do you want to active")'));
+                $status_button = anchor("members/activate-member/$id", "<i class='far fa-thumbs-up'></i>", array("class" => 'btn btn-success btn-sm',"onclick" => 'return confirm("Do you want to active")'));
             }
             $edit_url = 'members/edit-member/'.$id;
-            //var_dump($edit_url);die();
             $edit_icon = "<i class='fas fa-edit'></i>";
-            $delete_url = "members/delete_member/".$id;
+            $delete_url = "members/delete-member/".$id;
             $delete_icon = "<i class='fas fa-trash-alt'></i>";
 
             $member_data .=
@@ -118,9 +117,9 @@
         <br>
         <div style="padding-bottom: 8px;">
             <div>
-                <?php echo anchor("members/add_member", "Add Member", array("class"=>"btn btn-primary btn-sm")); ?>
+                <?php echo anchor("members/add-member", "Add Member", array("class"=>"btn btn-primary btn-sm")); ?>
 
-                <?php echo anchor("members/bulk_registration/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
+                <?php echo anchor("members/import-members/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
             </div>
         </div>
         <div class="table-responsive">
@@ -141,7 +140,7 @@
                     <th>School Loan</th>
                     <th colspan="4" style="text-align:center">Actions</th>
                 </tr>
-                <?php echo $member_data;                ?>
+                <?php echo $member_data;?>
             </table>
         </div>
         <?php echo $links; ?>

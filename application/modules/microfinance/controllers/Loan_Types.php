@@ -152,7 +152,7 @@
                 else 
                 {
                     $this->session->set_flashdata("error_message", "unable to edit loan_type");
-                    redirect("edit-loan-types");
+                    redirect("loan-types/all-loan-types");
                 }
             } 
             else

@@ -60,8 +60,6 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['admin/login'] = 'auth/admin/login_admin';
 
-
-
 /****
  * Loan Routes
 ****/
@@ -73,7 +71,6 @@ $route['loan/edit/(:num)'] = 'microfinance/loans/edit/$1';
 $route['loan/deactivate/(:num)'] = 'microfinance/loans/deactivate/$1';
 $route['loan/activate/(:num)'] = 'microfinance/loans/activate/$1';
 $route['loan/delete/(:num)'] = 'microfinance/loans/delete/$1';
-
 
 /****
  * Loan Types Routes
@@ -100,22 +97,18 @@ $route['members/all-members'] = 'microfinance/members/index';
 $route['members/all-members/(:num)'] = 'microfinance/members/index/$1';
 $route['members/all-members/(:any)/(:any)'] = 'microfinance/members/index/$1/$2';
 $route['members/all-members/(:any)/(:any)/(:num)'] = 'microfinance/members/index/$1/$2/$3';
-$route['members/add_member'] = 'microfinance/members/add_member';
+$route['members/add-member'] = 'microfinance/members/add_member';
 $route['members/edit-member/(:num)'] = 'microfinance/members/edit_member/$1';
-
-$route['members/bulk_registration'] = 'microfinance/members/bulk_registration';
-$route['members/deactivate/(:num)'] = 'microfinance/members/deactivate/$1';
-$route['members/activate/(:num)'] = 'microfinance/members/activate/$1';
-$route['members/delete_member/(:num)'] = 'microfinance/members/delete_member/$1';
+$route['members/activate-member/(:num)'] = 'microfinance/members/activate_member/$1';
+$route['members/deactivate-member/(:num)'] = 'microfinance/members/deactivate_member/$1';
+$route['members/delete-member/(:num)'] = 'microfinance/members/delete_member/$1';
 $route['members/search-members'] = 'microfinance/members/search_member';
+$route['members/import-members'] = 'microfinance/members/bulk_upload_view';
 $route['members/close-search-members'] = 'microfinance/members/close_search_member_session';
-
-
 $route['members/member-existence'] = 'microfinance/members/member_existence';
 $route['members/check-member-existence/(:any)/(:any)'] = 'microfinance/members/check_member_existence/$1/$2';
 $route['members/save-member-password/(:any)/(:any)/(:any)'] = 'microfinance/members/save_member_password/$1/$2/$3';
 $route['members/check-member-phone/(:num)'] = 'microfinance/members/retrieve_phone/$1';
-
 
 //saving_types routes
 $route['saving-types/add-saving-type'] = 'microfinance/saving_types/new_saving_type';

@@ -1,5 +1,21 @@
+<?php
+	$edit_member = '';
+	$alert_message = '';	
+	$success = $this->session->flashdata("success_message");
+	$error = $this->session->flashdata("error_message");
+    if(!empty($success)) 
+    {
+		$alert_message='<div class="alert alert-success" role="alert">'.$success.'</div>';	
+	}
+    if(!empty($error)) 
+    {
+		$alert_message='<div class="alert alert-dark" role="alert">'.$error.'</div>';
+	}
+	$edit_member .= '<div class="container">'.$alert_message.'</div>';
+?>
 <div class="card">
 	<div class="card-body">
+		<?php echo $edit_member;?> 
 		<?php echo form_open_multipart($this->uri->uri_string()); ?>
 		<div class="form-group">
 			<label for="member_national_id"><b>National id</b></label>

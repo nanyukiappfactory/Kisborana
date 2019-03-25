@@ -131,7 +131,7 @@ class Members extends Admin
         $employer_details = $this->member_model->get_employer_details();
         if($this->form_validation->run()) 
         {
-            $saved_members = $this->member_model->save_members();
+            $saved_members = $this->member_model->add_member();
             if($saved_members) 
             {
                 $this->session->set_flashdata("success", "Successfully saved");
@@ -175,7 +175,7 @@ class Members extends Admin
         //if the edit form is submitted do this
         if($this->form_validation->run()) 
         {
-            $member_edited = $this->member_model->update_member($member_id);
+            $member_edited = $this->member_model->edit_member($member_id);
             if($member_edited > 0)
             {
                 $this->session->set_flashdata("success_message", "Your member has been edited");
@@ -190,7 +190,6 @@ class Members extends Admin
         else 
         {
             $this->session->set_flashdata("error_message", validation_errors());
-            //redirect("members/edit-member");
         }
         //1. get data for the member with the passed member_id from the model
 
@@ -238,20 +237,20 @@ class Members extends Admin
         $this->load->view("site/layouts/layout", $data);
     }
     // A function that activates a member
-    public function activate($member_id)
+    public function activate_member($member_id)
     {
-        if ($this->member_model->activate($member_id)) {
-            $this->session->set_flashdata("success_message", "Successfully activated");
+        if ($this->member_model->activate_member($member_id)) {
+            $this->session->set_flashdata("success", "Successfully activated");
         } else {
-            $this->session->set_flashdata("error_message", "Cannot be activated");
+            $this->session->set_flashdata("error", "Cannot be activated");
         }
         redirect('microfinance/members');
     }
 
     // A function that deactivates a member
-    public function deactivate($member_id)
+    public function deactivate_member($member_id)
     {
-        if ($this->member_model->deactivate($member_id)) {
+        if ($this->member_model->deactivate_member($member_id)) {
             $this->session->set_flashdata("success", "Successfully deactivated");
         } else {
             $this->session->set_flashdata("error", "Cannot deactivate");
@@ -262,15 +261,35 @@ class Members extends Admin
     // A function that deletes a member
     public function delete_member($member_id)
     {
-        if ($this->member_model->delete($member_id)) {
+        if ($this->member_model->delete_member($member_id)) {
             $this->session->set_flashdata("success", "Successfully deleted");
         } else {
             $this->session->set_flashdata("error", "Cannot be deleted");
         }
         redirect('microfinance/members');
     }
+    public function search_member()
+    {
+        $search_results = $this->input->post("search");
+        $this->form_validation->set_rules("search", "Search", "required");
+        
+        if($this->form_validation->run()) 
+        {
+            $search_session = $this->session->set_userdata("search_session", $search_results);
+        } 
+        else 
+        {
+            $this->session->unset_userdata("search_session");
+        }
+        redirect("microfinance/members");
+    }
+    public function close_search_member_session()
+    {
+        $this->session->unset_userdata("search_session");
+        redirect("microfinance/members"); 
+    }
 
-    public function bulk_registration()
+    public function bulk_upload_view()
     {
         $v_data["add_member"] = "member/member_model";
         $data = array("title" => $this->site_model->display_page_title(),
@@ -291,27 +310,9 @@ class Members extends Admin
         force_download("./assets/downloads/member.csv", null);
     }
 
-    public function search_member()
-    {
-        $search_results = $this->input->post("search");
-        $this->form_validation->set_rules("search", "Search", "required");
-        
-        if($this->form_validation->run()) 
-        {
-            $search_session = $this->session->set_userdata("search_session", $search_results);
-        } 
-        else 
-        {
-            $this->session->unset_userdata("search_session");
-        }
-        redirect("microfinance/members");
-    }
+    
 
-    public function close_search_member_session()
-    {
-        $this->session->unset_userdata("search_session");
-        redirect("microfinance/members"); 
-    }
+    
 
     //get members to create web serrvice
     public function check_member_existence($nationalid,$payroll_number)
