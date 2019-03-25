@@ -45,7 +45,7 @@
                                             </td>
 
                                             <td>
-                                                <?php echo anchor("members/edit/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
+                                                <?php echo anchor("members/edit_member/" . $id, '<i class="fas fa-edit"></i>', "class ='btn btn-info btn-sm'"); ?>
                                             </td>
 
                                             <td>

@@ -27,11 +27,11 @@ class Site_model extends CI_Model
   {
     if (!empty($search_results) && $search_results != null) 
     {
-        $length = count($search_parameters);
-        for($index = 0; $index < $length; $index ++)
-        {
-          $this->db->or_where($search_parameters[$index], $search_results);
-        }
+      $length = count($search_parameters);
+      for($index = 0; $index < $length; $index ++)
+      {
+        $this->db->or_where($search_parameters[$index], $search_results);
+      }
     }  
     else 
     {

@@ -15,8 +15,10 @@
 		$alert_message='<div class="alert alert-dark" role="alert">'.$error.'</div>';
     }
     $member_message .= '<div class="container">'.$alert_message.'</div>';
-    if ($all_members->num_rows() > 0) {
-        foreach ($all_members->result() as $row) {
+    if($all_members->num_rows() > 0) 
+    {
+        foreach ($all_members->result() as $row) 
+        {
             $count++;
             $id = $row->member_id;
             $first_name = $row->member_first_name;
@@ -33,7 +35,6 @@
             $development_loan = $row->development_loan;
             $emergency_loan = $row->emergency_loan;
             $school_loan = $row->school_loan;
-
             $data = array (
                 "id"=>$id,
                 "national_id"=>$national_id,
@@ -43,20 +44,21 @@
                 "first_name"=>$first_name,
                 "status"=>$status
             );
-
-            $view_modal = $this->load->view("microfinance/members/view_members", $data, true);
-            
-            if($status  == 1){ 
+            $view_modal = $this->load->view("microfinance/members/view_members", $data, true);            
+            if($status  == 1)
+            { 
                 $status_span = "<span class='badge badge-success far fa-thumbs-up'>Active</span>";
                 
                 $status_button = anchor("members/deactivate/$id", "<i class='far fa-thumbs-down'></i>", array("class" => 'btn btn-danger btn-sm',"onclick" => 'return confirm("Do you want to deactive")'));
             }
-            else {
+            else 
+            {
                 $status_span = "<span class='badge badge-danger far fa-thumbs-down'>Inactive</span>";
                 
                 $status_button = anchor("members/activate/$id", "<i class='far fa-thumbs-up'></i>", array("class" => 'btn btn-success btn-sm',"onclick" => 'return confirm("Do you want to active")'));
             }
-            $edit_url = "member/edit".$id;
+            $edit_url = "members/edit_member/".$id;
+            //var_dump($edit_url);die();
             $edit_icon = "<i class='fas fa-edit'></i>";
             $delete_url = "members/delete_member/".$id;
             $delete_icon = "<i class='fas fa-trash-alt'></i>";
@@ -100,7 +102,6 @@
                         </h1>
                     </div>
                 </td>
-
                 <td>
                     <div style="display: flex; justify-content: flex-end;">
                         <form action="<?php echo site_url('members/search-members');?>" method = "post">
@@ -114,39 +115,35 @@
                 </td>
             </tr>
         </table>
-
-        <br></br>
+        <br>
         <div style="padding-bottom: 8px;">
-
-
             <div>
-                <?php echo anchor("members/new_member", "Add Member", array("class"=>"btn btn-primary btn-sm")); ?>
+                <?php echo anchor("members/add_member", "Add Member", array("class"=>"btn btn-primary btn-sm")); ?>
 
                 <?php echo anchor("members/bulk_registration/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
             </div>
-
         </div>
-        <?php echo form_close() ?>
-        <table class="table table-condensed table-striped table-sm table-bordered">
-            <tr>
-                <th>#</th>
-                <th><a href="<?php echo site_url().'members/all-members/member_first_name/'.$order_method.'/'.$page ?>" >First Name</a></th>
-                <th><a href="<?php echo site_url().'members/all-members/member_last_name/'.$order_method.'/'.$page ?>" >Last Name</a></th>
-                <th>Status</th>
-                <th>National ID</th>
-                <th>Member Payroll Number</th>
-                <th>Phone Number</th>
-                <th>Registration Date</th>
-                <th>Share Balance</th>
-                <th>Advance Loan</th>
-                <th>Development Loan</th>
-                <th>Emergency Loan</th>
-                <th>School Loan</th>
-                <th colspan="4" style="text-align:center">Actions</th>
-            </tr>
-            <?php echo $member_data;                ?>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped table-sm table-bordered">
+                <tr>
+                    <th>#</th>
+                    <th><a href="<?php echo site_url().'members/all-members/member_first_name/'.$order_method.'/'.$page ?>" >First Name</a></th>
+                    <th><a href="<?php echo site_url().'members/all-members/member_last_name/'.$order_method.'/'.$page ?>" >Last Name</a></th>
+                    <th>Status</th>
+                    <th>National ID</th>
+                    <th>Member Payroll Number</th>
+                    <th>Phone Number</th>
+                    <th>Registration Date</th>
+                    <th>Share Balance</th>
+                    <th>Advance Loan</th>
+                    <th>Development Loan</th>
+                    <th>Emergency Loan</th>
+                    <th>School Loan</th>
+                    <th colspan="4" style="text-align:center">Actions</th>
+                </tr>
+                <?php echo $member_data;                ?>
+            </table>
+        </div>
+        <?php echo $links; ?>
     </div>
-    <?php echo $links; ?>
-</div>
 </div>

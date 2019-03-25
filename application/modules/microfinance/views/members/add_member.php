@@ -38,8 +38,6 @@
                 foreach($employer_details->result() as $row){
                   $employer_name =  $row->employer_name;
                   $employer_id =  $row->employer_id;
-                  // echo $bank_name;
-                
                 ?>
 				<option value="<?php echo $employer_id; ?>">
 					<?php echo $employer_name; ?>
