@@ -60,12 +60,8 @@ class Saving_types_model extends CI_Model
     {
         $this->db->where("saving_type_id", $saving_type_id);
         $this->db->set("deleted", 1);
-        if ($this->db->update("saving_type")) {
-            $saving_type_not_deleted = $this->get_saving_type($limit, $start, $sortBy, $order);
-            return $saving_type_not_deleted;
-        } else {
-            return false;
-        }
+        $saving_type_not_deleted = $this->db->update("saving_type");
+        return $saving_type_not_deleted;        
     }
 
     //deactivate
@@ -73,9 +69,8 @@ class Saving_types_model extends CI_Model
     {
         $this->db->where("saving_type_id", $saving_type_id);
         $this->db->set("saving_type_status", 0);
-        $saving_type_not_deactivated = $this->db->update("saving_type");
-           
-            return $saving_type_not_deactivated;
+        $saving_type_not_deactivated = $this->db->update("saving_type");           
+        return $saving_type_not_deactivated;
         
     }
 
@@ -84,8 +79,7 @@ class Saving_types_model extends CI_Model
     {
         $this->db->where("saving_type_id", $saving_type_id);
         $this->db->set("saving_type_status", 1);
-        $saving_type_deactivated = $this->db->update("saving_type");
-           
+        $saving_type_deactivated = $this->db->update("saving_type");           
         return $saving_type_deactivated;
     }
 
