@@ -745,14 +745,39 @@
 
 					invalidateFooter();
 				});
+
+				//forgot password button
+				var buttonFieldDiv = KASClient.UI.getElement("div");
+				buttonFieldDiv.className = "logout_button";
+				var buttonField = KASClient.UI.getElement("button", {
+					"align": "center",
+					"font-size": "24px",
+					"margin": "15pt",
+					"width": "90%",
+					"color": "white",
+					"padding": "15px",
+					"background-color": "#00a1ff",
+					"box-shadow": "0px 0px 0px 0px",
+					"border-color": "#00a1ff",
+					"border": "0px",
+
+				});
+				buttonField.innerText = "Forgot Password";
+
+				buttonField.addEventListener("click", function () {
+					member_password = "";
+					updatePage();
+				});
+
+
 				KASClient.UI.addElement(headerDiv, fieldDiv4);
 				KASClient.UI.addElement(headerDetails, headerDiv);
+
 				KASClient.UI.addElement(fieldTitleDiv4, fieldDiv4);
 				KASClient.UI.addElement(passwordfieldInput2, fieldDiv4);
 
-				//invalidateFooter();
-				//Add items to page 1
-				//KASClient.UI.addElement(fieldDiv, pageTwoDiv);
+				KASClient.UI.addElement(buttonField, buttonFieldDiv);
+				KASClient.UI.addElement(buttonFieldDiv, fieldDiv4);
 				KASClient.UI.addElement(fieldDiv4, pageTwoDiv);
 
 			}

@@ -18,7 +18,7 @@
             // Pagination
             $table = "loan_type";
             $where = "deleted = 0";
-            $search_parameters = "loan_type_name";
+            $search_parameters = array('loan_type_name');
             $search_results = $this->session->userdata("search_session");
             if(!empty($search_results) && $search_results != null) 
             {
@@ -66,6 +66,7 @@
                 {
                     $order_method = 'DESC';
                 }
+                $this->session->set_flashdata("success_message", "$row Loan types retrived");
             }
             else
             {
