@@ -106,7 +106,8 @@ $route['members/edit/(:num)'] = 'microfinance/members/display_edit_form/$1';
 $route['members/deactivate/(:num)'] = 'microfinance/members/deactivate/$1';
 $route['members/activate/(:num)'] = 'microfinance/members/activate/$1';
 $route['members/gitdelete/(:num)'] = 'microfinance/members/delete_member/$1';
-$route['members/execute_search'] = 'microfinance/members/execute_search';
+$route['members/search-members'] = 'microfinance/members/search_member';
+$route['members/close-search-members'] = 'microfinance/members/close_search_member_session';
 //$route['members/check-member-existence/(:any)'] = 'microfinance/members/check_member_existence/$1';
 
 

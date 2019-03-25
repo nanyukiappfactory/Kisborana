@@ -46,15 +46,12 @@ class Members extends MX_Controller
     {
         $table = 'member';
         $where = 'deleted = 0';
-        $search_parameters= 'member_first_name';
-
+        $search_parameters = array('member_first_name','member_last_name','member_payroll_number');
         $search_results = $this->session->userdata("search_session");
-
-        if (!empty($search_results) && $search_results != null) {
+        if(!empty($search_results) && $search_results != null) 
+        {
             $where = $search_results;
-
         }
-
         $total_members = $this->site_model->get_count_results($table);
         $limit_per_page = 20;
         $segment = 5;
@@ -85,29 +82,31 @@ class Members extends MX_Controller
         // build paging links
 
         $links = $this->pagination->create_links();
-
-        //$employer_details = $this->member_model->get_employer_details();
-
         $query = $this->site_model->get_all_results($search_results, $table, $limit_per_page, $start_index, $where, $order_column, $order_method, $search_parameters);
-
-
-        if($order_method == 'DESC')
+        $row = $query->num_rows();
+        if($row > 0)
+        {            
+            if($order_method == 'DESC')
+            {          
+                $order_method = 'ASC';
+            }
+            else
+            {
+                $order_method = 'DESC';
+            }
+            $this->session->set_flashdata("success_message", "$row Members retrived");
+        }
+        else
         {
-          
-            $order_method = 'ASC';
-        }
-        else{
-            $order_method = 'DESC';
-        }
+            $this->session->set_flashdata("error_message", "0 Members retrieved");
 
-
+        }
         $params = array('links' => $links,
             'all_members' => $query,
             'page' => $start_index,
             'order_method' => $order_method,
             'order_column' => $order_column,
-        );
-        
+        );        
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/members/all_members", $params, true)
@@ -118,7 +117,6 @@ class Members extends MX_Controller
     // A function that adds a new member
     public function new_member()
     {
-
         $this->form_validation->set_rules("member_national_id", "National id", "required");
         $this->form_validation->set_rules("firstname", "First Name", "required");
         $this->form_validation->set_rules("lastname", "Last Name", "required");
@@ -292,20 +290,26 @@ class Members extends MX_Controller
         force_download("./assets/downloads/member.csv", null);
     }
 
-    public function execute_search()
+    public function search_member()
     {
-        // Retrieve the posted search term.
-        $search_term = $this->input->post('search');
+        $search_results = $this->input->post("search");
+        $this->form_validation->set_rules("search", "Search", "required");
+        
+        if($this->form_validation->run()) 
+        {
+            $search_session = $this->session->set_userdata("search_session", $search_results);
+        } 
+        else 
+        {
+            $this->session->unset_userdata("search_session");
+        }
+        redirect("microfinance/members");
+    }
 
-        // Use a model to retrieve the results.
-        $data['results'] = $this->member_model->get_results($search_term);
-
-        // Pass the results to the view.
-
-        $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/members/search_results", $data, true));
-        $this->load->view("site/layouts/layout", $data);
-
+    public function close_search_member_session()
+    {
+        $this->session->unset_userdata("search_session");
+        redirect("microfinance/members"); 
     }
 
     //get members to create web serrvice
