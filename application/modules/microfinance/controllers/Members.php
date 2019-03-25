@@ -184,13 +184,13 @@ class Members extends Admin
             else 
             {
                 $this->session->set_flashdata("error_message", "unable to member");
-                redirect("members/edit_member");
+                redirect("members/all-members");
             }
         } 
         else 
         {
             $this->session->set_flashdata("error_message", validation_errors());
-            redirect("members/edit_member");
+            //redirect("members/edit-member");
         }
         //1. get data for the member with the passed member_id from the model
 

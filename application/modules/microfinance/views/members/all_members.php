@@ -57,7 +57,7 @@
                 
                 $status_button = anchor("members/activate/$id", "<i class='far fa-thumbs-up'></i>", array("class" => 'btn btn-success btn-sm',"onclick" => 'return confirm("Do you want to active")'));
             }
-            $edit_url = "members/edit_member/".$id;
+            $edit_url = 'members/edit-member/'.$id;
             //var_dump($edit_url);die();
             $edit_icon = "<i class='fas fa-edit'></i>";
             $delete_url = "members/delete_member/".$id;

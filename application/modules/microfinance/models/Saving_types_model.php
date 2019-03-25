@@ -73,12 +73,10 @@ class Saving_types_model extends CI_Model
     {
         $this->db->where("saving_type_id", $saving_type_id);
         $this->db->set("saving_type_status", 0);
-        if ($this->db->update("saving_type")) {
-            $saving_type_not_deactivated = $this->get_saving_type($limit, $start, $sortBy, $order);
+        $saving_type_not_deactivated = $this->db->update("saving_type");
+           
             return $saving_type_not_deactivated;
-        } else {
-            return false;
-        }
+        
     }
 
     //activate
@@ -86,12 +84,9 @@ class Saving_types_model extends CI_Model
     {
         $this->db->where("saving_type_id", $saving_type_id);
         $this->db->set("saving_type_status", 1);
-        if ($this->db->update("saving_type")) {
-            $saving_type_not_activated = $this->get_saving_type($limit, $start,$sortBy, $order);
-            return $saving_type_not_activated;
-        } else {
-            return false;
-        }
+        $saving_type_deactivated = $this->db->update("saving_type");
+           
+        return $saving_type_deactivated;
     }
 
     //function for searching

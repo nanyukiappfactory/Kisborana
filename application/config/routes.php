@@ -101,12 +101,12 @@ $route['members/all-members/(:num)'] = 'microfinance/members/index/$1';
 $route['members/all-members/(:any)/(:any)'] = 'microfinance/members/index/$1/$2';
 $route['members/all-members/(:any)/(:any)/(:num)'] = 'microfinance/members/index/$1/$2/$3';
 $route['members/add_member'] = 'microfinance/members/add_member';
-$route['members/edit_member/(:num)'] = 'microfinance/members/edit_member/$1';
+$route['members/edit-member/(:num)'] = 'microfinance/members/edit_member/$1';
 
 $route['members/bulk_registration'] = 'microfinance/members/bulk_registration';
 $route['members/deactivate/(:num)'] = 'microfinance/members/deactivate/$1';
 $route['members/activate/(:num)'] = 'microfinance/members/activate/$1';
-$route['members/gitdelete/(:num)'] = 'microfinance/members/delete_member/$1';
+$route['members/delete_member/(:num)'] = 'microfinance/members/delete_member/$1';
 $route['members/search-members'] = 'microfinance/members/search_member';
 $route['members/close-search-members'] = 'microfinance/members/close_search_member_session';
 
