@@ -90,7 +90,7 @@ $route['loan-types/activate-loan-types/(:num)'] = 'microfinance/loan_types/activ
 $route['loan-types/deactivate-loan-types/(:num)'] = 'microfinance/loan_types/deactivate_loan_type/$1';
 $route['loan-types/delete-loan-types/(:num)'] = 'microfinance/loan_types/delete_loan_type/$1';
 $route['loan-types/search-loan-types'] = 'microfinance/loan_types/search_loan_type';
-$route['loan-types/close-search-loan-types'] = 'microfinance/loan_types/close_search_loan_type_session';
+$route['loan-types/close-search-loan-types'] = 'microfinance/loan_types/close_search_git add session';
 
 /****
  * Member Routes
