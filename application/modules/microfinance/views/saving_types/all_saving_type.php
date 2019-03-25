@@ -98,7 +98,21 @@
             <tr>
                 <!-- <th width="50px"><input type="checkbox" id="master"></th> -->
                 <th scope="col">#</th>
-                <th scope="col">Saving Type Name</th>
+                <th scope="col">
+                <?php
+
+                // Set order
+                if($order == "asc"){
+                    
+                $order = "desc";
+                
+                }else{
+                $order = "asc";
+                
+                }
+                
+                ?><a href="<?php echo base_url() . 'saving-types/all-saving-types/saving_type_name/' . $order . '/' . $page ?>">Saving Type Name</a> 
+                </th>
                 <th scope="col">Status</th>
                 <!-- <th scope="col">Actions</th> -->
                 <th colspan="4" style="text-align: center;">Actions</th>

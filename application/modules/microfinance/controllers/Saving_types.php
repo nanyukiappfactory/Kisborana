@@ -14,13 +14,13 @@
             $this->load->helper(array('url', 'form', 'html', 'download'));
         }
         //all saving types
-        public function index()
+        public function index($sortBy="saving_type_name",$order="asc")
         {
             $var = $this->session->userdata('logged_in_user');
             $login_status = $var['login_status'];
             if ($login_status == 'TRUE') {
 
-                $table = "loan_type";
+                $table = "saving_type";
                 $where = "deleted = 0";
                 $search_results = $this->session->userdata("search_session");
                 if (!empty($search_results) && $search_results != null) {
@@ -28,7 +28,7 @@
                 }
                 //pagination
                 $config = array();
-                $config["base_url"] = base_url() . "saving-types/all-saving-types/";
+                $config["base_url"] = base_url() . "saving-types/all-saving-types/".$sortBy.'/'.$order;
                 $config["total_rows"] = $this->saving_types_model->record_count();
                 $config["per_page"] = 5;
                 $config["uri_segment"] = 3;
@@ -50,7 +50,7 @@
 
                 $this->pagination->initialize($config);
                 $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-                $v_data = $this->saving_types_model->get_saving_type($config["per_page"], $page);
+                $v_data = $this->saving_types_model->get_saving_type($config["per_page"], $page, $sortBy,$order);
                 $link_data = $this->pagination->create_links();
                 //search
                 $this->form_validation->set_rules("search", "Search", "required");
@@ -65,6 +65,7 @@
                         "all_saving_type" => $v_data,
                         "links" => $link_data,
                         "page" => $page,
+                        "order"=>$order
                     );
                     
                     $data = array("title" => $this->site_model->display_page_title(),
