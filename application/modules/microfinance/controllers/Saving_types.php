@@ -10,16 +10,17 @@
             parent::__construct();
             $this->load->model("microfinance/saving_types_model");
             $this->load->model("site/site_model");
-            $this->load->library("pagination");
+            $this->load->library(array("pagination", "upload"));
+            $this->load->helper(array('url', 'form', 'html', 'download'));
         }
         //all saving types
-        public function index()
+        public function index($sortBy="saving_type_name",$order="asc")
         {
             $var = $this->session->userdata('logged_in_user');
             $login_status = $var['login_status'];
             if ($login_status == 'TRUE') {
 
-                $table = "loan_type";
+                $table = "saving_type";
                 $where = "deleted = 0";
                 $search_results = $this->session->userdata("search_session");
                 if (!empty($search_results) && $search_results != null) {
@@ -27,7 +28,7 @@
                 }
                 //pagination
                 $config = array();
-                $config["base_url"] = base_url() . "saving-types/all-saving-types/";
+                $config["base_url"] = base_url() . "saving-types/all-saving-types/".$sortBy.'/'.$order;
                 $config["total_rows"] = $this->saving_types_model->record_count();
                 $config["per_page"] = 5;
                 $config["uri_segment"] = 3;
@@ -49,7 +50,7 @@
 
                 $this->pagination->initialize($config);
                 $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-                $v_data = $this->saving_types_model->get_saving_type($config["per_page"], $page);
+                $v_data = $this->saving_types_model->get_saving_type($config["per_page"], $page, $sortBy,$order);
                 $link_data = $this->pagination->create_links();
                 //search
                 $this->form_validation->set_rules("search", "Search", "required");
@@ -64,6 +65,7 @@
                         "all_saving_type" => $v_data,
                         "links" => $link_data,
                         "page" => $page,
+                        "order"=>$order
                     );
                     
                     $data = array("title" => $this->site_model->display_page_title(),
@@ -187,6 +189,20 @@
         //function for importing saving types in bulk
         public function bulk_registration()
         {
-            $v_data["add_saving_types"] = "";
+            $v_data["add_saving_type"] = "microfinance/saving_types/saving_types_model";
+            $data = array("title" => $this->site_model->display_page_title(),
+                          "content" => $this->load->view("microfinance/saving_types/bulk_registration", $v_data, true),
+
+            );
+            $this->load->view("site/layouts/layout", $data);
         }
+        public function download_csv()
+        {
+            force_download("./assets/downloads/saving_type.csv", null);
+        }
+
+        public function upload_csv()
+        {
+            $this->saving_types_model->upload_csv();
+        } 
     }

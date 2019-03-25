@@ -16,10 +16,10 @@ class Saving_types_model extends CI_Model
     }
 
     //function for grabing all saving types
-    public function get_saving_type($limit, $start)
+    public function get_saving_type($limit, $start, $sortBy, $order)
     {
         $this->db->limit($limit, $start);
-        $this->db->order_by("created_on", "DESC");
+        $this->db->order_by($sortBy, $order);
         $this->db->where("deleted", 0);
         $query = $this->db->get("saving_type");
         if ($query->num_rows() > 0) {
@@ -61,7 +61,7 @@ class Saving_types_model extends CI_Model
         $this->db->where("saving_type_id", $saving_type_id);
         $this->db->set("deleted", 1);
         if ($this->db->update("saving_type")) {
-            $saving_type_not_deleted = $this->get_saving_type($limit, $start);
+            $saving_type_not_deleted = $this->get_saving_type($limit, $start, $sortBy, $order);
             return $saving_type_not_deleted;
         } else {
             return false;
@@ -74,7 +74,7 @@ class Saving_types_model extends CI_Model
         $this->db->where("saving_type_id", $saving_type_id);
         $this->db->set("saving_type_status", 0);
         if ($this->db->update("saving_type")) {
-            $saving_type_not_deactivated = $this->get_saving_type($limit, $start);
+            $saving_type_not_deactivated = $this->get_saving_type($limit, $start, $sortBy, $order);
             return $saving_type_not_deactivated;
         } else {
             return false;
@@ -87,7 +87,7 @@ class Saving_types_model extends CI_Model
         $this->db->where("saving_type_id", $saving_type_id);
         $this->db->set("saving_type_status", 1);
         if ($this->db->update("saving_type")) {
-            $saving_type_not_activated = $this->get_saving_type($limit, $start);
+            $saving_type_not_activated = $this->get_saving_type($limit, $start,$sortBy, $order);
             return $saving_type_not_activated;
         } else {
             return false;
@@ -124,6 +124,51 @@ class Saving_types_model extends CI_Model
             return $row->count;
         }
 
+    }
+
+    //importing a csv file
+    public function upload_csv()
+    {
+        $file_csv = $this->input->post("userfile");
+        $config["upload_path"] = "./assets/uploads/";
+        $config["allowed_types"] = "csv";
+        $config["file_name"] = $_FILES["userfile"]["name"];
+        $this->load->library("upload",$config);
+        $this->upload->initialize($config);
+        $filetype = $config["allowed_types"];
+        if($filetype != "CSV" || $filetype != "csv")
+        {
+            $this->session->set_flashdata("error_message", "Wrong file, kindly upload the correct file format");
+            redirect("saving-types/import-saving-types");
+        }
+        else
+        {
+            $this->upload->do_upload("userfile");
+            $data = $this->upload->data();
+            $count = 0;
+            $fp = fopen($_FILES["userfile"]["tmp_name"],"r") or die("can't open file");
+            while($csv_line = fgetcsv($fp, 1024)){
+                $count++;
+                if($count == 1)
+                {
+                    continue;
+                }
+                for($i = 0, $j = count($csv_line); $i < $j; $i++)
+                {
+                    $insert_csv = array();
+                    $insert_csv["saving type name"] = $csv_line[0];
+                }
+                $i++;
+                $data = array(
+                    "saving_type_name"=>$insert_csv["saving type name"]
+                );
+                $data["saving_type_details"] = $this->db->insert("saving_type", $data);
+            }
+            fclose($fp) or die("can't close file");
+            $this->session->set_flashdata("success_message", "CSV template uploaded successfully");
+            redirect("microfinance/saving_types");
+            return $data;
+        }
     }
 
 }
