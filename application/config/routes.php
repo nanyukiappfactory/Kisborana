@@ -130,7 +130,7 @@ $route['saving-types/edit-saving-types/(:num)'] = 'microfinance/saving_types/edi
 $route['saving_types/delete-saving-type/(:num)'] = 'microfinance/saving_types/delete_saving_type/$1';
 $route['saving-types/deactivate-saving-type/(:num)'] = 'microfinance/saving_types/deactivate_saving_type/$1';
 $route['saving-types/activate-saving-type/(:num)'] = 'microfinance/saving_types/activate_saving_type/$1';
-
+$route['saving-types/import-saving-types'] = 'microfinance/saving_types/bulk_registration';
 $route['loan_types/new_loan_type'] = 'microfinance/loan_types/new_loan_type';
 $route['loan_types/bulk_registration'] = 'microfinance/loan_types/bulk_registration';
 $route['loan_types/edit/(:num)'] = 'microfinance/loan_types/edit/$1';

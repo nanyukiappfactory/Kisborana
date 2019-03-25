@@ -10,7 +10,8 @@
             parent::__construct();
             $this->load->model("microfinance/saving_types_model");
             $this->load->model("site/site_model");
-            $this->load->library("pagination");
+            $this->load->library(array("pagination", "upload"));
+            $this->load->helper(array('url', 'form', 'html', 'download'));
         }
         //all saving types
         public function index()
@@ -187,6 +188,20 @@
         //function for importing saving types in bulk
         public function bulk_registration()
         {
-            $v_data["add_saving_types"] = "";
+            $v_data["add_saving_type"] = "microfinance/saving_types/saving_types_model";
+            $data = array("title" => $this->site_model->display_page_title(),
+                          "content" => $this->load->view("microfinance/saving_types/bulk_registration", $v_data, true),
+
+            );
+            $this->load->view("site/layouts/layout", $data);
         }
+        public function download_csv()
+        {
+            force_download("./assets/downloads/saving_type.csv", null);
+        }
+
+        public function upload_csv()
+        {
+            $this->saving_types_model->upload_csv();
+        } 
     }

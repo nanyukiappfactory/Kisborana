@@ -90,7 +90,7 @@
             <div style="padding-bottom: 8px;">
                 <div>
                     <?php echo anchor("saving-types/add-saving-type", "Add Saving Type", array("class" => "btn btn-primary btn-sm")); ?>
-                    <?php echo anchor("microfinance/imports", "Import Saving Types", array("class" => "btn btn-success btn-sm")); ?>
+                    <?php echo anchor("saving-types/import-saving-types", "Import Saving Types", array("class" => "btn btn-success btn-sm")); ?>
                 </div>
             </div>
         <?php echo form_close() ?>
