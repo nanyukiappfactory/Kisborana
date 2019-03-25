@@ -23,7 +23,8 @@ class Member_model extends CI_Model
         $newstring = substr($phone_number, -9);
         $length = strlen($newstring);
 
-        if ($newstring[0] == 7 && $length == 9) {
+        if($newstring[0] == 7 && $length == 9) 
+        {
             $data = array(
                 "bank_id" => $this->input->post("bank_name"),
                 "member_national_id" => $this->input->post("member_national_id"),
@@ -42,38 +43,29 @@ class Member_model extends CI_Model
                 "created_by" => 1,
                 "created_on" => date('Y-m-d H:i:s'),
             );
-            //var_dump($data);die();
-
-            if ($this->db->insert("member", $data)) {
+            if($this->db->insert("member", $data)) 
+            {
                 $member_id = $this->db->insert_id();
-
                 $member_number = "MN00" . $member_id;
-
                 $member_number_data = array(
                     "member_number" => $member_number,
                 );
-
                 $this->db->set($member_number_data);
                 $this->db->where("member_id", $member_id);
                 $this->db->update("member");
-
                 return $member_id;
-            } else {
+            } 
+            else 
+            {
                 return false;
             }
 
-        } else {
+        } 
+        else 
+        {
             return false;
         }
 
-    }
-    public function get_members($limit_per_page, $start_index)
-    {
-
-        $this->db->where("deleted", 0);
-        $this->db->limit($limit_per_page, $start_index);
-        $query = $this->db->get('member');
-        return $query;
     }
     public function deactivate($member_id)
     {
@@ -123,56 +115,18 @@ class Member_model extends CI_Model
             "modified_on" => date('Y-m-d H:i:s'),
         );
         $this->db->where("member_id", $member_id);
-        if ($this->db->update("member", $data)) {
-            $this->session->set_flashdata("success", "successfuly updated");
-            return true;
-        } else {
-            $this->session->set_flashdata("error", "failed to update");
-
-            return false;
-        }
+        $this->db->set($data);
+        $this->db->update("member");
+        return $this->db->get("member");
     }
-
-    //'SELECT * FROM member JOIN bank ON member.bank_id=bank.bank_id WHERE member.member_id='.$member_id
     public function get_single_member($member_id)
     {
-        // 'SELECT * FROM member JOIN bank ON member.bank_id = BANK.BANK_ID where member.member_id='. $member_id;
-        $this->db->select('mb.*, bk.bank_name, ep.employer_name');
-        $this->db->from('member as mb');
-        $this->db->join('bank as bk', 'mb.bank_id = bk.bank_id', 'LEFT');
-        $this->db->join('employer as ep', 'mb.employer_id = ep.employer_id', 'LEFT');
-        $this->db->where('mb.member_id', $member_id);
+        $this->db->select('*');
+        $this->db->from('member');
+        $this->db->where('member_id', $member_id);
         $query = $this->db->get();
         return $query;
     }
-    public function importdata($data)
-    {
-
-        $res = $this->db->insert_batch('member', $data);
-        if ($res) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
-// Search function
-    public function get_results($search_term = 'default')
-    {
-        // Use the Active Record class for safer queries.
-        $this->db->select('*');
-        $this->db->from('member');
-        $this->db->like('member_first_name', $search_term);
-        $this->db->or_like('member_last_name', $search_term);
-
-        // Execute the query.
-        $query = $this->db->get();
-
-        // Return the results.
-        return $query->result_array();
-    }
-
     public function db_upload_cv()
     {
         $file_csv = $this->input->post('userfile');
@@ -182,20 +136,19 @@ class Member_model extends CI_Model
         $config['file_name'] = $_FILES["userfile"]['name'];
         $this->load->library('upload', $config);
         $parse = $this->upload->initialize($config);
-        // var_dump($parse);die();
-
         $this->upload->do_upload('userfile');
         $data = $this->upload->data();
-        //var_dump($data["client_name"]);die();
-
         $count = 0;
         $fp = fopen($_FILES['userfile']['tmp_name'], 'r') or die("can't open file");
-        while ($csv_line = fgetcsv($fp, 1024)) {
+        while($csv_line = fgetcsv($fp, 1024)) 
+        {
             $count++;
-            if ($count == 1) {
+            if($count == 1) 
+            {
                 continue;
             } //keep this if condition if you want to remove the first row
-            for ($i = 0, $j = count($csv_line); $i < $j; $i++) {
+            for($i = 0, $j = count($csv_line); $i < $j; $i++) 
+            {
                 $insert_csv = array();
                 $insert_csv['member national id'] = $csv_line[0];
                 $insert_csv['member first name'] = $csv_line[1];
@@ -242,9 +195,7 @@ class Member_model extends CI_Model
         redirect("microfinance/members");
         $data['success'] = "success";
         return $data;
-
     }
-
     public function check_member_existence($nationalid, $payroll_number)
     {
         $data = array(
@@ -256,7 +207,6 @@ class Member_model extends CI_Model
         $member_details = $this->db->get("member");
         return $member_details;
     }
-
     public function save_member_password($nationalid, $password, $phone_number)
     {
         $data = array(
@@ -264,9 +214,12 @@ class Member_model extends CI_Model
             'member_phone_number' => $phone_number,
         );
         $this->db->where('member_national_id', $nationalid);
-        if ($this->db->update("member", $data)) {
+        if($this->db->update("member", $data)) 
+        {
             return true;
-        } else {
+        } 
+        else 
+        {
             return false;
         }
     }
@@ -280,7 +233,6 @@ class Member_model extends CI_Model
         $member_details = $this->db->get("member");
         return $member_details;
     }
-
     public function get_total_members()
     {
         return $this->db->count_all('member');

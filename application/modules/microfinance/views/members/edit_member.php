@@ -17,18 +17,30 @@
 		<div class="form-group">
 			<label for="Bank"><b>Select Bank</b></label>
 			<select name="bank_name" id="bank_details" class="form-control form-control-lg inputform">
+			<?php 
+                foreach($bank_details->result() as $row){
+                  $bank_name =  $row->bank_name;
+                  $bank_id =  $row->bank_id;
+                ?>
 				<option value="<?php echo $bank_id; ?>">
 					<?php echo $bank_name; ?>
 				</option>
+				<?php } ?>
 			</select>
 		</div>
 
 		<div class="form-group">
 			<label for="Employer"><b>Select Employer</b></label>
 			<select name="employer_name" id="employer_details" class="form-control form-control-lg inputform">
+			<?php 
+                foreach($employer_details->result() as $row){
+                  $employer_name =  $row->employer_name;
+                  $employer_id =  $row->employer_id;
+                ?>
 				<option value="<?php echo $employer_id; ?>">
 					<?php echo $employer_name; ?>
 				</option>
+				<?php } ?>
 			</select>
 		</div>
 		<div class="form-group">

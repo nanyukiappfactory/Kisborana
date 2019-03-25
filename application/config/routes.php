@@ -100,22 +100,21 @@ $route['members/all-members'] = 'microfinance/members/index';
 $route['members/all-members/(:num)'] = 'microfinance/members/index/$1';
 $route['members/all-members/(:any)/(:any)'] = 'microfinance/members/index/$1/$2';
 $route['members/all-members/(:any)/(:any)/(:num)'] = 'microfinance/members/index/$1/$2/$3';
-$route['members/new_member'] = 'microfinance/members/new_member';
+$route['members/add_member'] = 'microfinance/members/add_member';
+$route['members/edit_member/(:num)'] = 'microfinance/members/edit_member/$1';
+
 $route['members/bulk_registration'] = 'microfinance/members/bulk_registration';
-$route['members/edit/(:num)'] = 'microfinance/members/display_edit_form/$1';
 $route['members/deactivate/(:num)'] = 'microfinance/members/deactivate/$1';
 $route['members/activate/(:num)'] = 'microfinance/members/activate/$1';
 $route['members/gitdelete/(:num)'] = 'microfinance/members/delete_member/$1';
 $route['members/search-members'] = 'microfinance/members/search_member';
 $route['members/close-search-members'] = 'microfinance/members/close_search_member_session';
-//$route['members/check-member-existence/(:any)'] = 'microfinance/members/check_member_existence/$1';
 
 
 $route['members/member-existence'] = 'microfinance/members/member_existence';
 $route['members/check-member-existence/(:any)/(:any)'] = 'microfinance/members/check_member_existence/$1/$2';
 $route['members/save-member-password/(:any)/(:any)/(:any)'] = 'microfinance/members/save_member_password/$1/$2/$3';
 $route['members/check-member-phone/(:num)'] = 'microfinance/members/retrieve_phone/$1';
-//$route['members/strip'] = 'microfinance/members/strip_number';
 
 
 //saving_types routes

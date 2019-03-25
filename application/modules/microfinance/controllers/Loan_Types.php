@@ -15,7 +15,7 @@
 
         public function index($order_column = 'loan_type_name', $order_method = 'ASC')
         {
-            // Pagination
+            // Listing and Search Parameters
             $table = "loan_type";
             $where = "deleted = 0";
             $search_parameters = array('loan_type_name');
@@ -24,6 +24,7 @@
             {
                 $where = $search_results;
             }
+            // Pagination
             $total_records = $this->site_model->get_count_results($table);
             $limit_per_page = 5;
             $segment = 5;
