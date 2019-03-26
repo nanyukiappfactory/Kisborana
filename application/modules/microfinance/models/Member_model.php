@@ -9,10 +9,8 @@ class Member_model extends CI_Model
     {
         $phone_number = $this->input->post("phone_number");
         $member_password = $this->input->post("member_password");
-
         $newstring = substr($phone_number, -9);
         $length = strlen($newstring);
-
         if($newstring[0] == 7 && $length == 9) 
         {
             $data = array(
@@ -95,16 +93,16 @@ class Member_model extends CI_Model
     {
         $this->db->where("member_id", $member_id);
         $this->db->set("member_status", 1);
-        $query = $this->db->update("member");
-        return $query;
+        $this->db->update("member");
+        return $this->db->get("member");
 
     }
     public function deactivate_member($member_id)
     {
         $this->db->where("member_id", $member_id);
         $this->db->set("member_status", 0);
-        $query = $this->db->update("member");
-        return $query;
+        $this->db->update("member");
+        return $this->db->get("member");
 
     }
     public function delete_member($member_id)
@@ -116,8 +114,8 @@ class Member_model extends CI_Model
             "deleted_on" => date('Y-m-d H:i:s'),
         );
         $this->db->set($data);
-        $query = $this->db->update("member");
-        return $query;
+        $this->db->update("member");
+        return $this->db->get("member");
     }
     
     public function get_single_member($member_id)
@@ -131,7 +129,6 @@ class Member_model extends CI_Model
     public function db_upload_cv()
     {
         $file_csv = $this->input->post('userfile');
-
         $config['upload_path'] = './assets/uploads/';
         $config['allowed_types'] = 'csv|CSV';
         $config['file_name'] = $_FILES["userfile"]['name'];

@@ -6,13 +6,34 @@
         public function __construct()
         {
             parent::__construct();
+            // Allow access from any origin
+            if(isset($_SERVER['HTTP_ORIGIN'])) 
+            {
+                header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+                header('Access-Control-Allow-Credentials: true');
+                header('Access-Control-Max-Age: 86400'); // cache for 1 day
+            }
+            // Access-Control headers are received during OPTIONS requests
+            if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') 
+            {
+                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) 
+                {
+                    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+                }
+                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) 
+                {
+                    header("Access-Control-Allow-Headers:        {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+                }
+                exit(0);
+            }
+            //load required model
             $this->load->model(array("loan_types_model", "site_model"));
             // load required libraries
             $this->load->library(array('pagination', 'upload'));
             // load required helpers
             $this->load->helper(array('url', 'form', 'html', 'download'));
         }
-
+        // listing all members
         public function index($order_column = 'loan_type_name', $order_method = 'ASC')
         {
             // Listing and Search Parameters
@@ -67,7 +88,6 @@
                 {
                     $order_method = 'DESC';
                 }
-                $this->session->set_flashdata("success_message", "$row Loan types retrived");
             }
             else
             {
@@ -192,8 +212,9 @@
                 "interest_rate" => $interest,
                 "loan_type_id" => $id,
             );
-            $view = array("title" => $this->site_model->display_page_title(),
-                          "content" => $this->load->view("microfinance/loan_types/edit_loan_type", $data, true));
+            $view = array(
+                "title" => $this->site_model->display_page_title(),
+                "content" => $this->load->view("microfinance/loan_types/edit_loan_type", $data, true));
             $this->load->view("site/layouts/layout", $view);
         }
         //activating a loan type
@@ -203,13 +224,12 @@
             if($my_loan_type > 0) 
             {
                 $this->session->set_flashdata("success_message", "Loan Type Activated Successfully");
-                redirect("loan-types/all-loan-types");
             } 
             else 
             {
                 $this->session->set_flashdata("error_message", "Unable to Activate Loan Type");
-                redirect("loan-types/all-loan-types");
             }
+            redirect("loan-types/all-loan-types");
         }
         //deactivating a loan type
         public function deactivate_loan_type($loan_type_id)
@@ -218,13 +238,12 @@
             if($my_loan_type > 0) 
             {
                 $this->session->set_flashdata("success_message", "Loan Type Deactivated Successfully");
-                redirect("loan-types/all-loan-types");
             } 
             else 
             {
                 $this->session->set_flashdata("error_message", "Unable to Deactivate Loan Type");
-                redirect("loan-types/all-loan-types");
             }
+            redirect("loan-types/all-loan-types");
         }
         //deleting a loan type
         public function delete_loan_type($loan_type_id)
@@ -233,15 +252,14 @@
             if($my_loan_type > 0) 
             {
                 $this->session->set_flashdata("success_message", "Loan Type Deleted Successfully");
-                redirect("loan-types/all-loan-types");
             } 
             else 
             {
                 $this->session->set_flashdata("error_message", "Unable to Delete Loan Type");
-                redirect("loan-types/all-loan-types");
             }
+            redirect("loan-types/all-loan-types");
         }
-        //search function
+        //searching a loan type
         public function search_loan_type()
         {
             $search_results = $this->input->post("search");
@@ -257,13 +275,13 @@
             }
             redirect("loan-types/all-loan-types");
         }
-        // close search session
+        // closing search session
         public function close_search_loan_type_session()
         {
             $this->session->unset_userdata("search_session");
             redirect("loan-types/all-loan-types");
         }
-        //impoting records from a csv file
+        // loading bulk view
         public function bulk_upload_view()
         {
             $v_data["add_loan_type"] = "microfinance/loan_types/loan_types_model";
@@ -273,12 +291,12 @@
             );
             $this->load->view("site/layouts/layout", $data);
         }
-
+        // downloading csv template
         public function download_csv()
         {
             force_download("./assets/downloads/loan_type.csv", null);
         }
-
+        // uploading csv file
         public function upload_csv()
         {
             $this->loan_types_model->upload_csv();
