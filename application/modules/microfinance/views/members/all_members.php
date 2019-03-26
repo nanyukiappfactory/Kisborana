@@ -1,20 +1,7 @@
 <?php 
     $member_data = '';
     $select_div = "";
-	$member_message = '';
-    $alert_message = '';
     $count = $page;	
-    $success = $this->session->flashdata("success_message");
-    $error = $this->session->flashdata("error_message");  
-    if(!empty($success)) 
-    {
-		$alert_message='<div class="alert alert-success" role="alert">'.$success.'</div>';	
-	}
-    if(!empty($error)) 
-    {
-		$alert_message='<div class="alert alert-dark" role="alert">'.$error.'</div>';
-    }
-    $member_message .= '<div class="container">'.$alert_message.'</div>';
     if($all_members->num_rows() > 0) 
     {
         foreach ($all_members->result() as $row) 
@@ -92,7 +79,6 @@
 ?>
 <div class="card">
     <div class="card-body">        
-        <?php echo $member_message;?> 
         <table style="width: 100%; margin-top: 10px;">
             <tr>
                 <td>

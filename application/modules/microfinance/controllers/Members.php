@@ -7,14 +7,14 @@ class Members extends Admin
     {
         parent::__construct();
         // Allow from any origin
-        if (isset($_SERVER['HTTP_ORIGIN'])) 
+        if(isset($_SERVER['HTTP_ORIGIN'])) 
         {
             header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
             header('Access-Control-Allow-Credentials: true');
             header('Access-Control-Max-Age: 86400'); // cache for 1 day
         }
         // Access-Control headers are received during OPTIONS requests
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') 
+        if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') 
         {
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) 
             {
@@ -27,14 +27,9 @@ class Members extends Admin
             exit(0);
         }
         //load required model
-        $this->load->model(array("member_model","site_model"));
-       // load required libraries
-       $this->load->library(array('pagination', 'upload'));
-       // load required helpers
-       $this->load->helper(array('url', 'form', 'html', 'download'));
-        
+        $this->load->model(array("member_model","site_model"));        
     }
-    // A function that displays all members
+    // listing all members
     public function index($order_column = 'member_first_name', $order_method = 'ASC')
     {
         // Listing and Search Parameters
@@ -79,7 +74,8 @@ class Members extends Admin
         $query = $this->site_model->get_all_results($search_results, $table, $limit_per_page, $start_index, $where, $order_column, $order_method, $search_parameters);
         $row = $query->num_rows();
         if($row > 0)
-        {            
+        {
+            //Ordering            
             if($order_method == 'DESC')
             {          
                 $order_method = 'ASC';
@@ -91,7 +87,7 @@ class Members extends Admin
         }
         else
         {
-            $this->session->set_flashdata("error_message", "0 Members retrieved");
+            $this->session->set_flashdata("error", "0 Members retrieved");
 
         }
         $params = array('links' => $links,
@@ -131,28 +127,31 @@ class Members extends Admin
             if($saved_members) 
             {
                 $this->session->set_flashdata("success", "Successfully saved");
-
+                redirect("members/all-members");
             } 
             else 
             {
-                $this->session->set_flashdata("error", "Error when saving");
+                $this->session->set_flashdata("error", "Error, Unable to add the member");
             }
-            redirect("microfinance/members");
+        } 
+        else 
+        {
+            $this->session->set_flashdata("error", validation_errors());
         }
         $v_data = array(
             "add_member" => "member/Member_model",
             "bank_details" => $bank_details,
             "employer_details" => $employer_details,
         );
-        $data = array("title" => $this->site_model->display_page_title(),
+        $data = array(
+            "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/members/add_member", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }    
-    //A function that edits member deatails
+    //editing a member
     public function edit_member($member_id)
     {
-
         $this->form_validation->set_rules("member_national_id", "National id", "required");
         $this->form_validation->set_rules("firstname", "First Name", "required");
         $this->form_validation->set_rules("lastname", "Last Name", "required");
@@ -172,18 +171,17 @@ class Members extends Admin
             $members_edited = $this->member_model->edit_member($member_id);
             if($members_edited > 0)
             {
-                $this->session->set_flashdata("success_message", "Your member has been edited");
-                redirect("members/all-members");
+                $this->session->set_flashdata("success", "Your member has been edited");
             } 
             else 
             {
-                $this->session->set_flashdata("error_message", "unable to member");
-                redirect("members/all-members");
+                $this->session->set_flashdata("error", "unable to edit member");
             }
+            redirect("members/all-members");
         } 
         else 
         {
-            $this->session->set_flashdata("error_message", validation_errors());
+            $this->session->set_flashdata("error", validation_errors());
         }
         //1. get data for the member with the passed member_id from the model
         $single_member_data = $this->member_model->get_single_member($member_id);
@@ -234,7 +232,9 @@ class Members extends Admin
         if($activated_member > 0) 
         {
             $this->session->set_flashdata("success", "Successfully activated");
-        } else {
+        } 
+        else 
+        {
             $this->session->set_flashdata("error", "Cannot be activated");
         }
         redirect('microfinance/members');
@@ -246,19 +246,23 @@ class Members extends Admin
         if($deactivated_member > 0) 
         {
             $this->session->set_flashdata("success", "Successfully deactivated");
-        } else {
+        } 
+        else 
+        {
             $this->session->set_flashdata("error", "Cannot deactivate");
         }
         redirect('microfinance/members');
     }
-    // A function that deletes a member
+    // deleting a member
     public function delete_member($member_id)
     {
         $deleted_member = $this->member_model->delete_member($member_id);
         if($deleted_member > 0) 
         {
             $this->session->set_flashdata("success", "Successfully deleted");
-        } else {
+        } 
+        else 
+        {
             $this->session->set_flashdata("error", "Cannot be deleted");
         }
         redirect('microfinance/members');
@@ -288,9 +292,9 @@ class Members extends Admin
     public function bulk_upload_view()
     {
         $v_data["add_member"] = "member/member_model";
-        $data = array("title" => $this->site_model->display_page_title(),
+        $data = array(
+            "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/members/bulk_registration", $v_data, true),
-
         );
         $this->load->view("site/layouts/layout", $data);
     }

@@ -1,20 +1,7 @@
 <?php 
     $tr_loan_types = "";    
     $count = $page;
-	$loan_type_message = '';
-    $alert_message = '';
     $select_div = "";	
-	$success = $this->session->flashdata("success_message");
-    $error = $this->session->flashdata("error_message");    
-    if(!empty($success)) 
-    {
-		$alert_message='<div class="alert alert-success" role="alert">'.$success.'</div>';	
-	}
-    if(!empty($error)) 
-    {
-		$alert_message='<div class="alert alert-dark" role="alert">'.$error.'</div>';
-	}
-    $loan_type_message .= '<div class="container">'.$alert_message.'</div>';
     $select_div .= '<select class="form-control custom-select2" name="search" single ">';
     if($all_loan_types->num_rows() > 0)
     {
@@ -92,8 +79,7 @@
     }      
 ?>
 <div class="card">
-    <div class="card-body">
-        <?php echo $loan_type_message;?>      
+    <div class="card-body">     
         <table style="width: 100%; margin-top: 10px;">
             <tr>
                 <td>

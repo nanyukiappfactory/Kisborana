@@ -1,3 +1,23 @@
+<?php
+	$employerdiv = '';
+	$bankdiv = '';
+	$bankdiv .= '<select name="bank_name" id="bank_details" class="form-control form-control-lg inputform">';
+	foreach($bank_details->result() as $row)
+		{
+			$bank_name =  $row->bank_name;
+			$bank_id =  $row->bank_id;
+			$bankdiv .= '<option value = "'.$bank_id. '">'.$bank_name.'</option>';
+		}
+	$bankdiv .= '</select>';
+	$employerdiv .= '<select name="employer_name" id="employer_details" class="form-control form-control-lg inputform">';
+	foreach($employer_details->result() as $row)
+		{
+			$employer_name =  $row->employer_name;
+			$employer_id =  $row->employer_id;
+			$employerdiv .= '<option value = "'.$employer_id. '">'.$employer_name.'</option>';
+		}
+	$employerdiv .= '</select>';
+?>
 <div class="card">
 	<div class="card-body">
 		<?php echo form_open_multipart($this->uri->uri_string()); ?>	
@@ -16,34 +36,13 @@
 
 		<div class="form-group">
 			<label for="Bank"><b>Select Bank</b></label>
-			<select name="bank_name" id="bank_details" class="form-control form-control-lg inputform">
-				<?php 
-                foreach($bank_details->result() as $row){
-                  $bank_name =  $row->bank_name;
-                  $bank_id =  $row->bank_id;
-                  // echo $bank_name;
-                
-                ?>
-				<option value="<?php echo $bank_id; ?>">
-					<?php echo $bank_name; ?>
-				</option>
-				<?php } ?>
-			</select>
+				<?php echo $bankdiv?>
+		
 		</div>
 
 		<div class="form-group">
 			<label for="Employer"><b>Select Employer</b></label>
-			<select name="employer_name" id="employer_details" class="form-control form-control-lg inputform">
-				<?php 
-                foreach($employer_details->result() as $row){
-                  $employer_name =  $row->employer_name;
-                  $employer_id =  $row->employer_id;
-                ?>
-				<option value="<?php echo $employer_id; ?>">
-					<?php echo $employer_name; ?>
-				</option>
-				<?php } ?>
-			</select>
+				<?php echo $employerdiv?>
 		</div>
 		<div class="form-group">
 			<label for="email"><b>Email Address</b></label>
@@ -65,10 +64,6 @@
 			<label for="postal_code"><b>Postal code</b></label>
 			<input type="number" name="postal_code" class="form-control form-control-lg inputform" />
 		</div>
-		<!-- <div class="form-group">
-			<label for="member_number"><b>Member number</b></label>
-			<input type="number" name="member_number" class="form-control form-control-lg inputform" />
-		</div> -->
 		<div class="form-group">
 			<label for="member_payroll_number"><b>Member Payroll number</b></label>
 			<input type="number" name="member_payroll_number" class="form-control form-control-lg inputform" />
