@@ -6,15 +6,15 @@ class Members extends Admin
     public function __construct()
     {
         parent::__construct();
-        // Allow access from any origin
-        if(isset($_SERVER['HTTP_ORIGIN'])) 
+        // Allow from any origin
+        if (isset($_SERVER['HTTP_ORIGIN'])) 
         {
             header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
             header('Access-Control-Allow-Credentials: true');
             header('Access-Control-Max-Age: 86400'); // cache for 1 day
         }
         // Access-Control headers are received during OPTIONS requests
-        if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') 
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') 
         {
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) 
             {
@@ -34,7 +34,7 @@ class Members extends Admin
        $this->load->helper(array('url', 'form', 'html', 'download'));
         
     }
-    // listing all members
+    // A function that displays all members
     public function index($order_column = 'member_first_name', $order_method = 'ASC')
     {
         // Listing and Search Parameters
@@ -88,7 +88,7 @@ class Members extends Admin
             {
                 $order_method = 'DESC';
             }
-            $this->session->set_flashdata("success_message", "$row Members retrived");
+            // $this->session->set_flashdata("success_message", "$row Members retrived");
         }
         else
         {
@@ -150,7 +150,7 @@ class Members extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }    
-    //editing a member
+    //A function that edits member deatails
     public function edit_member($member_id)
     {
 
@@ -252,7 +252,7 @@ class Members extends Admin
         }
         redirect('microfinance/members');
     }
-    // deleting a member
+    // A function that deletes a member
     public function delete_member($member_id)
     {
         $deleted_member = $this->member_model->delete_member($member_id);
@@ -337,7 +337,8 @@ class Members extends Admin
             echo (json_encode("Error: Password not saved"));
         }
     }
-    // retrieving registered phone number
+    // 
+    // downloading csv template
     public function retrieve_phone($phone_number)
     {
         $retrieved =$this->member_model->retrieve_phone($phone_number);
