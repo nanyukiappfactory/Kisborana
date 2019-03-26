@@ -88,7 +88,6 @@ class Members extends Admin
             {
                 $order_method = 'DESC';
             }
-            // $this->session->set_flashdata("success_message", "$row Members retrived");
         }
         else
         {
