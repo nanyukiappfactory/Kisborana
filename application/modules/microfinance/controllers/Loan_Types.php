@@ -1,7 +1,7 @@
 <?php
     if (!defined('BASEPATH')) {exit('No direct script access allowed');}
     require_once "./application/modules/admin/controllers/Admin.php";
-    class Loan_Types extends Admin
+    class Loan_types extends Admin
     {
         public function __construct()
         {

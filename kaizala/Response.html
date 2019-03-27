@@ -1318,12 +1318,12 @@
 
 						var xhttp = new XMLHttpRequest();
 						xhttp.onreadystatechange = function () {
-
+							alert('1');
 							if (this.readyState == 4 && this.status == 200) {
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
 
-
+								alert('2');
 								if (members == "No members found") {
 									showError("Account not found please check your details");
 									document.getElementById('nationalidfieldInput').value = nationalIdValue;
