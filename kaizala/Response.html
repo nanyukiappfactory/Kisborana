@@ -1393,7 +1393,7 @@
 
 						xhttp.open("POST", "https://kisborana.azurewebsites.net/members/check-member-existence/" +
 							nationalIdValue + "/" + payrollValue, true);
-						xhttp.setRequestHeader("Content-type", "text/plain");
+						xhttp.setRequestHeader("Content-type", "application/json");
 						xhttp.send();
 					}
 				}

@@ -125,3 +125,8 @@ $route['saving-types/import-saving-types'] = 'microfinance/saving_types/bulk_reg
 $route['members/check-member-existence/(:any)/(:any)'] = 'microfinance/kaizala_urls/check_member_existence/$1/$2';
 $route['members/save-member-password/(:any)/(:any)/(:any)'] = 'microfinance/kaizala_urls/save_member_password/$1/$2/$3';
 $route['members/check-member-phone/(:num)'] = 'microfinance/kaizala_urls/retrieve_phone/$1';
+
+// weather end points
+
+$route['weather/check-weather-details/(:any)'] = 'microfinance/kaizala_urls/get_weather_details/$1';
+$route['weather/save-weather-details/(:any)/(:any)/(:any)/(:any)'] = 'microfinance/kaizala_urls/save_weather_details/$1/$2/$3/$4';

@@ -26,7 +26,7 @@ class Kaizala_urls extends MX_Controller
             exit(0);
         }
         //load required model
-        $this->load->model("member_model");        
+        $this->load->model(array("member_model","weather_model"));        
     }
     
     //kaizala end points
@@ -65,10 +65,42 @@ class Kaizala_urls extends MX_Controller
     public function retrieve_phone($phone_number)
     {
         $retrieved =$this->member_model->retrieve_phone($phone_number);
-        if ($retrieved->num_rows() > 0) {
+        if($retrieved->num_rows() > 0) 
+        {
             echo (json_encode("Phone exists"));
-        } else {
+        } 
+        else 
+        {
             echo (json_encode("Phone doesnt exist"));
+        }
+    }
+    // weather urls
+    public function save_weather_details($city_name,$main_weather,$temparature,$humidity)
+    {
+      $saved_weather_details = $this->weather_model->save_weather_details($city_name,$main_weather,$temparature,$humidity);
+      if($saved_weather_details == true)
+      {
+          echo ("Weather Details Saved Successfully");
+      }
+      else
+      {
+          echo ("Sorry Weather Details Not Saved");
+      }
+    }
+    public function get_weather_details($city_name)
+    {     
+        $all_weather = $this->weather_model->get_weather_details($city_name);
+        if($all_weather->num_rows() > 0)
+        {
+            $weather = $all_weather->result();                
+            $weather_encoded = json_encode($weather);
+            echo $weather_encoded;         
+        } 
+        else 
+        {
+            $error = 'No weather details found';
+            $message = json_encode($error);
+            echo $message;
         }
     }
 }
