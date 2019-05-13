@@ -13,7 +13,8 @@
     $all_alerts = '<div class="container">'.$alert.'</div>';         
 
     $tr_saving_types = "";
-    $count = $page;    
+    $count = $page;  
+     
     if ($all_saving_type) {
         foreach ($all_saving_type as $row) {
             $count++;

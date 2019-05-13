@@ -22,6 +22,8 @@
           </div>
 
           <div align = "right" class="collapse" id="collapseExample"><?php echo anchor("saving-types/all-saving-types","Saving Types", array("class"=> "text-dark", "style"=>"color:black;font-family: 'PT Serif', serif;"));?> <span class="sr-only">(current)</span>
+          </div></br>
+          <div align = "right" class="collapse" id="collapseExample"><?php echo anchor("saving/all-savings","Shares", array("class"=> "text-dark", "style"=>"color:black;font-family: 'PT Serif', serif;"));?> <span class="sr-only">(current)</span>
           </div>
 
           <!-- <div align = "right" class="collapse" id="collapseExample"><?php //echo anchor(" ","Members Savings", array("class"=> "text-dark", ));?> <span class="sr-only">(current)</span>

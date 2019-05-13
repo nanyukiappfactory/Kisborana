@@ -102,7 +102,7 @@ class Loans extends Admin
             $loan_id = $this->loans_model->add_loan();
             if ($loan_id > 0) {
                 $this->session->set_flashdata("success_message", "new loan has been added");
-                redirect("loans");
+                redirect("loan/all-loans");
             } else {
                 $this->session->set_flashdata("error_message", "unable to add loan");
             }

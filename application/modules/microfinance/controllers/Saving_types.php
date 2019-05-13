@@ -50,6 +50,8 @@
 
                 $this->pagination->initialize($config);
                 $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+                
+                
                 $v_data = $this->saving_types_model->get_saving_type($config["per_page"], $page, $sortBy,$order);
                 $link_data = $this->pagination->create_links();
                 //search
@@ -109,7 +111,6 @@
 
             if ($this->form_validation->run()) {
                 $saving_type_id = $this->saving_types_model->edit_saving_type($saving_type_id);
-
                 redirect("saving-types/all-saving-types");
             } else {
                 $validation_errors = validation_errors();
@@ -120,13 +121,11 @@
 
             //1. get data for the saving type with the passed saving_type_id from the model
             $single_saving_type_data = $this->saving_types_model->get_single_saving_type($saving_type_id);
-
             if ($single_saving_type_data->num_rows() > 0) {
                 $row = $single_saving_type_data->row();
                 $saving_type_id = $row->saving_type_id;
                 $saving_type_name = $row->saving_type_name;
             }
-
             $v_data = array(
                 "saving_type_id" => $saving_type_id,
                 "saving_type_name" => $saving_type_name,
@@ -146,12 +145,11 @@
             $undeleted = $this->saving_types_model->delete_saving_type($saving_type_id);
 
             if ($undeleted > 0) {
-                $this->session->set_flashdata("success_message", "Saving Type Deleted Successfully");
-                redirect("saving-types/all-saving-types");
+                $this->session->set_flashdata("success_message", "Saving Type Deleted Successfully");               
             } else {
-                $this->session->set_flashdata("error_message", "Unable to Delete Saving Type");
-                redirect("saving-types/all-saving-types");
+                $this->session->set_flashdata("error_message", "Unable to Delete Saving Type");               
             }
+            redirect("saving-types/all-saving-types");
         }
 
         //deactivate
@@ -162,12 +160,11 @@
             //2. Return all saving_type where the value saving_type_status column is 1; meaning, they are deactivated
 
             if ($undeactivated) {
-                $this->session->set_flashdata("success_message", "Saving Type Dactivated Successfully");
-                redirect("saving-types/all-saving-types");
+                $this->session->set_flashdata("success_message", "Saving Type Dactivated Successfully");                
             } else {
-                $this->session->set_flashdata("error_message", "Unable to Deactivate Saving Type");
-                redirect("saving-types/all-saving-types");
+                $this->session->set_flashdata("error_message", "Unable to Deactivate Saving Type");                
             }
+            redirect("saving-types/all-saving-types");
         }
 
         //activate
@@ -178,12 +175,11 @@
             //2. Return all saving_types where the value saving_type_status column is 1; meaning, they are active
 
             if ($unactivated) {
-                $this->session->set_flashdata("success_message", "Saving Type Activated Successfully");
-                redirect("saving-types/all-saving-types");
+                $this->session->set_flashdata("success_message", "Saving Type Activated Successfully");                
             } else {
-                $this->session->set_flashdata("error_message", "Unable to Activate Saving Type");
-                redirect("saving-types/all-saving-types");
+                $this->session->set_flashdata("error_message", "Unable to Activate Saving Type");              
             }
+            redirect("saving-types/all-saving-types");
         }
 
         //function for importing saving types in bulk

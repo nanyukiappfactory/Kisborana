@@ -102,7 +102,7 @@
             $this->form_validation->set_rules("custom_number_of_guarantors", "Custom number of guarantors", "numeric");
             $this->form_validation->set_rules("interest_rate", "Interest rate", "numeric|required");
 
-            if($this->form_validation->run()) 
+            if($this->form_validation->run())  
             {
                 $loan_type_created = $this->loan_types_model->add_loan_type();
                 if($loan_type_created > 0) 

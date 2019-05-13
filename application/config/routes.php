@@ -74,6 +74,19 @@ $route['loan/deactivate/(:num)'] = 'microfinance/loans/deactivate/$1';
 $route['loan/activate/(:num)'] = 'microfinance/loans/activate/$1';
 $route['loan/delete/(:num)'] = 'microfinance/loans/delete/$1';
 
+/****
+ * saving Routes
+****/
+
+$route['saving/all-savings'] = 'microfinance/savings/index';
+$route['saving/add-saving'] = 'microfinance/savings/new_saving';
+$route['saving/bulk_registration'] = 'microfinance/savings/bulk_registration';
+$route['saving/edit/(:num)'] = 'microfinance/savings/edit/$1';
+$route['saving/deactivate/(:num)'] = 'microfinance/savings/deactivate/$1';
+$route['saving/activate/(:num)'] = 'microfinance/savings/activate/$1';
+$route['saving/delete/(:num)'] = 'microfinance/savings/delete/$1';
+
+
 
 /****
  * Loan Types Routes
