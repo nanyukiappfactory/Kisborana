@@ -1,8 +1,8 @@
 {
   "id": "com.nanyukiaf.kisboranagit ",
   "schemaVersion": 1,
-  "version": "3",
-  "minorVersion": 1,
+  "version": "4",
+  "minorVersion": 7,
   "providerName": "Kisborana",
   "displayName": "Account Statement",
   "description": "Account Statement",

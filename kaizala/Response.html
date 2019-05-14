@@ -1318,12 +1318,10 @@
 
 						var xhttp = new XMLHttpRequest();
 						xhttp.onreadystatechange = function () {
-							alert('1');
 							if (this.readyState == 4 && this.status == 200) {
 								KASClient.App.hideProgressBar();
 								members = JSON.parse(this.responseText);
 
-								alert('2');
 								if (members == "No members found") {
 									showError("Account not found please check your details");
 									document.getElementById('nationalidfieldInput').value = nationalIdValue;
@@ -1333,6 +1331,7 @@
 								} else if (members != "No members found") {
 
 									member_password = members[0].member_password;
+									member_name = members[0].member_first_name;
 
 									if (member_password == "" || member_password == null) {
 										
@@ -1351,7 +1350,7 @@
 													showError("Your phone number is already registered with another account");
 												}
 												else {
-												showError("Please create a password for your account");
+												showError("Hello "+ member_name+ " create a password for your account");
 												_currentPage += 1;
 
 												updatePage();
@@ -1364,8 +1363,7 @@
 										xhttp3.setRequestHeader("Content-type", "text/plain");
 										xhttp3.send();
 									} else if (member_password != "" || member_password != null) {
-										//showError("Please create a password for your account");
-										showError("Please enter your password to proceed");
+										showError("Hello "+ member_name+ " enter your password to proceed");
 										_currentPage += 1;
 										updatePage();
 									}
