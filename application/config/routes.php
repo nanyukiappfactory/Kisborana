@@ -130,3 +130,4 @@ $route['members/check-member-phone/(:num)'] = 'microfinance/kaizala_urls/retriev
 
 $route['weather/check-weather-details/(:any)'] = 'microfinance/kaizala_urls/get_weather_details/$1';
 $route['weather/save-weather-details/(:any)/(:any)/(:any)/(:any)'] = 'microfinance/kaizala_urls/save_weather_details/$1/$2/$3/$4';
+$route['weather/save-city-forecast'] = 'microfinance/kaizala_urls/save_city_forecast';

@@ -103,4 +103,16 @@ class Kaizala_urls extends MX_Controller
             echo $message;
         }
     }
+    public function save_city_forecast()
+    {
+      $saved_weather_details = $this->weather_model->save_city_forecast();
+      if($saved_weather_details == true)
+      {
+          echo ("Weather Details Saved Successfully");
+      }
+      else
+      {
+          echo ("Sorry Weather Details Not Saved");
+      }
+    }
 }
