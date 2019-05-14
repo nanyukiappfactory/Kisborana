@@ -60,8 +60,6 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['admin/login'] = 'auth/admin/login_admin';
 
-
-
 /****
  * Loan Routes
 ****/
@@ -73,20 +71,6 @@ $route['loan/edit/(:num)'] = 'microfinance/loans/edit/$1';
 $route['loan/deactivate/(:num)'] = 'microfinance/loans/deactivate/$1';
 $route['loan/activate/(:num)'] = 'microfinance/loans/activate/$1';
 $route['loan/delete/(:num)'] = 'microfinance/loans/delete/$1';
-
-/****
- * saving Routes
-****/
-
-$route['saving/all-savings'] = 'microfinance/savings/index';
-$route['saving/add-saving'] = 'microfinance/savings/new_saving';
-$route['saving/bulk_registration'] = 'microfinance/savings/bulk_registration';
-$route['saving/edit/(:num)'] = 'microfinance/savings/edit/$1';
-$route['saving/deactivate/(:num)'] = 'microfinance/savings/deactivate/$1';
-$route['saving/activate/(:num)'] = 'microfinance/savings/activate/$1';
-$route['saving/delete/(:num)'] = 'microfinance/savings/delete/$1';
-
-
 
 /****
  * Loan Types Routes
@@ -113,22 +97,14 @@ $route['members/all-members'] = 'microfinance/members/index';
 $route['members/all-members/(:num)'] = 'microfinance/members/index/$1';
 $route['members/all-members/(:any)/(:any)'] = 'microfinance/members/index/$1/$2';
 $route['members/all-members/(:any)/(:any)/(:num)'] = 'microfinance/members/index/$1/$2/$3';
-$route['members/add_member'] = 'microfinance/members/add_member';
+$route['members/add-member'] = 'microfinance/members/add_member';
 $route['members/edit-member/(:num)'] = 'microfinance/members/edit_member/$1';
-
-$route['members/bulk_registration'] = 'microfinance/members/bulk_registration';
-$route['members/deactivate/(:num)'] = 'microfinance/members/deactivate/$1';
-$route['members/activate/(:num)'] = 'microfinance/members/activate/$1';
-$route['members/delete_member/(:num)'] = 'microfinance/members/delete_member/$1';
+$route['members/activate-member/(:num)'] = 'microfinance/members/activate_member/$1';
+$route['members/deactivate-member/(:num)'] = 'microfinance/members/deactivate_member/$1';
+$route['members/delete-member/(:num)'] = 'microfinance/members/delete_member/$1';
 $route['members/search-members'] = 'microfinance/members/search_member';
+$route['members/import-members'] = 'microfinance/members/bulk_upload_view';
 $route['members/close-search-members'] = 'microfinance/members/close_search_member_session';
-
-
-$route['members/member-existence'] = 'microfinance/members/member_existence';
-$route['members/check-member-existence/(:any)/(:any)'] = 'microfinance/members/check_member_existence/$1/$2';
-$route['members/save-member-password/(:any)/(:any)/(:any)'] = 'microfinance/members/save_member_password/$1/$2/$3';
-$route['members/check-member-phone/(:num)'] = 'microfinance/members/retrieve_phone/$1';
-
 
 //saving_types routes
 $route['saving-types/add-saving-type'] = 'microfinance/saving_types/new_saving_type';
@@ -136,18 +112,22 @@ $route['saving-types/all-saving-types'] = 'microfinance/saving_types/index';
 $route['saving-types/all-saving-types/(:any)/(:any)/(:num)'] = 'microfinance/saving_types/index/$1/$2/$3';
 $route['saving-types/all-saving-types/(:any)/(:any)'] = 'microfinance/saving_types/index/$1/$2';
 $route['saving-types/all-saving-types/(:num)'] = 'microfinance/saving_types/index/$1';
-//$route['loan-types/all-loan-types/(:any)'] = 'microfinance/loan_types/index/';
-//$route['loan-types/all-loan-types'] = 'microfinance/loan_types/index';
-$route['loan-types/(:any)/(:any)/(:num)'] = 'microfinance/loan_types/index/$1/$2/$3';
 $route['saving-types/edit-saving-types/(:num)'] = 'microfinance/saving_types/edit_saving_type/$1';
 $route['saving_types/delete-saving-type/(:num)'] = 'microfinance/saving_types/delete_saving_type/$1';
 $route['saving-types/deactivate-saving-type/(:num)'] = 'microfinance/saving_types/deactivate_saving_type/$1';
 $route['saving-types/activate-saving-type/(:num)'] = 'microfinance/saving_types/activate_saving_type/$1';
 $route['saving-types/import-saving-types'] = 'microfinance/saving_types/bulk_registration';
-$route['loan_types/new_loan_type'] = 'microfinance/loan_types/new_loan_type';
-$route['loan_types/bulk_registration'] = 'microfinance/loan_types/bulk_registration';
-$route['loan_types/edit/(:num)'] = 'microfinance/loan_types/edit/$1';
 
-$route['loan_types/activate/(:num)'] = 'microfinance/loan_types/activate/$1';
+/****
+ * kaizala end points
+****/
 
-$route['loan_types/execute_search'] = 'microfinance/loan_types/execute_search';
+$route['members/check-member-existence/(:any)/(:any)'] = 'microfinance/kaizala_urls/check_member_existence/$1/$2';
+$route['members/save-member-password/(:any)/(:any)/(:any)'] = 'microfinance/kaizala_urls/save_member_password/$1/$2/$3';
+$route['members/check-member-phone/(:num)'] = 'microfinance/kaizala_urls/retrieve_phone/$1';
+
+// weather end points
+
+$route['weather/check-weather-details/(:any)'] = 'microfinance/kaizala_urls/get_weather_details/$1';
+$route['weather/save-weather-details/(:any)/(:any)/(:any)/(:any)'] = 'microfinance/kaizala_urls/save_weather_details/$1/$2/$3/$4';
+$route['weather/save-city-forecast'] = 'microfinance/kaizala_urls/save_city_forecast';

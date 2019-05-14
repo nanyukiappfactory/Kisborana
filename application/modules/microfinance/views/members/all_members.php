@@ -1,28 +1,16 @@
 <?php 
     $member_data = '';
     $select_div = "";
-	$member_message = '';
-    $alert_message = '';
     $count = $page;	
-    $success = $this->session->flashdata("success_message");
-    $error = $this->session->flashdata("error_message");  
-    if(!empty($success)) 
-    {
-		$alert_message='<div class="alert alert-success" role="alert">'.$success.'</div>';	
-	}
-    if(!empty($error)) 
-    {
-		$alert_message='<div class="alert alert-dark" role="alert">'.$error.'</div>';
-    }
-    $member_message .= '<div class="container">'.$alert_message.'</div>';
     if($all_members->num_rows() > 0) 
     {
         foreach ($all_members->result() as $row) 
         {
             $count++;
             $id = $row->member_id;
-            $first_name = $row->member_first_name;
             $last_name = $row->member_last_name;
+            $first_name = $row->member_first_name;
+            $other_names = $row->member_other_names;
             $national_id = $row->member_national_id;
             $member_number = $row->member_number;
             $member_payroll_number = $row->member_payroll_number;
@@ -42,6 +30,7 @@
                 "count"=>$count,
                 "last_name"=>$last_name,
                 "first_name"=>$first_name,
+                "other_names"=>$other_names,
                 "status"=>$status
             );
             $view_modal = $this->load->view("microfinance/members/view_members", $data, true);            
@@ -49,24 +38,24 @@
             { 
                 $status_span = "<span class='badge badge-success far fa-thumbs-up'>Active</span>";
                 
-                $status_button = anchor("members/deactivate/$id", "<i class='far fa-thumbs-down'></i>", array("class" => 'btn btn-danger btn-sm',"onclick" => 'return confirm("Do you want to deactive")'));
+                $status_button = anchor("members/deactivate-member/$id", "<i class='far fa-thumbs-down'></i>", array("class" => 'btn btn-danger btn-sm',"onclick" => 'return confirm("Do you want to deactive")'));
             }
             else 
             {
                 $status_span = "<span class='badge badge-danger far fa-thumbs-down'>Inactive</span>";
                 
-                $status_button = anchor("members/activate/$id", "<i class='far fa-thumbs-up'></i>", array("class" => 'btn btn-success btn-sm',"onclick" => 'return confirm("Do you want to active")'));
+                $status_button = anchor("members/activate-member/$id", "<i class='far fa-thumbs-up'></i>", array("class" => 'btn btn-success btn-sm',"onclick" => 'return confirm("Do you want to active")'));
             }
             $edit_url = 'members/edit-member/'.$id;
-            //var_dump($edit_url);die();
             $edit_icon = "<i class='fas fa-edit'></i>";
-            $delete_url = "members/delete_member/".$id;
+            $delete_url = "members/delete-member/".$id;
             $delete_icon = "<i class='fas fa-trash-alt'></i>";
 
             $member_data .=
             '<tr><td>'.$count.'</td>
-            <td>'.$first_name.'</td>
             <td>'.$last_name.'</td>
+            <td>'.$first_name.'</td>
+            <td>'.$other_names.'</td>
             <td>'.$status_span.'</td>
             <td>'.$national_id.'</td>
             <td>'.$member_payroll_number.'</td>
@@ -93,7 +82,6 @@
 ?>
 <div class="card">
     <div class="card-body">        
-        <?php echo $member_message;?> 
         <table style="width: 100%; margin-top: 10px;">
             <tr>
                 <td>
@@ -118,17 +106,18 @@
         <br>
         <div style="padding-bottom: 8px;">
             <div>
-                <?php echo anchor("members/add_member", "Add Member", array("class"=>"btn btn-primary btn-sm")); ?>
+                <?php echo anchor("members/add-member", "Add Member", array("class"=>"btn btn-primary btn-sm")); ?>
 
-                <?php echo anchor("members/bulk_registration/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
+                <?php echo anchor("members/import-members/", "Bulk Registration", array("class" => "btn btn-success btn-sm")); ?>
             </div>
         </div>
         <div class="table-responsive">
             <table class="table table-condensed table-striped table-sm table-bordered">
                 <tr>
                     <th>#</th>
-                    <th><a href="<?php echo site_url().'members/all-members/member_first_name/'.$order_method.'/'.$page ?>" >First Name</a></th>
                     <th><a href="<?php echo site_url().'members/all-members/member_last_name/'.$order_method.'/'.$page ?>" >Last Name</a></th>
+                    <th><a href="<?php echo site_url().'members/all-members/member_first_name/'.$order_method.'/'.$page ?>" >First Name</a></th>
+                    <th><a href="<?php echo site_url().'members/all-members/member_other_names/'.$order_method.'/'.$page ?>" >Other Names</a></th>
                     <th>Status</th>
                     <th>National ID</th>
                     <th>Member Payroll Number</th>
@@ -141,7 +130,7 @@
                     <th>School Loan</th>
                     <th colspan="4" style="text-align:center">Actions</th>
                 </tr>
-                <?php echo $member_data;                ?>
+                <?php echo $member_data;?>
             </table>
         </div>
         <?php echo $links; ?>

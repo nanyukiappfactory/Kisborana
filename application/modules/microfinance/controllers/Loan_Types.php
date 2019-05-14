@@ -1,18 +1,15 @@
 <?php
     if (!defined('BASEPATH')) {exit('No direct script access allowed');}
     require_once "./application/modules/admin/controllers/Admin.php";
-    class Loan_Types extends Admin
+    class Loan_types extends Admin
     {
         public function __construct()
         {
             parent::__construct();
+            //load required models
             $this->load->model(array("loan_types_model", "site_model"));
-            // load required libraries
-            $this->load->library(array('pagination', 'upload'));
-            // load required helpers
-            $this->load->helper(array('url', 'form', 'html', 'download'));
         }
-
+        // listing all loan types
         public function index($order_column = 'loan_type_name', $order_method = 'ASC')
         {
             // Listing and Search Parameters
@@ -67,11 +64,10 @@
                 {
                     $order_method = 'DESC';
                 }
-                $this->session->set_flashdata("success_message", "$row Loan types retrived");
             }
             else
             {
-                $this->session->set_flashdata("error_message", "0 Loan types retrieved");
+                $this->session->set_flashdata("error", "0 Loan types retrieved");
 
             }
             $params = array('links' => $v_data,
@@ -107,20 +103,21 @@
                 $loan_type_created = $this->loan_types_model->add_loan_type();
                 if($loan_type_created > 0) 
                 {
-                    $this->session->set_flashdata("success_message", "New Loan Type has been Added");
+                    $this->session->set_flashdata("success", "New Loan Type has been Added");
                     redirect("loan-types/all-loan-types");
                 } 
                 else 
                 {
-                    $this->session->set_flashdata("error_message", "Unable to Add Loan Type");
+                    $this->session->set_flashdata("error", "Error, Unable to Add Loan Type");
                 }
             } 
             else 
             {
-                $this->session->set_flashdata("error_message", validation_errors());
+                $this->session->set_flashdata("error", validation_errors());
             }
             $v_data["add_loan_type"] = "loan_types/loan_types_model";
-            $data = array("title" => $this->site_model->display_page_title(),
+            $data = array(
+                "title" => $this->site_model->display_page_title(),
                 "content" => $this->load->view("microfinance/loan_types/add_loan_type", $v_data, true),
             );
             $this->load->view("site/layouts/layout", $data);
@@ -146,18 +143,17 @@
                 $loan_type_edited = $this->loan_types_model->edit_loan_type($loan_type_id);
                 if($loan_type_edited > 0)
                 {
-                    $this->session->set_flashdata("success_message", "Your loan type has been edited");
-                    redirect("loan-types/all-loan-types");
+                    $this->session->set_flashdata("success", "Your loan type has been edited");
                 } 
                 else 
                 {
-                    $this->session->set_flashdata("error_message", "unable to edit loan_type");
-                    redirect("edit-loan-types");
+                    $this->session->set_flashdata("error", "unable to edit loan_type");
                 }
+                redirect("loan-types/all-loan-types");
             } 
             else
             {
-                $this->session->set_flashdata("error_message", validation_errors());
+                $this->session->set_flashdata("error", validation_errors());
             }
             //1. get data for the loan_type with the passed loan_type_id from the model
             $my_loan_type = $this->loan_types_model->get_single_loan_type($loan_type_id);
@@ -192,56 +188,54 @@
                 "interest_rate" => $interest,
                 "loan_type_id" => $id,
             );
-            $view = array("title" => $this->site_model->display_page_title(),
-                          "content" => $this->load->view("microfinance/loan_types/edit_loan_type", $data, true));
+            $view = array(
+                "title" => $this->site_model->display_page_title(),
+                "content" => $this->load->view("microfinance/loan_types/edit_loan_type", $data, true));
             $this->load->view("site/layouts/layout", $view);
         }
         //activating a loan type
         public function activate_loan_type($loan_type_id)
         {
-            $my_loan_type = $this->loan_types_model->activate_loan_type($loan_type_id);
-            if($my_loan_type > 0) 
+            $activated_loan = $this->loan_types_model->activate_loan_type($loan_type_id);
+            if($activated_loan > 0) 
             {
-                $this->session->set_flashdata("success_message", "Loan Type Activated Successfully");
-                redirect("loan-types/all-loan-types");
+                $this->session->set_flashdata("success", "Loan Type Activated Successfully");
             } 
             else 
             {
-                $this->session->set_flashdata("error_message", "Unable to Activate Loan Type");
-                redirect("loan-types/all-loan-types");
+                $this->session->set_flashdata("error", "Unable to Activate Loan Type");
             }
+            redirect("loan-types/all-loan-types");
         }
         //deactivating a loan type
         public function deactivate_loan_type($loan_type_id)
         {
-            $my_loan_type = $this->loan_types_model->deactivate_loan_type($loan_type_id);
-            if($my_loan_type > 0) 
+            $deactivated_loan_type = $this->loan_types_model->deactivate_loan_type($loan_type_id);
+            if($deactivated_loan_type > 0) 
             {
-                $this->session->set_flashdata("success_message", "Loan Type Deactivated Successfully");
-                redirect("loan-types/all-loan-types");
+                $this->session->set_flashdata("success", "Loan Type Deactivated Successfully");
             } 
             else 
             {
-                $this->session->set_flashdata("error_message", "Unable to Deactivate Loan Type");
-                redirect("loan-types/all-loan-types");
+                $this->session->set_flashdata("error", "Unable to Deactivate Loan Type");
             }
+            redirect("loan-types/all-loan-types");
         }
         //deleting a loan type
         public function delete_loan_type($loan_type_id)
         {
-            $my_loan_type = $this->loan_types_model->delete_loan_type($loan_type_id);
-            if($my_loan_type > 0) 
+            $deleted_loan_type = $this->loan_types_model->delete_loan_type($loan_type_id);
+            if($deleted_loan_type > 0) 
             {
-                $this->session->set_flashdata("success_message", "Loan Type Deleted Successfully");
-                redirect("loan-types/all-loan-types");
+                $this->session->set_flashdata("success", "Loan Type Deleted Successfully");
             } 
             else 
             {
-                $this->session->set_flashdata("error_message", "Unable to Delete Loan Type");
-                redirect("loan-types/all-loan-types");
+                $this->session->set_flashdata("error", "Unable to Delete Loan Type");
             }
+            redirect("loan-types/all-loan-types");
         }
-        //search function
+        //searching a loan type
         public function search_loan_type()
         {
             $search_results = $this->input->post("search");
@@ -257,28 +251,28 @@
             }
             redirect("loan-types/all-loan-types");
         }
-        // close search session
+        // closing search session
         public function close_search_loan_type_session()
         {
             $this->session->unset_userdata("search_session");
             redirect("loan-types/all-loan-types");
         }
-        //impoting records from a csv file
+        // loading bulk view
         public function bulk_upload_view()
         {
             $v_data["add_loan_type"] = "microfinance/loan_types/loan_types_model";
-            $data = array("title" => $this->site_model->display_page_title(),
-                          "content" => $this->load->view("microfinance/loan_types/bulk_registration", $v_data, true),
-
+            $data = array(
+                "title" => $this->site_model->display_page_title(),
+                "content" => $this->load->view("microfinance/loan_types/bulk_registration", $v_data, true),
             );
             $this->load->view("site/layouts/layout", $data);
         }
-
+        // downloading csv template
         public function download_csv()
         {
             force_download("./assets/downloads/loan_type.csv", null);
         }
-
+        // uploading csv file
         public function upload_csv()
         {
             $this->loan_types_model->upload_csv();

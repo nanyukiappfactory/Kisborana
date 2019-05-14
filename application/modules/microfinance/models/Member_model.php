@@ -5,30 +5,19 @@ if (!defined('BASEPATH')) {
 
 class Member_model extends CI_Model
 {
-    public function get_bank_details()
-    {
-        $query = $this->db->get('bank');
-        return $query;
-    }
-    public function get_employer_details()
-    {
-        $query = $this->db->get('employer');
-        return $query;
-    }
-    public function save_members()
+    public function add_member()
     {
         $phone_number = $this->input->post("phone_number");
         $member_password = $this->input->post("member_password");
-
         $newstring = substr($phone_number, -9);
         $length = strlen($newstring);
-
         if($newstring[0] == 7 && $length == 9) 
         {
             $data = array(
                 "bank_id" => $this->input->post("bank_name"),
                 "member_national_id" => $this->input->post("member_national_id"),
                 "member_first_name" => $this->input->post("firstname"),
+                "member_other_names" => $this->input->post("othernames"),
                 "member_last_name" => $this->input->post("lastname"),
                 "employer_id" => $this->input->post("employer_name"),
                 "member_phone_number" => $newstring,
@@ -67,41 +56,24 @@ class Member_model extends CI_Model
         }
 
     }
-    public function deactivate($member_id)
+    public function get_bank_details()
     {
-        $this->db->where("member_id", $member_id);
-        $this->db->set("member_status", 0);
-        $query = $this->db->update("member");
-        return $query;
-
-    }
-    public function activate($member_id)
-    {
-        $this->db->where("member_id", $member_id);
-        $this->db->set("member_status", 1);
-        $query = $this->db->update("member");
-        return $query;
-
-    }
-    public function delete($member_id)
-    {
-        $this->db->where("member_id", $member_id);
-        $data = array(
-            "deleted" => 1,
-            "deleted_by" => 1,
-            "deleted_on" => date('Y-m-d H:i:s'),
-        );
-        $this->db->set($data);
-        $query = $this->db->update("member");
+        $query = $this->db->get('bank');
         return $query;
     }
-    public function update_member($member_id)
+    public function get_employer_details()
+    {
+        $query = $this->db->get('employer');
+        return $query;
+    }
+    public function edit_member($member_id)
     {
         $data = array(
             "bank_id" => $this->input->post("bank_name"),
             "member_national_id" => $this->input->post("member_national_id"),
             "member_first_name" => $this->input->post("firstname"),
             "member_last_name" => $this->input->post("lastname"),
+            "member_other_names" => $this->input->post("othernames"),
             "employer_id" => $this->input->post("employer_name"),
             "member_phone_number" => $this->input->post("phone_number"),
             "member_account_number" => $this->input->post("account_number"),
@@ -119,6 +91,35 @@ class Member_model extends CI_Model
         $this->db->update("member");
         return $this->db->get("member");
     }
+    public function activate_member($member_id)
+    {
+        $this->db->where("member_id", $member_id);
+        $this->db->set("member_status", 1);
+        $this->db->update("member");
+        return $this->db->get("member");
+
+    }
+    public function deactivate_member($member_id)
+    {
+        $this->db->where("member_id", $member_id);
+        $this->db->set("member_status", 0);
+        $this->db->update("member");
+        return $this->db->get("member");
+
+    }
+    public function delete_member($member_id)
+    {
+        $this->db->where("member_id", $member_id);
+        $data = array(
+            "deleted" => 1,
+            "deleted_by" => 1,
+            "deleted_on" => date('Y-m-d H:i:s'),
+        );
+        $this->db->set($data);
+        $this->db->update("member");
+        return $this->db->get("member");
+    }
+    
     public function get_single_member($member_id)
     {
         $this->db->select('*');
@@ -130,7 +131,6 @@ class Member_model extends CI_Model
     public function db_upload_cv()
     {
         $file_csv = $this->input->post('userfile');
-
         $config['upload_path'] = './assets/uploads/';
         $config['allowed_types'] = 'csv|CSV';
         $config['file_name'] = $_FILES["userfile"]['name'];
@@ -151,28 +151,30 @@ class Member_model extends CI_Model
             {
                 $insert_csv = array();
                 $insert_csv['member national id'] = $csv_line[0];
-                $insert_csv['member first name'] = $csv_line[1];
-                $insert_csv['member last name'] = $csv_line[2];
-                $insert_csv['employer id'] = $csv_line[3];
-                $insert_csv['member email'] = $csv_line[4];
-                $insert_csv['member phone number'] = $csv_line[5];
-                $insert_csv['member account number'] = $csv_line[6];
-                $insert_csv['member postal address'] = $csv_line[7];
-                $insert_csv['member postal code'] = $csv_line[8];
-                $insert_csv['member location'] = $csv_line[9];
-                $insert_csv['member number'] = $csv_line[10];
-                $insert_csv['member payroll number'] = $csv_line[11];
-                $insert_csv['member share balance'] = $csv_line[12];
-                $insert_csv['advance loan'] = $csv_line[13];
-                $insert_csv['development loan'] = $csv_line[14];
-                $insert_csv['emergency loan'] = $csv_line[15];
-                $insert_csv['school loan'] = $csv_line[16];
+                $insert_csv['member last name'] = $csv_line[1];
+                $insert_csv['member first name'] = $csv_line[2];
+                $insert_csv['member other names'] = $csv_line[3];
+                $insert_csv['employer id'] = $csv_line[4];
+                $insert_csv['member email'] = $csv_line[5];
+                $insert_csv['member phone number'] = $csv_line[6];
+                $insert_csv['member account number'] = $csv_line[7];
+                $insert_csv['member postal address'] = $csv_line[8];
+                $insert_csv['member postal code'] = $csv_line[9];
+                $insert_csv['member location'] = $csv_line[10];
+                $insert_csv['member number'] = $csv_line[11];
+                $insert_csv['member payroll number'] = $csv_line[12];
+                $insert_csv['member share balance'] = $csv_line[13];
+                $insert_csv['advance loan'] = $csv_line[14];
+                $insert_csv['development loan'] = $csv_line[15];
+                $insert_csv['emergency loan'] = $csv_line[16];
+                $insert_csv['school loan'] = $csv_line[17];
             }
             $i++;
             $data = array(
                 'member_national_id' => $insert_csv['member national id'],
-                'member_first_name' => $insert_csv['member first name'],
                 'member_last_name' => $insert_csv['member last name'],
+                'member_first_name' => $insert_csv['member first name'],
+                'member_other_names' => $insert_csv['member other names'],
                 'employer_id' => $insert_csv['employer id'],
                 'member_email' => $insert_csv['member email'],
                 'member_phone_number' => $insert_csv['member phone number'],

@@ -35,6 +35,10 @@ class Migration_Create_member extends CI_Migration {
                             'type' => 'VARCHAR',
                             'constraint' => '100',
                         ),
+                        'member_other_names' => array(
+                            'type' => 'VARCHAR',
+                            'constraint' => '100',
+                        ),
                         'employer_id' => array(
                             'type' => 'INT',
                             'constraint' => 11,

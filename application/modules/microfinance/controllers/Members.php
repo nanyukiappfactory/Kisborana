@@ -6,42 +6,16 @@ class Members extends Admin
     public function __construct()
     {
         parent::__construct();
-        // Allow from any origin
-        if (isset($_SERVER['HTTP_ORIGIN'])) 
-        {
-            header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
-            header('Access-Control-Allow-Credentials: true');
-            header('Access-Control-Max-Age: 86400'); // cache for 1 day
-        }
-        // Access-Control headers are received during OPTIONS requests
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') 
-        {
-            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) 
-            {
-                header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-            }
-            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) 
-            {
-                header("Access-Control-Allow-Headers:        {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
-            }
-            exit(0);
-        }
         //load required model
-        $this->load->model(array("member_model","site_model"));
-       // load required libraries
-       $this->load->library(array('pagination', 'upload'));
-       // load required helpers
-       $this->load->helper(array('url', 'form', 'html', 'download'));
-        
+        $this->load->model(array("member_model","site_model"));        
     }
-
-    // A function that displays all members
+    // listing all members
     public function index($order_column = 'member_first_name', $order_method = 'ASC')
     {
         // Listing and Search Parameters
         $table = 'member';
         $where = 'deleted = 0';
-        $search_parameters = array('member_first_name','member_national_id','member_last_name','member_payroll_number');
+        $search_parameters = array('member_first_name','member_other_names','member_national_id','member_last_name','member_payroll_number');
         $search_results = $this->session->userdata("search_session");
         if(!empty($search_results) && $search_results != null) 
         {
@@ -76,12 +50,12 @@ class Members extends Admin
         $this->pagination->initialize($config);
         $start_index = ($this->uri->segment($segment)) ? $this->uri->segment($segment) : 0;
         // build paging links
-
         $links = $this->pagination->create_links();
         $query = $this->site_model->get_all_results($search_results, $table, $limit_per_page, $start_index, $where, $order_column, $order_method, $search_parameters);
         $row = $query->num_rows();
         if($row > 0)
-        {            
+        {
+            //Ordering            
             if($order_method == 'DESC')
             {          
                 $order_method = 'ASC';
@@ -90,11 +64,10 @@ class Members extends Admin
             {
                 $order_method = 'DESC';
             }
-            $this->session->set_flashdata("success_message", "$row Members retrived");
         }
         else
         {
-            $this->session->set_flashdata("error_message", "0 Members retrieved");
+            $this->session->set_flashdata("error", "0 Members retrieved");
 
         }
         $params = array('links' => $links,
@@ -109,13 +82,13 @@ class Members extends Admin
         );
         $this->load->view("site/layouts/layout", $data);
     }
-
     // adding a new member
     public function add_member()
     {
         // form validation
         $this->form_validation->set_rules("member_national_id", "National id", "required");
         $this->form_validation->set_rules("firstname", "First Name", "required");
+        $this->form_validation->set_rules("othernames", "Other Names", "required");
         $this->form_validation->set_rules("lastname", "Last Name", "required");
         $this->form_validation->set_rules("bank_name", "Select Bank", "required");
         $this->form_validation->set_rules("employer_name", "Select Employer", "required");
@@ -131,36 +104,39 @@ class Members extends Admin
         $employer_details = $this->member_model->get_employer_details();
         if($this->form_validation->run()) 
         {
-            $saved_members = $this->member_model->save_members();
+            $saved_members = $this->member_model->add_member();
             if($saved_members) 
             {
                 $this->session->set_flashdata("success", "Successfully saved");
-
+                redirect("members/all-members");
             } 
             else 
             {
-                $this->session->set_flashdata("error", "Error when saving");
+                $this->session->set_flashdata("error", "Error, Unable to add the member");
             }
-            redirect("microfinance/members");
+        } 
+        else 
+        {
+            $this->session->set_flashdata("error", validation_errors());
         }
         $v_data = array(
             "add_member" => "member/Member_model",
             "bank_details" => $bank_details,
             "employer_details" => $employer_details,
         );
-        $data = array("title" => $this->site_model->display_page_title(),
+        $data = array(
+            "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/members/add_member", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
-    }
-    
-    //A function that edits member deatails
+    }    
+    //editing a member
     public function edit_member($member_id)
     {
-
         $this->form_validation->set_rules("member_national_id", "National id", "required");
         $this->form_validation->set_rules("firstname", "First Name", "required");
         $this->form_validation->set_rules("lastname", "Last Name", "required");
+        $this->form_validation->set_rules("othernames", "Other Names", "required");
         $this->form_validation->set_rules("bank_name", "Select Bank", "required");
         $this->form_validation->set_rules("employer_name", "Select Employer", "required");
         $this->form_validation->set_rules("email", "Email", "required");
@@ -172,38 +148,34 @@ class Members extends Admin
         $this->form_validation->set_rules("member_payroll_number", "Member Payroll number", "required");
         $this->form_validation->set_rules("location", "Location", "required");
 
-        //if the edit form is submitted do this
         if($this->form_validation->run()) 
         {
-            $member_edited = $this->member_model->update_member($member_id);
-            if($member_edited > 0)
+            $members_edited = $this->member_model->edit_member($member_id);
+            if($members_edited > 0)
             {
-                $this->session->set_flashdata("success_message", "Your member has been edited");
-                redirect("members/all-members");
+                $this->session->set_flashdata("success", "Your member has been edited");
             } 
             else 
             {
-                $this->session->set_flashdata("error_message", "unable to member");
-                redirect("members/all-members");
+                $this->session->set_flashdata("error", "unable to edit member");
             }
+            redirect("members/all-members");
         } 
         else 
         {
-            $this->session->set_flashdata("error_message", validation_errors());
-            //redirect("members/edit-member");
+            $this->session->set_flashdata("error", validation_errors());
         }
         //1. get data for the member with the passed member_id from the model
-
         $single_member_data = $this->member_model->get_single_member($member_id);
         $bank_details = $this->member_model->get_bank_details();
-        $employer_details = $this->member_model->get_employer_details();        
-        // var_dump($single_member_data);die();
+        $employer_details = $this->member_model->get_employer_details();    
         if($single_member_data->num_rows() > 0) 
         {
             $row = $single_member_data->row();
             $member_id = $row->member_id;
             $first_name = $row->member_first_name;
             $last_name = $row->member_last_name;
+            $other_names = $row->member_other_names;
             $national_id = $row->member_national_id;
             $email = $row->member_email;
             $location = $row->member_location;
@@ -218,6 +190,7 @@ class Members extends Admin
             "member_id " => $member_id,
             "first_name" => $first_name,
             "last_name" => $last_name,
+            "other_names" => $other_names,
             "national_id" => $national_id,
             "email" => $email,
             "location" => $location,
@@ -230,72 +203,59 @@ class Members extends Admin
             "bank_details" => $bank_details,
             "employer_details" => $employer_details,
         );
-        //2. Load view with the data from step 1
         $data = array(
             "title" => $this->site_model->display_page_title(),
             "content" => $this->load->view("microfinance/members/edit_member", $v_data, true),
         );
         $this->load->view("site/layouts/layout", $data);
     }
-    // A function that activates a member
-    public function activate($member_id)
+    // activating a member
+    public function activate_member($member_id)
     {
-        if ($this->member_model->activate($member_id)) {
-            $this->session->set_flashdata("success_message", "Successfully activated");
-        } else {
-            $this->session->set_flashdata("error_message", "Cannot be activated");
+        $activated_member =$this->member_model->activate_member($member_id);
+        if($activated_member > 0) 
+        {
+            $this->session->set_flashdata("success", "Successfully activated");
+        } 
+        else 
+        {
+            $this->session->set_flashdata("error", "Cannot be activated");
         }
         redirect('microfinance/members');
     }
-
-    // A function that deactivates a member
-    public function deactivate($member_id)
+    // deactivating a member
+    public function deactivate_member($member_id)
     {
-        if ($this->member_model->deactivate($member_id)) {
+        $deactivated_member = $this->member_model->deactivate_member($member_id);
+        if($deactivated_member > 0) 
+        {
             $this->session->set_flashdata("success", "Successfully deactivated");
-        } else {
+        } 
+        else 
+        {
             $this->session->set_flashdata("error", "Cannot deactivate");
         }
         redirect('microfinance/members');
     }
-
-    // A function that deletes a member
+    // deleting a member
     public function delete_member($member_id)
     {
-        if ($this->member_model->delete($member_id)) {
+        $deleted_member = $this->member_model->delete_member($member_id);
+        if($deleted_member > 0) 
+        {
             $this->session->set_flashdata("success", "Successfully deleted");
-        } else {
+        } 
+        else 
+        {
             $this->session->set_flashdata("error", "Cannot be deleted");
         }
         redirect('microfinance/members');
     }
-
-    public function bulk_registration()
-    {
-        $v_data["add_member"] = "member/member_model";
-        $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("microfinance/members/bulk_registration", $v_data, true),
-
-        );
-        $this->load->view("site/layouts/layout", $data);
-    }
-    
-
-    public function upload_csv()
-    {
-        $this->member_model->db_upload_cv();
-    }
-
-    public function download_csv()
-    {
-        force_download("./assets/downloads/member.csv", null);
-    }
-
+    // searching a member
     public function search_member()
     {
         $search_results = $this->input->post("search");
-        $this->form_validation->set_rules("search", "Search", "required");
-        
+        $this->form_validation->set_rules("search", "Search", "required");        
         if($this->form_validation->run()) 
         {
             $search_session = $this->session->set_userdata("search_session", $search_results);
@@ -306,101 +266,30 @@ class Members extends Admin
         }
         redirect("microfinance/members");
     }
-
+    // closing search session
     public function close_search_member_session()
     {
         $this->session->unset_userdata("search_session");
         redirect("microfinance/members"); 
     }
-
-    //get members to create web serrvice
-    public function check_member_existence($nationalid,$payroll_number)
+    // loading bulk view
+    public function bulk_upload_view()
     {
-       
-        $all_members = $this->member_model->check_member_existence($nationalid,$payroll_number);
-
-        if($all_members->num_rows() > 0)
-        {
-            // $insert_member_phone_number = $this->member_model->insert_phone_number($nationalid,$payroll_number);
-           
-                $members = $all_members->result();                
-                $members_encoded = json_encode($members);
-                echo $members_encoded;
-           
-
-        } else {
-            $error = 'No members found';
-            $message = json_encode($error);
-            echo $message;
-        }
-
+        $v_data["add_member"] = "member/member_model";
+        $data = array(
+            "title" => $this->site_model->display_page_title(),
+            "content" => $this->load->view("microfinance/members/bulk_registration", $v_data, true),
+        );
+        $this->load->view("site/layouts/layout", $data);
     }
-    //updates member password field for a specific member
-    public function save_member_password($nationalid, $password, $member_phone_number)
+    // uploading csv file
+    public function upload_csv()
     {
-
-        $update_password = $this->member_model->save_member_password($nationalid, $password, $member_phone_number);
-        if ($update_password == true) {
-            echo (json_encode("Password and phone number saved successfully"));
-        } else {
-            echo (json_encode("Error: Password not saved"));
-        }
+        $this->member_model->db_upload_cv();
     }
-    public function retrieve_phone($phone_number)
+    // downloading csv template
+    public function download_csv()
     {
-        $retrieved =$this->member_model->retrieve_phone($phone_number);
-        if ($retrieved->num_rows() > 0) {
-            echo (json_encode("Phone exists"));
-        } else {
-            echo (json_encode("Phone doesnt exist"));
-        }
-    }
-    //trial ========
-    //get members to create web serrvice
-    public function member_existence()
-    {
-
-        $all_members = $this->member_model->member_existence();
-
-        if ($all_members->num_rows() > 0) {
-            $members = $all_members->result();
-            $members_encoded = json_encode($members);
-            echo $members_encoded;
-        } else {
-
-            echo (json_encode("No members found"));
-        }
-    }
-//===========
-
-    //save encoded data to db
-    public function update_member_table()
-    {
-        // 1. Receive json post
-        $json_string = file_get_contents("php://input");
-
-        // 2. convert json to array
-        $json_object = json_decode($json_string);
-
-        // 3. validate
-        if (is_array($json_object) && (count($json_object) > 0)) {
-            // Retreive the data
-            $row = $json_object[0];
-            $date_submitted = date("Y-m-d H:i:s");
-            $data = array(
-                "member_password" => $row->member = -password,
-
-            );
-
-            // 4. Request to submit
-            $this->member_model->save_member_password($data);
-
-        } else {
-            // send invalid data message
-            echo "invalid data provided";
-
-        }
-        // 4. request to save data
-        // 5. send confirmation
+        force_download("./assets/downloads/member.csv", null);
     }
 }

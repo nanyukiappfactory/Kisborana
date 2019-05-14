@@ -1,21 +1,5 @@
-<?php
-	$edit_loan_type = '';
-	$alert_message = '';	
-	$success = $this->session->flashdata("success_message");
-	$error = $this->session->flashdata("error_message");
-    if(!empty($success)) 
-    {
-		$alert_message='<div class="alert alert-success" role="alert">'.$success.'</div>';	
-	}
-    if(!empty($error)) 
-    {
-		$alert_message='<div class="alert alert-dark" role="alert">'.$error.'</div>';
-	}
-	$edit_loan_type .= '<div class="container">'.$alert_message.'</div>';
-?>
 <div class="card">
-    <div class="card-body">
-		<?php echo $edit_loan_type;?>    
+    <div class="card-body"> 
         <?php echo form_open_multipart('microfinance/loan_types/edit_loan_type/'.$loan_type_id, array('onsubmit' => "return confirm('Do you want to update this record')")); ?>
             <div>
                 <input type="hidden" name="loan_type_id" value="<?php echo $loan_type_id; ?>">
