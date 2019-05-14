@@ -8,7 +8,7 @@ class Saving_types_model extends CI_Model
             "saving_type_name" => $this->input->post("saving_type_name"),
         );
 
-        if ($this->db->insert("saving_type", $data)) {
+        if ($this->db->insert("saving_type", $data)){
             return $this->db->insert_id();
         } else {
             return false;

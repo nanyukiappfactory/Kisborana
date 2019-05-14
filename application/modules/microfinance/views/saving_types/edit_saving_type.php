@@ -12,13 +12,7 @@
     </head>
     <body>
         <div class="container">
-            <div class="container">
-                <?php
-                    $validation_errors = validation_errors();
-                    if (!empty($validation_errors)) {
-                        echo $validation_errors;
-                    }
-                ?>			
+            <div class="container">               	
                 <?php echo form_open_multipart('microfinance/saving_types/edit_saving_type/'.$saving_type_id, array('onsubmit' => "return confirm('Do you want to update this record')")); ?>
                 <div class="form-group">
                     <label for="saving_type_name">Saving Type Name</label>
@@ -26,7 +20,7 @@
                         value="<?php echo $saving_type_name; ?>">
                 </div>
                 <div class="submit_button">
-                    <input type="submit" value="Update Friend" />
+                    <input type="submit" value="Update Saving Type" />
                 </div>
                 <?php echo form_close() ?>
             </div>
