@@ -8,8 +8,9 @@
         {
             $count++;
             $id = $row->member_id;
-            $first_name = $row->member_first_name;
             $last_name = $row->member_last_name;
+            $first_name = $row->member_first_name;
+            $other_names = $row->member_other_names;
             $national_id = $row->member_national_id;
             $member_number = $row->member_number;
             $member_payroll_number = $row->member_payroll_number;
@@ -29,6 +30,7 @@
                 "count"=>$count,
                 "last_name"=>$last_name,
                 "first_name"=>$first_name,
+                "other_names"=>$other_names,
                 "status"=>$status
             );
             $view_modal = $this->load->view("microfinance/members/view_members", $data, true);            
@@ -51,8 +53,9 @@
 
             $member_data .=
             '<tr><td>'.$count.'</td>
-            <td>'.$first_name.'</td>
             <td>'.$last_name.'</td>
+            <td>'.$first_name.'</td>
+            <td>'.$other_names.'</td>
             <td>'.$status_span.'</td>
             <td>'.$national_id.'</td>
             <td>'.$member_payroll_number.'</td>
@@ -112,8 +115,9 @@
             <table class="table table-condensed table-striped table-sm table-bordered">
                 <tr>
                     <th>#</th>
-                    <th><a href="<?php echo site_url().'members/all-members/member_first_name/'.$order_method.'/'.$page ?>" >First Name</a></th>
                     <th><a href="<?php echo site_url().'members/all-members/member_last_name/'.$order_method.'/'.$page ?>" >Last Name</a></th>
+                    <th><a href="<?php echo site_url().'members/all-members/member_first_name/'.$order_method.'/'.$page ?>" >First Name</a></th>
+                    <th><a href="<?php echo site_url().'members/all-members/member_other_names/'.$order_method.'/'.$page ?>" >Other Names</a></th>
                     <th>Status</th>
                     <th>National ID</th>
                     <th>Member Payroll Number</th>

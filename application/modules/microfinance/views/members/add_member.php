@@ -26,12 +26,16 @@
 			<input type="number" name="member_national_id" class="form-control form-control-lg inputform">
 		</div>
 		<div class="form-group">
+			<label for="last_name"><b>Last Name</b></label>
+			<input type="text" name="lastname" class="form-control form-control-lg inputform">
+		</div>
+		<div class="form-group">
 			<label for="first_name"><b>First Name</b></label>
 			<input type="text" name="firstname" class="form-control form-control-lg inputform">
 		</div>
 		<div class="form-group">
-			<label for="last_name"><b>Last Name</b></label>
-			<input type="text" name="lastname" class="form-control form-control-lg inputform">
+			<label for="other_names"><b>Other Names</b></label>
+			<input type="text" name="othernames" class="form-control form-control-lg inputform">
 		</div>
 
 		<div class="form-group">

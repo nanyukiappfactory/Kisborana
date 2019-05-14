@@ -17,6 +17,7 @@ class Member_model extends CI_Model
                 "bank_id" => $this->input->post("bank_name"),
                 "member_national_id" => $this->input->post("member_national_id"),
                 "member_first_name" => $this->input->post("firstname"),
+                "member_other_names" => $this->input->post("othernames"),
                 "member_last_name" => $this->input->post("lastname"),
                 "employer_id" => $this->input->post("employer_name"),
                 "member_phone_number" => $newstring,
@@ -72,6 +73,7 @@ class Member_model extends CI_Model
             "member_national_id" => $this->input->post("member_national_id"),
             "member_first_name" => $this->input->post("firstname"),
             "member_last_name" => $this->input->post("lastname"),
+            "member_other_names" => $this->input->post("othernames"),
             "employer_id" => $this->input->post("employer_name"),
             "member_phone_number" => $this->input->post("phone_number"),
             "member_account_number" => $this->input->post("account_number"),
@@ -149,28 +151,30 @@ class Member_model extends CI_Model
             {
                 $insert_csv = array();
                 $insert_csv['member national id'] = $csv_line[0];
-                $insert_csv['member first name'] = $csv_line[1];
-                $insert_csv['member last name'] = $csv_line[2];
-                $insert_csv['employer id'] = $csv_line[3];
-                $insert_csv['member email'] = $csv_line[4];
-                $insert_csv['member phone number'] = $csv_line[5];
-                $insert_csv['member account number'] = $csv_line[6];
-                $insert_csv['member postal address'] = $csv_line[7];
-                $insert_csv['member postal code'] = $csv_line[8];
-                $insert_csv['member location'] = $csv_line[9];
-                $insert_csv['member number'] = $csv_line[10];
-                $insert_csv['member payroll number'] = $csv_line[11];
-                $insert_csv['member share balance'] = $csv_line[12];
-                $insert_csv['advance loan'] = $csv_line[13];
-                $insert_csv['development loan'] = $csv_line[14];
-                $insert_csv['emergency loan'] = $csv_line[15];
-                $insert_csv['school loan'] = $csv_line[16];
+                $insert_csv['member last name'] = $csv_line[1];
+                $insert_csv['member first name'] = $csv_line[2];
+                $insert_csv['member other names'] = $csv_line[3];
+                $insert_csv['employer id'] = $csv_line[4];
+                $insert_csv['member email'] = $csv_line[5];
+                $insert_csv['member phone number'] = $csv_line[6];
+                $insert_csv['member account number'] = $csv_line[7];
+                $insert_csv['member postal address'] = $csv_line[8];
+                $insert_csv['member postal code'] = $csv_line[9];
+                $insert_csv['member location'] = $csv_line[10];
+                $insert_csv['member number'] = $csv_line[11];
+                $insert_csv['member payroll number'] = $csv_line[12];
+                $insert_csv['member share balance'] = $csv_line[13];
+                $insert_csv['advance loan'] = $csv_line[14];
+                $insert_csv['development loan'] = $csv_line[15];
+                $insert_csv['emergency loan'] = $csv_line[16];
+                $insert_csv['school loan'] = $csv_line[17];
             }
             $i++;
             $data = array(
                 'member_national_id' => $insert_csv['member national id'],
-                'member_first_name' => $insert_csv['member first name'],
                 'member_last_name' => $insert_csv['member last name'],
+                'member_first_name' => $insert_csv['member first name'],
+                'member_other_names' => $insert_csv['member other names'],
                 'employer_id' => $insert_csv['employer id'],
                 'member_email' => $insert_csv['member email'],
                 'member_phone_number' => $insert_csv['member phone number'],

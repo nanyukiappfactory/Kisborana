@@ -26,12 +26,16 @@
 				<input type="number" name="member_national_id" value="<?php echo $national_id ?>" class="form-control form-control-lg inputform">
 			</div>
 			<div class="form-group">
+				<label for="last_name"><b>Last Name</b></label>
+				<input type="text" name="lastname" value="<?php echo $last_name ?>" class="form-control form-control-lg inputform">
+			</div>
+			<div class="form-group">
 				<label for="first_name"><b>First Name</b></label>
 				<input type="text" name="firstname" value="<?php echo $first_name ?>" class="form-control form-control-lg inputform">
 			</div>
 			<div class="form-group">
-				<label for="last_name"><b>Last Name</b></label>
-				<input type="text" name="lastname" value="<?php echo $last_name ?>" class="form-control form-control-lg inputform">
+				<label for="other_names"><b>Other Names</b></label>
+				<input type="text" name="othernames" value="<?php echo $other_names ?>" class="form-control form-control-lg inputform">
 			</div>
 			<div class="form-group">
 				<label for="Bank"><b>Select Bank</b></label>

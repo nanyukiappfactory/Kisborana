@@ -15,7 +15,7 @@ class Members extends Admin
         // Listing and Search Parameters
         $table = 'member';
         $where = 'deleted = 0';
-        $search_parameters = array('member_first_name','member_national_id','member_last_name','member_payroll_number');
+        $search_parameters = array('member_first_name','member_other_names','member_national_id','member_last_name','member_payroll_number');
         $search_results = $this->session->userdata("search_session");
         if(!empty($search_results) && $search_results != null) 
         {
@@ -88,6 +88,7 @@ class Members extends Admin
         // form validation
         $this->form_validation->set_rules("member_national_id", "National id", "required");
         $this->form_validation->set_rules("firstname", "First Name", "required");
+        $this->form_validation->set_rules("othernames", "Other Names", "required");
         $this->form_validation->set_rules("lastname", "Last Name", "required");
         $this->form_validation->set_rules("bank_name", "Select Bank", "required");
         $this->form_validation->set_rules("employer_name", "Select Employer", "required");
@@ -135,6 +136,7 @@ class Members extends Admin
         $this->form_validation->set_rules("member_national_id", "National id", "required");
         $this->form_validation->set_rules("firstname", "First Name", "required");
         $this->form_validation->set_rules("lastname", "Last Name", "required");
+        $this->form_validation->set_rules("othernames", "Other Names", "required");
         $this->form_validation->set_rules("bank_name", "Select Bank", "required");
         $this->form_validation->set_rules("employer_name", "Select Employer", "required");
         $this->form_validation->set_rules("email", "Email", "required");
@@ -173,6 +175,7 @@ class Members extends Admin
             $member_id = $row->member_id;
             $first_name = $row->member_first_name;
             $last_name = $row->member_last_name;
+            $other_names = $row->member_other_names;
             $national_id = $row->member_national_id;
             $email = $row->member_email;
             $location = $row->member_location;
@@ -187,6 +190,7 @@ class Members extends Admin
             "member_id " => $member_id,
             "first_name" => $first_name,
             "last_name" => $last_name,
+            "other_names" => $other_names,
             "national_id" => $national_id,
             "email" => $email,
             "location" => $location,
